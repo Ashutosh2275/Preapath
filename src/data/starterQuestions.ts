@@ -1,6 +1,7 @@
 import { Question } from '../types';
+import { ALL_QUESTIONS } from './questions';
 
-export const STARTER_QUESTIONS: Question[] = [
+export const ORIGINAL_STARTER_QUESTIONS: Question[] = [
   {
     id: 'tcs-cp-001',
     slug: 'sum-of-multiples-of-three-and-five',
@@ -1196,3 +1197,9 @@ if __name__ == '__main__':
     version: 1
   }
 ];
+
+export const STARTER_QUESTIONS: Question[] = [
+  ...ORIGINAL_STARTER_QUESTIONS,
+  ...ALL_QUESTIONS.filter(aq => !ORIGINAL_STARTER_QUESTIONS.some(oq => oq.id === aq.id))
+];
+

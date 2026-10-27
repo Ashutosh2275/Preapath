@@ -73,12 +73,15 @@ export async function fetchPostgresQuestions(): Promise<Question[]> {
   const { data, error } = await supabase
     .from('questions')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('catalog_number', { ascending: true, nullsFirst: false });
 
   if (error || !data) return [];
 
   return data.map((row: any) => ({
     id: row.id,
+    catalogNumber: row.catalog_number || undefined,
+    externalProblemId: row.external_problem_id || undefined,
+    externalUrl: row.external_url || undefined,
     slug: row.slug,
     title: row.title,
     problemStatement: row.problem_statement,
@@ -91,13 +94,17 @@ export async function fetchPostgresQuestions(): Promise<Question[]> {
     sections: row.sections || [],
     targetTracks: row.target_tracks || [],
     estimatedMinutes: row.estimated_minutes,
-    problemFormat: 'STANDARD_IO',
+    problemFormat: row.problem_format || 'STANDARD_IO',
     sourceType: row.source_type,
     hints: row.hints || [],
+    hintStages: row.hint_stages || [],
+    solutions: row.solutions || [],
+    options: row.options || [],
+    correctOptionId: row.correct_option_id || undefined,
     explanation: row.explanation,
     timeComplexity: row.time_complexity,
     spaceComplexity: row.space_complexity,
-    starterCodeByLanguage: row.starter_code,
+    starterCodeByLanguage: row.starter_code || { c: '', cpp: '', java: '', python: '' },
     publicTestCases: row.public_test_cases || [],
     hiddenTestCases: row.hidden_test_cases || [],
     publicationStatus: row.publication_status,
@@ -114,6 +121,9 @@ export async function upsertPostgresQuestion(question: Question): Promise<boolea
     .from('questions')
     .upsert({
       id: question.id,
+      catalog_number: question.catalogNumber || null,
+      external_problem_id: question.externalProblemId || null,
+      external_url: question.externalUrl || null,
       slug: question.slug,
       title: question.title,
       problem_statement: question.problemStatement,
@@ -126,8 +136,13 @@ export async function upsertPostgresQuestion(question: Question): Promise<boolea
       sections: question.sections,
       target_tracks: question.targetTracks,
       estimated_minutes: question.estimatedMinutes,
+      problem_format: question.problemFormat || 'STANDARD_IO',
       source_type: question.sourceType,
       hints: question.hints,
+      hint_stages: question.hintStages || [],
+      solutions: question.solutions || [],
+      options: question.options || [],
+      correct_option_id: question.correctOptionId || null,
       explanation: question.explanation,
       time_complexity: question.timeComplexity || null,
       space_complexity: question.spaceComplexity || null,
@@ -140,6 +155,51 @@ export async function upsertPostgresQuestion(question: Question): Promise<boolea
     });
 
   return !error;
+}
+
+export async function seedPostgresQuestions(questions: Question[]): Promise<{ count: number; error: any }> {
+  if (!isPostgresConfigured() || !supabase) return { count: 0, error: 'PostgreSQL not configured' };
+
+  const rows = questions.map((q) => ({
+    id: q.id,
+    catalog_number: q.catalogNumber || null,
+    external_problem_id: q.externalProblemId || null,
+    external_url: q.externalUrl || null,
+    slug: q.slug,
+    title: q.title,
+    problem_statement: q.problemStatement,
+    input_format: q.inputFormat,
+    output_format: q.outputFormat,
+    constraints: q.constraints,
+    examples: q.examples,
+    difficulty: q.difficulty,
+    topics: q.topics,
+    sections: q.sections,
+    target_tracks: q.targetTracks,
+    estimated_minutes: q.estimatedMinutes,
+    problem_format: q.problemFormat || 'STANDARD_IO',
+    source_type: q.sourceType,
+    hints: q.hints,
+    hint_stages: q.hintStages || [],
+    solutions: q.solutions || [],
+    options: q.options || [],
+    correct_option_id: q.correctOptionId || null,
+    explanation: q.explanation,
+    time_complexity: q.timeComplexity || null,
+    space_complexity: q.spaceComplexity || null,
+    starter_code: q.starterCodeByLanguage,
+    public_test_cases: q.publicTestCases,
+    hidden_test_cases: q.hiddenTestCases || [],
+    publication_status: q.publicationStatus,
+    version: q.version || 1,
+    updated_at: new Date().toISOString(),
+  }));
+
+  const { error } = await supabase
+    .from('questions')
+    .upsert(rows, { onConflict: 'id' });
+
+  return { count: rows.length, error };
 }
 
 // 3. STUDY PLANS

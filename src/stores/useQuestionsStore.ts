@@ -38,6 +38,7 @@ interface QuestionsStoreState {
   setPublicationStatus: (id: string, status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED', adminEmail: string) => void;
   getQuestionById: (id: string) => Question | undefined;
   getQuestionBySlug: (slug: string) => Question | undefined;
+  getQuestionByCatalogNumber: (num: number) => Question | undefined;
 }
 
 const defaultFilters: QuestionFilters = {
@@ -160,11 +161,35 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
       },
 
       getQuestionBySlug: (slug) => {
-        return get().questions.find((q) => q.slug === slug || q.id === slug);
+        const num = Number(slug);
+        return get().questions.find(
+          (q) =>
+            q.slug === slug ||
+            q.id === slug ||
+            (!isNaN(num) && q.catalogNumber === num)
+        );
+      },
+
+      getQuestionByCatalogNumber: (num) => {
+        return get().questions.find((q) => q.catalogNumber === num);
       },
     }),
     {
-      name: 'preppath_questions_storage_v1',
+      name: 'preppath_questions_storage_v2',
+      merge: (persistedState: any, currentState) => {
+        const persistedQuestions: Question[] = persistedState?.questions || [];
+        const combined = [...STARTER_QUESTIONS];
+        for (const pq of persistedQuestions) {
+          if (!combined.some((q) => q.id === pq.id)) {
+            combined.push(pq);
+          }
+        }
+        return {
+          ...currentState,
+          ...persistedState,
+          questions: combined,
+        };
+      },
     }
   )
 );

@@ -54,8 +54,31 @@ export interface Example {
   explanation?: string;
 }
 
+export interface HintStage {
+  stage: number;
+  title: string;
+  content: string;
+}
+
+export interface QuestionSolution {
+  approachName: string;
+  language: ProgrammingLanguage;
+  code: string;
+  explanation: string;
+  timeComplexity: string;
+  spaceComplexity: string;
+}
+
+export interface QuestionOption {
+  id: string; // 'A', 'B', 'C', 'D'
+  text: string;
+}
+
 export interface Question {
   id: string;
+  catalogNumber?: number;
+  externalProblemId?: string;
+  externalUrl?: string;
   slug: string;
   title: string;
   problemStatement: string;
@@ -68,7 +91,7 @@ export interface Question {
   sections: SectionType[];
   targetTracks: TargetTrack[];
   estimatedMinutes: number;
-  problemFormat: 'STANDARD_IO' | 'FUNCTION_SIGNATURE';
+  problemFormat: 'STANDARD_IO' | 'FUNCTION_SIGNATURE' | 'MULTIPLE_CHOICE';
   sourceType: SourceEvidenceType;
   sourceReferences?: {
     title: string;
@@ -77,6 +100,10 @@ export interface Question {
     notes?: string;
   };
   hints: string[];
+  hintStages?: HintStage[];
+  solutions?: QuestionSolution[];
+  options?: QuestionOption[];
+  correctOptionId?: string;
   explanation: string;
   timeComplexity?: string;
   spaceComplexity?: string;

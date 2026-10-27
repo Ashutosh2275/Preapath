@@ -6,7 +6,6 @@ import {
   Send, 
   RotateCcw, 
   Bookmark, 
-  Clock, 
   CheckCircle2, 
   AlertCircle, 
   HelpCircle, 
@@ -17,9 +16,12 @@ import {
   Sparkles,
   FileCode,
   Check,
+  ChevronLeft,
   ChevronRight,
-  Maximize2,
-  Minimize2
+  ExternalLink,
+  XCircle,
+  ArrowRight,
+  Code2
 } from 'lucide-react';
 import { useQuestionsStore } from '../../stores/useQuestionsStore';
 import { useUserStore } from '../../stores/useUserStore';
@@ -53,7 +55,11 @@ export const ProblemDetailPage: React.FC = () => {
     addSubmission
   } = useUserStore();
 
-  const question = questions.find(q => q.id === problemId || q.slug === problemId);
+  const question = questions.find(
+    q => q.id === problemId || 
+         q.slug === problemId || 
+         (q.catalogNumber !== undefined && String(q.catalogNumber) === problemId)
+  );
 
   // Fallback if question not found
   if (!question) {
@@ -68,6 +74,16 @@ export const ProblemDetailPage: React.FC = () => {
     );
   }
 
+  const isMCQ = question.problemFormat === 'MULTIPLE_CHOICE';
+
+  // Neighboring questions for navigation
+  const prevQuestion = question.catalogNumber 
+    ? questions.find(q => q.catalogNumber === question.catalogNumber! - 1)
+    : null;
+  const nextQuestion = question.catalogNumber
+    ? questions.find(q => q.catalogNumber === question.catalogNumber! + 1)
+    : null;
+
   // Active language
   const defaultLang: ProgrammingLanguage = 
     lastSelectedLanguage[question.id] || 
@@ -76,16 +92,16 @@ export const ProblemDetailPage: React.FC = () => {
   const [language, setLanguage] = useState<ProgrammingLanguage>(defaultLang);
 
   // Editor code state
-  const initialCode = getDraft(question.id, language) || question.starterCodeByLanguage[language] || '';
+  const initialCode = getDraft(question.id, language) || question.starterCodeByLanguage?.[language] || '';
   const [code, setCode] = useState<string>(initialCode);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [draftSavedAt, setDraftSavedAt] = useState<string | null>(null);
 
   // Left Panel Tab
-  const [leftTab, setLeftTab] = useState<'problem' | 'hints' | 'notes' | 'history'>('problem');
+  const [leftTab, setLeftTab] = useState<'problem' | 'hints' | 'solutions' | 'notes' | 'history'>('problem');
 
-  // Mobile Top Tab: 'problem' | 'editor' | 'cases' | 'output'
-  const [mobileTab, setMobileTab] = useState<'problem' | 'editor' | 'cases' | 'output'>('problem');
+  // Mobile Top Tab: 'problem' | 'editor' | 'cases' | 'output' | 'solve' | 'hints'
+  const [mobileTab, setMobileTab] = useState<'problem' | 'editor' | 'cases' | 'output' | 'solve' | 'hints'>('problem');
 
   // Bottom Panel Tab
   const [bottomTab, setBottomTab] = useState<'sample' | 'custom' | 'output'>('sample');
@@ -95,6 +111,11 @@ export const ProblemDetailPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [runOutputs, setRunOutputs] = useState<any[] | null>(null);
   const [latestSubmission, setLatestSubmission] = useState<Submission | null>(null);
+
+  // MCQ interactive state
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [isMcqSubmitted, setIsMcqSubmitted] = useState<boolean>(false);
+  const [mcqFeedback, setMcqFeedback] = useState<{ isCorrect: boolean; message: string } | null>(null);
 
   // Custom Test Case input states
   const [customInput, setCustomInput] = useState('');
@@ -112,6 +133,7 @@ export const ProblemDetailPage: React.FC = () => {
 
   // Progress metrics
   const progress = problemProgress[question.id];
+  const maxHintCount = question.hintStages?.length || question.hints?.length || 0;
   const revealedHints = progress?.revealedHintsCount || 0;
   const isBookmarked = progress?.bookmarked || false;
   const isRevision = progress?.needsRevision || false;
@@ -119,9 +141,10 @@ export const ProblemDetailPage: React.FC = () => {
   // Question submissions
   const questionSubmissions = submissions.filter(s => s.problemId === question.id);
 
-  // Debounced autosave effect
+  // Debounced autosave effect for code
   const autosaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
+    if (isMCQ) return;
     if (autosaveTimeoutRef.current) clearTimeout(autosaveTimeoutRef.current);
     setIsSavingDraft(true);
 
@@ -134,7 +157,7 @@ export const ProblemDetailPage: React.FC = () => {
     return () => {
       if (autosaveTimeoutRef.current) clearTimeout(autosaveTimeoutRef.current);
     };
-  }, [code, language, question.id, saveDraft]);
+  }, [code, language, question.id, saveDraft, isMCQ]);
 
   // Handle language switch
   const handleLanguageChange = (newLang: ProgrammingLanguage) => {
@@ -144,13 +167,13 @@ export const ProblemDetailPage: React.FC = () => {
     if (existingDraft) {
       setCode(existingDraft);
     } else {
-      setCode(question.starterCodeByLanguage[newLang] || '');
+      setCode(question.starterCodeByLanguage?.[newLang] || '');
     }
   };
 
   // Reset to starter code
   const handleResetStarter = () => {
-    const starter = question.starterCodeByLanguage[language] || '';
+    const starter = question.starterCodeByLanguage?.[language] || '';
     setCode(starter);
     saveDraft(question.id, language, starter);
     setShowResetModal(false);
@@ -212,6 +235,44 @@ export const ProblemDetailPage: React.FC = () => {
     }
   };
 
+  // Submit MCQ Answer
+  const handleMcqSubmit = () => {
+    if (!selectedOptionId) return;
+    const isCorrect = selectedOptionId.toUpperCase() === (question.correctOptionId || '').toUpperCase();
+    setIsMcqSubmitted(true);
+    setMcqFeedback({
+      isCorrect,
+      message: isCorrect 
+        ? `Correct! Option (${selectedOptionId}) is the exact verified answer.` 
+        : `Incorrect. You chose (${selectedOptionId}), but the correct option is (${question.correctOptionId}).`
+    });
+
+    const uid = user?.uid || 'guest-user';
+    const subRecord: Submission = {
+      id: `mcq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      userId: uid,
+      problemId: question.id,
+      language: 'python',
+      sourceCodeSnapshot: `Option Selected: ${selectedOptionId}\nCorrect Option: ${question.correctOptionId}`,
+      verdict: isCorrect ? 'Accepted' : 'Wrong Answer',
+      executionTimeMs: 15,
+      memoryUsedKb: 256,
+      passedTests: isCorrect ? 1 : 0,
+      totalTests: 1,
+      submittedAt: new Date().toISOString(),
+    };
+
+    addSubmission(subRecord);
+    recordSubmissionResult(question.id, isCorrect ? 'Accepted' : 'Wrong Answer', 'python', 15);
+  };
+
+  // Reset MCQ Answer
+  const handleMcqReset = () => {
+    setSelectedOptionId(null);
+    setIsMcqSubmitted(false);
+    setMcqFeedback(null);
+  };
+
   // Add custom test case
   const handleSaveCustomCase = (e: React.FormEvent) => {
     e.preventDefault();
@@ -243,10 +304,51 @@ export const ProblemDetailPage: React.FC = () => {
             ← Problem Bank
           </Link>
           <span className="text-slate-300 dark:text-slate-700">|</span>
-          <h1 className="font-bold text-sm text-slate-900 dark:text-white truncate max-w-[200px] sm:max-w-md">
-            {question.title}
-          </h1>
+          <div className="flex items-center gap-1.5">
+            {prevQuestion && (
+              <Link
+                to={`/problems/${prevQuestion.catalogNumber || prevQuestion.slug || prevQuestion.id}`}
+                className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                title={`Previous: #${prevQuestion.catalogNumber} ${prevQuestion.title}`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Link>
+            )}
+            <h1 className="font-bold text-sm text-slate-900 dark:text-white truncate max-w-[180px] sm:max-w-xs md:max-w-md">
+              {question.catalogNumber ? `${question.catalogNumber}. ${question.title}` : question.title}
+            </h1>
+            {nextQuestion && (
+              <Link
+                to={`/problems/${nextQuestion.catalogNumber || nextQuestion.slug || nextQuestion.id}`}
+                className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                title={`Next: #${nextQuestion.catalogNumber} ${nextQuestion.title}`}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            )}
+          </div>
           <DifficultyBadge difficulty={question.difficulty} />
+          {isMCQ ? (
+            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+              MCQ Practice
+            </span>
+          ) : (
+            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+              Coding
+            </span>
+          )}
+          {question.externalUrl && (
+            <a
+              href={question.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400 hover:underline"
+              title="View on LeetCode"
+            >
+              LeetCode #{question.externalProblemId || ''}
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -282,10 +384,10 @@ export const ProblemDetailPage: React.FC = () => {
 
       {/* Mobile Tab Switcher */}
       <div className="md:hidden flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold">
-        {(['problem', 'editor', 'cases', 'output'] as const).map((tab) => (
+        {(isMCQ ? ['problem', 'solve', 'hints'] : ['problem', 'editor', 'cases', 'output']).map((tab) => (
           <button
             key={tab}
-            onClick={() => setMobileTab(tab)}
+            onClick={() => setMobileTab(tab as any)}
             className={`flex-1 py-2 text-center capitalize border-b-2 transition-colors ${
               mobileTab === tab
                 ? 'border-primary text-primary'
@@ -297,17 +399,17 @@ export const ProblemDetailPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Main Workspace Layout (Two Resizable/Flex Columns on Desktop) */}
+      {/* Main Workspace Layout (Two Columns) */}
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-0 overflow-hidden">
-        {/* Left Column: Problem Details, Hints, Notes, History (Desktop: 5 cols) */}
+        {/* Left Column: Problem Details, Progressive Hints, Reference Solutions, Notes, History */}
         <div className={`lg:col-span-5 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-full overflow-hidden ${
           mobileTab !== 'problem' ? 'hidden md:flex' : 'flex'
         }`}>
           {/* Subtabs Header */}
-          <div className="flex items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-3 text-xs font-medium">
+          <div className="flex items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-3 text-xs font-medium overflow-x-auto">
             <button
               onClick={() => setLeftTab('problem')}
-              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 ${
+              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'problem'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -318,18 +420,35 @@ export const ProblemDetailPage: React.FC = () => {
             </button>
             <button
               onClick={() => setLeftTab('hints')}
-              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 ${
+              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'hints'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5" />
-              Hints {revealedHints > 0 && `(${revealedHints}/${question.hints.length})`}
+              {question.hintStages && question.hintStages.length > 0 ? (
+                <>12-Stage Hints {revealedHints > 0 && `(${revealedHints}/12)`}</>
+              ) : (
+                <>Hints {revealedHints > 0 && `(${revealedHints}/${maxHintCount})`}</>
+              )}
             </button>
+            {question.solutions && question.solutions.length > 0 && (
+              <button
+                onClick={() => setLeftTab('solutions')}
+                className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
+                  leftTab === 'solutions'
+                    ? 'border-primary text-primary font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <Code2 className="w-3.5 h-3.5" />
+                Solutions ({question.solutions.length})
+              </button>
+            )}
             <button
               onClick={() => setLeftTab('notes')}
-              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 ${
+              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'notes'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -340,7 +459,7 @@ export const ProblemDetailPage: React.FC = () => {
             </button>
             <button
               onClick={() => setLeftTab('history')}
-              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 ${
+              className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'history'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -357,13 +476,18 @@ export const ProblemDetailPage: React.FC = () => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                    {question.title}
+                    {question.catalogNumber ? `${question.catalogNumber}. ${question.title}` : question.title}
                   </h2>
                   <div className="flex flex-wrap items-center gap-2">
                     <DifficultyBadge difficulty={question.difficulty} />
                     <SourceBadge sourceType={question.sourceType} />
                     {question.targetTracks.map(t => (
                       <TrackBadge key={t} track={t} />
+                    ))}
+                    {question.topics?.slice(0, 3).map(topic => (
+                      <span key={topic} className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                        {topic}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -373,24 +497,26 @@ export const ProblemDetailPage: React.FC = () => {
                   {question.problemStatement}
                 </div>
 
-                {/* Input & Output Format */}
-                <div className="space-y-3 text-xs bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
-                  <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px] mb-1">
-                      Input Format
-                    </h4>
-                    <p className="text-slate-600 dark:text-slate-400">{question.inputFormat}</p>
+                {/* Input & Output Format (For Coding / Standard IO) */}
+                {!isMCQ && (
+                  <div className="space-y-3 text-xs bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                    <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px] mb-1">
+                        Input Format
+                      </h4>
+                      <p className="text-slate-600 dark:text-slate-400">{question.inputFormat}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px] mb-1">
+                        Output Format
+                      </h4>
+                      <p className="text-slate-600 dark:text-slate-400">{question.outputFormat}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px] mb-1">
-                      Output Format
-                    </h4>
-                    <p className="text-slate-600 dark:text-slate-400">{question.outputFormat}</p>
-                  </div>
-                </div>
+                )}
 
                 {/* Constraints */}
-                {question.constraints.length > 0 && (
+                {question.constraints && question.constraints.length > 0 && (
                   <div className="space-y-2">
                     <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
                       Constraints & Bounds
@@ -404,80 +530,139 @@ export const ProblemDetailPage: React.FC = () => {
                 )}
 
                 {/* Examples */}
-                <div className="space-y-4">
-                  <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
-                    Examples
-                  </h4>
-                  {question.examples.map((ex, idx) => (
-                    <div
-                      key={idx}
-                      className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-3.5 space-y-2 text-xs"
-                    >
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">
-                        Example {idx + 1}:
-                      </span>
-                      <div>
-                        <span className="text-[10px] text-slate-400 block font-mono uppercase">Input:</span>
-                        <pre className="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
-                          {ex.input}
-                        </pre>
+                {question.examples && question.examples.length > 0 && !isMCQ && (
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
+                      Examples
+                    </h4>
+                    {question.examples.map((ex, idx) => (
+                      <div
+                        key={idx}
+                        className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-3.5 space-y-2 text-xs"
+                      >
+                        <span className="font-semibold text-slate-700 dark:text-slate-300">
+                          Example {idx + 1}:
+                        </span>
+                        <div>
+                          <span className="text-[10px] text-slate-400 block font-mono uppercase">Input:</span>
+                          <pre className="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
+                            {ex.input}
+                          </pre>
+                        </div>
+                        <div>
+                          <span className="text-[10px] text-slate-400 block font-mono uppercase">Output:</span>
+                          <pre className="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
+                            {ex.output}
+                          </pre>
+                        </div>
+                        {ex.explanation && (
+                          <p className="text-[11px] text-slate-500 italic">
+                            <strong>Explanation:</strong> {ex.explanation}
+                          </p>
+                        )}
                       </div>
-                      <div>
-                        <span className="text-[10px] text-slate-400 block font-mono uppercase">Output:</span>
-                        <pre className="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
-                          {ex.output}
-                        </pre>
-                      </div>
-                      {ex.explanation && (
-                        <p className="text-[11px] text-slate-500 italic">
-                          <strong>Explanation:</strong> {ex.explanation}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Provenance note */}
+                {question.sourceReferences?.notes && (
+                  <div className="p-3 bg-amber-50/50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-900/40 text-[11px] text-amber-800 dark:text-amber-300">
+                    <strong>TCS Pattern Note:</strong> {question.sourceReferences.notes}
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Progressive Hint & Solution System */}
+            {/* Progressive Hint System (12 Stages or Standard Hints) */}
             {leftTab === 'hints' && (
               <div className="space-y-6">
                 <div>
                   <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
-                    <HelpCircle className="w-5 h-5 text-teal-600" />
-                    Layered Progressive Hint System
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    {question.hintStages && question.hintStages.length > 0 
+                      ? '12-Stage Progressive Hint System' 
+                      : 'Progressive Problem Hints'}
                   </h3>
                   <p className="text-xs text-slate-500 mt-1">
-                    Reveals guidance step-by-step to preserve your learning and problem-solving experience.
+                    Guidance designed after real TCS technical interviewers. Unlocks layer by layer to protect your independent reasoning.
                   </p>
                 </div>
 
-                {/* Revealed Hints */}
-                <div className="space-y-3">
-                  {question.hints.slice(0, revealedHints).map((hint, idx) => (
-                    <div
-                      key={idx}
-                      className="p-4 rounded-xl border border-teal-200 dark:border-teal-900/50 bg-teal-50/40 dark:bg-teal-950/20 text-xs text-slate-800 dark:text-slate-200 space-y-1.5 animate-in fade-in"
-                    >
-                      <span className="font-bold text-teal-700 dark:text-teal-400 block uppercase text-[10px]">
-                        Hint {idx + 1}
-                      </span>
-                      <p className="leading-relaxed">{hint}</p>
-                    </div>
-                  ))}
+                {/* Progress bar */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span>Progress: {revealedHints} of {maxHintCount} stages unlocked</span>
+                    <span>{Math.round((revealedHints / Math.max(maxHintCount, 1)) * 100)}%</span>
+                  </div>
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div 
+                      className="bg-primary h-full transition-all duration-300 rounded-full" 
+                      style={{ width: `${Math.min(100, (revealedHints / Math.max(maxHintCount, 1)) * 100)}%` }} 
+                    />
+                  </div>
                 </div>
 
+                {/* If question has 12 hint stages */}
+                {question.hintStages && question.hintStages.length > 0 ? (
+                  <div className="space-y-3">
+                    {question.hintStages.slice(0, revealedHints).map((stage) => (
+                      <div
+                        key={stage.stage}
+                        className="p-4 rounded-xl border border-primary/20 bg-primary/5 dark:bg-primary/10 text-xs text-slate-800 dark:text-slate-200 space-y-2 animate-in fade-in"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-primary block uppercase text-[11px] tracking-wide">
+                            Stage {stage.stage}: {stage.title}
+                          </span>
+                          <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
+                        </div>
+                        <p className="leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-300">
+                          {stage.content}
+                        </p>
+                      </div>
+                    ))}
+
+                    {revealedHints === 0 && (
+                      <div className="p-6 text-center rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 space-y-2">
+                        <HelpCircle className="w-8 h-8 text-slate-400 mx-auto" />
+                        <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-xs">No Hints Revealed Yet</h4>
+                        <p className="text-[11px] text-slate-500 max-w-xs mx-auto">
+                          Try thinking through the algorithm first. When you are stuck, unlock Stage 1 to clarify the core goal.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  /* Fallback to simple hints array */
+                  <div className="space-y-3">
+                    {question.hints.slice(0, revealedHints).map((hint, idx) => (
+                      <div
+                        key={idx}
+                        className="p-4 rounded-xl border border-teal-200 dark:border-teal-900/50 bg-teal-50/40 dark:bg-teal-950/20 text-xs text-slate-800 dark:text-slate-200 space-y-1.5 animate-in fade-in"
+                      >
+                        <span className="font-bold text-teal-700 dark:text-teal-400 block uppercase text-[10px]">
+                          Hint {idx + 1}
+                        </span>
+                        <p className="leading-relaxed">{hint}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* Action to reveal next hint */}
-                {revealedHints < question.hints.length ? (
+                {revealedHints < maxHintCount ? (
                   <div className="pt-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => revealNextHint(question.id, question.hints.length)}
-                      leftIcon={<Sparkles className="w-4 h-4 text-teal-600" />}
+                      onClick={() => revealNextHint(question.id, maxHintCount)}
+                      leftIcon={<Sparkles className="w-4 h-4 text-primary" />}
                       className="w-full text-xs"
                     >
-                      Reveal Next Hint ({revealedHints + 1} of {question.hints.length})
+                      {question.hintStages && question.hintStages[revealedHints]
+                        ? `Reveal Stage ${revealedHints + 1}: ${question.hintStages[revealedHints].title}`
+                        : `Reveal Next Hint (${revealedHints + 1} of ${maxHintCount})`}
                     </Button>
                   </div>
                 ) : (
@@ -486,7 +671,7 @@ export const ProblemDetailPage: React.FC = () => {
                       <span className="font-bold text-indigo-700 dark:text-indigo-400 uppercase text-[10px]">
                         Full Concept Explanation & Complexity
                       </span>
-                      <div className="whitespace-pre-line text-slate-800 dark:text-slate-200">
+                      <div className="whitespace-pre-line text-slate-800 dark:text-slate-200 leading-relaxed">
                         {question.explanation}
                       </div>
                       <div className="pt-2 border-t border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between text-[11px] font-mono text-indigo-700 dark:text-indigo-300">
@@ -496,6 +681,49 @@ export const ProblemDetailPage: React.FC = () => {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Reference Solutions Tab */}
+            {leftTab === 'solutions' && question.solutions && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                    <Code2 className="w-5 h-5 text-primary" />
+                    Validated Reference Solutions
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Multi-language optimal solutions verified against all edge cases and constraints.
+                  </p>
+                </div>
+
+                <div className="space-y-5">
+                  {question.solutions.map((sol, idx) => (
+                    <div key={idx} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-xs text-slate-900 dark:text-white">
+                          {sol.approachName}
+                        </span>
+                        <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                          {sol.language.toUpperCase()}
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        {sol.explanation}
+                      </p>
+
+                      <pre className="p-3 bg-slate-900 text-slate-200 rounded-lg font-mono text-[11px] overflow-x-auto">
+                        {sol.code}
+                      </pre>
+
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1 border-t border-slate-200 dark:border-slate-800">
+                        <span>Time: {sol.timeComplexity}</span>
+                        <span>Space: {sol.spaceComplexity}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -554,25 +782,27 @@ export const ProblemDetailPage: React.FC = () => {
                           <span>{sub.executionTimeMs}ms • {sub.memoryUsedKb}KB</span>
                         </div>
 
-                        <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-[11px] py-1"
-                            onClick={() => {
-                              setSelectedHistoricalCode(sub.sourceCodeSnapshot);
-                              setShowRestoreModal(true);
-                            }}
-                          >
-                            Restore This Code
-                          </Button>
-                        </div>
+                        {!isMCQ && (
+                          <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-[11px] py-1"
+                              onClick={() => {
+                                setSelectedHistoricalCode(sub.sourceCodeSnapshot);
+                                setShowRestoreModal(true);
+                              }}
+                            >
+                              Restore This Code
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="p-8 text-center text-xs text-slate-500 border border-dashed rounded-xl">
-                    No judged submissions recorded yet. Click Submit to run your code against public and evaluation cases.
+                    No submissions recorded yet. {isMCQ ? 'Choose an option to submit your answer.' : 'Click Submit to run your code against public and evaluation cases.'}
                   </div>
                 )}
               </div>
@@ -580,310 +810,460 @@ export const ProblemDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Monaco Code Editor + Test Cases (Desktop: 7 cols) */}
-        <div className={`lg:col-span-7 flex flex-col h-full bg-slate-900 overflow-hidden ${
-          mobileTab !== 'editor' && mobileTab !== 'cases' && mobileTab !== 'output' ? 'hidden md:flex' : 'flex'
-        }`}>
-          {/* Editor Header Toolbar */}
-          <div className="bg-slate-900 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-3">
-              {/* Language Selector */}
-              <select
-                value={language}
-                onChange={(e) => handleLanguageChange(e.target.value as ProgrammingLanguage)}
-                className="bg-slate-800 text-slate-200 font-mono text-xs px-2.5 py-1 rounded border border-slate-700 focus:outline-none focus:ring-1 focus:ring-primary"
-              >
-                <option value="python">Python 3</option>
-                <option value="cpp">C++ (GCC 9.2)</option>
-                <option value="java">Java (OpenJDK 17)</option>
-                <option value="c">C (GCC 9.2)</option>
-              </select>
-
-              {/* Autosave Status */}
-              <span className="text-[11px] text-slate-400 flex items-center gap-1 font-mono">
-                {isSavingDraft ? (
-                  <span>Saving draft...</span>
-                ) : draftSavedAt ? (
-                  <span className="text-emerald-400">✓ Saved draft ({draftSavedAt})</span>
-                ) : (
-                  <span>Draft saved</span>
-                )}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowResetModal(true)}
-                className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
-                title="Reset to Starter Code"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Monaco Editor Container */}
-          <div className="flex-1 min-h-[300px] bg-slate-950">
-            <Editor
-              height="100%"
-              language={language === 'c' ? 'c' : language === 'cpp' ? 'cpp' : language === 'java' ? 'java' : 'python'}
-              theme="vs-dark"
-              value={code}
-              onChange={(newVal) => setCode(newVal || '')}
-              options={{
-                fontSize: 13,
-                fontFamily: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
-                fontLigatures: true,
-                minimap: { enabled: false },
-                scrollBeyondLastLine: false,
-                lineNumbers: 'on',
-                automaticLayout: true,
-                tabSize: 4,
-              }}
-            />
-          </div>
-
-          {/* Bottom Test Cases & Output Panel */}
-          <div className="border-t border-slate-800 bg-slate-900 flex flex-col max-h-[320px]">
-            {/* Panel Tabs & Action Buttons */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-slate-800 bg-slate-900/90 text-xs">
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setBottomTab('sample')}
-                  className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                    bottomTab === 'sample'
-                      ? 'bg-slate-800 text-white font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  Sample Cases ({question.publicTestCases.length})
-                </button>
-
-                <button
-                  onClick={() => setBottomTab('custom')}
-                  className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                    bottomTab === 'custom'
-                      ? 'bg-slate-800 text-white font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  Custom Cases ({customTestCases.filter(c => c.problemId === question.id).length})
-                </button>
-
-                <button
-                  onClick={() => setBottomTab('output')}
-                  className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                    bottomTab === 'output'
-                      ? 'bg-slate-800 text-white font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  Output {runOutputs && `(Result)`}
-                </button>
+        {/* Right Column: Multiple Choice Practice Workspace OR Monaco Code Editor */}
+        {isMCQ ? (
+          /* MCQ Practice Interface */
+          <div className={`lg:col-span-7 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-y-auto p-6 md:p-8 ${
+            mobileTab !== 'solve' && mobileTab !== 'editor' ? 'hidden md:flex' : 'flex'
+          }`}>
+            <div className="max-w-2xl w-full mx-auto space-y-6">
+              {/* Card Header */}
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                    Aptitude & Concept Question
+                  </span>
+                  {progress?.currentStatus === 'SOLVED' && (
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Solved
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                  {question.problemStatement}
+                </h3>
               </div>
 
-              {/* Action Buttons: Run vs Submit */}
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRunCode}
-                  isLoading={isRunning}
-                  leftIcon={<Play className="w-3.5 h-3.5" />}
-                  className="bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700 text-xs py-1"
-                >
-                  Run Code
-                </Button>
+              {/* Options Selection List */}
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Select the correct answer:
+                </h4>
 
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={handleFinalSubmit}
-                  isLoading={isSubmitting}
-                  leftIcon={<Send className="w-3.5 h-3.5" />}
-                  className="text-xs py-1"
-                >
-                  Submit Code
-                </Button>
+                <div className="space-y-2.5">
+                  {(question.options || []).map((opt) => {
+                    const isSelected = selectedOptionId === opt.id;
+                    const isCorrect = isMcqSubmitted && opt.id.toUpperCase() === (question.correctOptionId || '').toUpperCase();
+                    const isWrongSelection = isMcqSubmitted && isSelected && !isCorrect;
+
+                    let cardClass = "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-primary/50 hover:bg-slate-50/50 dark:hover:bg-slate-850";
+                    if (isSelected && !isMcqSubmitted) {
+                      cardClass = "border-primary bg-primary/5 text-primary dark:text-primary-light font-medium ring-1 ring-primary";
+                    } else if (isCorrect) {
+                      cardClass = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 ring-1 ring-emerald-500";
+                    } else if (isWrongSelection) {
+                      cardClass = "border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 ring-1 ring-rose-500";
+                    }
+
+                    return (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        disabled={isMcqSubmitted}
+                        onClick={() => setSelectedOptionId(opt.id)}
+                        className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-all ${cardClass}`}
+                      >
+                        <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
+                          isCorrect 
+                            ? 'bg-emerald-500 text-white' 
+                            : isWrongSelection 
+                            ? 'bg-rose-500 text-white' 
+                            : isSelected 
+                            ? 'bg-primary text-white' 
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                        }`}>
+                          {isCorrect ? '✓' : isWrongSelection ? '✗' : opt.id}
+                        </span>
+                        <div className="flex-1 text-sm pt-0.5 leading-relaxed">
+                          {opt.text}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            {/* Panel Content */}
-            <div className="p-4 overflow-y-auto text-xs font-mono text-slate-300 min-h-[140px] max-h-[220px]">
-              {bottomTab === 'sample' && (
-                <div className="space-y-3">
-                  {question.publicTestCases.map((tc, idx) => (
-                    <div key={tc.id} className="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1.5">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px]">
-                        <span>Case {idx + 1} ({tc.name || 'Sample'})</span>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 text-[10px] block">Input:</span>
-                        <div className="text-slate-200 bg-slate-900 p-1.5 rounded">{tc.input}</div>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 text-[10px] block">Expected Output:</span>
-                        <div className="text-emerald-400 bg-slate-900 p-1.5 rounded">{tc.expectedOutput}</div>
-                      </div>
-                    </div>
-                  ))}
+              {/* Feedback Alert */}
+              {mcqFeedback && (
+                <div className={`p-4 rounded-xl border flex items-start gap-3 animate-in fade-in ${
+                  mcqFeedback.isCorrect 
+                    ? 'border-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300' 
+                    : 'border-rose-300 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300'
+                }`}>
+                  {mcqFeedback.isCorrect ? (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  ) : (
+                    <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+                  )}
+                  <div className="space-y-1">
+                    <h5 className="font-bold text-sm">
+                      {mcqFeedback.isCorrect ? 'Correct Answer!' : 'Incorrect Answer'}
+                    </h5>
+                    <p className="text-xs leading-relaxed">
+                      {mcqFeedback.message}
+                    </p>
+                  </div>
                 </div>
               )}
 
-              {bottomTab === 'custom' && (
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-xs">Your Private Test Cases:</span>
-                    {!isAddingCustom && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setIsAddingCustom(true)}
-                        leftIcon={<Plus className="w-3 h-3" />}
-                        className="text-[11px] py-0.5 bg-slate-800 border-slate-700 text-slate-200"
-                      >
-                        Add Custom Case
-                      </Button>
-                    )}
-                  </div>
-
-                  {isAddingCustom && (
-                    <form onSubmit={handleSaveCustomCase} className="p-3 rounded bg-slate-950 border border-slate-800 space-y-2">
-                      <input
-                        type="text"
-                        placeholder="Test case name (optional)"
-                        value={customCaseName}
-                        onChange={(e) => setCustomCaseName(e.target.value)}
-                        className="w-full p-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200"
-                      />
-                      <div>
-                        <label className="text-[10px] text-slate-400 block mb-0.5">Input (stdin):</label>
-                        <textarea
-                          rows={2}
-                          required
-                          value={customInput}
-                          onChange={(e) => setCustomInput(e.target.value)}
-                          placeholder="e.g. 15"
-                          className="w-full p-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200 font-mono"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] text-slate-400 block mb-0.5">Expected Output (optional):</label>
-                        <input
-                          type="text"
-                          value={customExpected}
-                          onChange={(e) => setCustomExpected(e.target.value)}
-                          placeholder="e.g. 45"
-                          className="w-full p-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200 font-mono"
-                        />
-                      </div>
-                      <div className="flex justify-end gap-2 pt-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setIsAddingCustom(false)}
-                          className="text-[11px]"
-                        >
-                          Cancel
-                        </Button>
-                        <Button type="submit" variant="primary" size="sm" className="text-[11px]">
-                          Save Case
-                        </Button>
-                      </div>
-                    </form>
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                <div className="flex items-center gap-2">
+                  {!isMcqSubmitted ? (
+                    <Button
+                      variant="primary"
+                      size="md"
+                      disabled={!selectedOptionId}
+                      onClick={handleMcqSubmit}
+                      leftIcon={<Send className="w-4 h-4" />}
+                    >
+                      Submit Answer
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="md"
+                      onClick={handleMcqReset}
+                      leftIcon={<RotateCcw className="w-4 h-4" />}
+                    >
+                      Try Again
+                    </Button>
                   )}
+                </div>
 
-                  {customTestCases.filter(c => c.problemId === question.id).map((tc) => (
-                    <div key={tc.id} className="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1.5 relative group">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px]">
-                        <span>{tc.name}</span>
-                        <button
-                          onClick={() => deleteCustomTestCase(tc.id)}
-                          className="text-slate-500 hover:text-rose-400"
-                          title="Delete custom case"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 text-[10px] block">Input:</span>
-                        <div className="text-slate-200 bg-slate-900 p-1.5 rounded">{tc.input}</div>
-                      </div>
-                      {tc.expectedOutput && (
+                {nextQuestion && (
+                  <Link to={`/problems/${nextQuestion.catalogNumber || nextQuestion.slug || nextQuestion.id}`}>
+                    <Button
+                      variant="secondary"
+                      size="md"
+                      rightIcon={<ArrowRight className="w-4 h-4" />}
+                    >
+                      Next Problem ({nextQuestion.catalogNumber})
+                    </Button>
+                  </Link>
+                )}
+              </div>
+
+              {/* Detailed Explanation / Derivation (Visible when submitted) */}
+              {isMcqSubmitted && (
+                <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-3 animate-in fade-in">
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    Step-by-Step Derivation & Solution
+                  </h4>
+                  <div className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 font-sans">
+                    {question.explanation}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          /* Coding Monaco Editor + Test Cases (Desktop: 7 cols) */
+          <div className={`lg:col-span-7 flex flex-col h-full bg-slate-900 overflow-hidden ${
+            mobileTab !== 'editor' && mobileTab !== 'cases' && mobileTab !== 'output' ? 'hidden md:flex' : 'flex'
+          }`}>
+            {/* Editor Header Toolbar */}
+            <div className="bg-slate-900 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-3">
+                {/* Language Selector */}
+                <select
+                  value={language}
+                  onChange={(e) => handleLanguageChange(e.target.value as ProgrammingLanguage)}
+                  className="bg-slate-800 text-slate-200 font-mono text-xs px-2.5 py-1 rounded border border-slate-700 focus:outline-none focus:ring-1 focus:ring-primary"
+                >
+                  <option value="python">Python 3</option>
+                  <option value="cpp">C++ (GCC 9.2)</option>
+                  <option value="java">Java (OpenJDK 17)</option>
+                  <option value="c">C (GCC 9.2)</option>
+                </select>
+
+                {/* Autosave Status */}
+                <span className="text-[11px] text-slate-400 flex items-center gap-1 font-mono">
+                  {isSavingDraft ? (
+                    <span>Saving draft...</span>
+                  ) : draftSavedAt ? (
+                    <span className="text-emerald-400">✓ Saved draft ({draftSavedAt})</span>
+                  ) : (
+                    <span>Draft saved</span>
+                  )}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowResetModal(true)}
+                  className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
+                  title="Reset to Starter Code"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Monaco Editor Container */}
+            <div className="flex-1 min-h-[300px] bg-slate-950">
+              <Editor
+                height="100%"
+                language={language === 'c' ? 'c' : language === 'cpp' ? 'cpp' : language === 'java' ? 'java' : 'python'}
+                theme="vs-dark"
+                value={code}
+                onChange={(newVal) => setCode(newVal || '')}
+                options={{
+                  fontSize: 13,
+                  fontFamily: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
+                  fontLigatures: true,
+                  minimap: { enabled: false },
+                  scrollBeyondLastLine: false,
+                  lineNumbers: 'on',
+                  automaticLayout: true,
+                  tabSize: 4,
+                }}
+              />
+            </div>
+
+            {/* Bottom Test Cases & Output Panel */}
+            <div className="border-t border-slate-800 bg-slate-900 flex flex-col max-h-[320px]">
+              {/* Panel Tabs & Action Buttons */}
+              <div className="flex items-center justify-between px-4 py-2 border-b border-slate-800 bg-slate-900/90 text-xs">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setBottomTab('sample')}
+                    className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                      bottomTab === 'sample'
+                        ? 'bg-slate-800 text-white font-bold'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Sample Cases ({question.publicTestCases?.length || 0})
+                  </button>
+
+                  <button
+                    onClick={() => setBottomTab('custom')}
+                    className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                      bottomTab === 'custom'
+                        ? 'bg-slate-800 text-white font-bold'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Custom Cases ({customTestCases.filter(c => c.problemId === question.id).length})
+                  </button>
+
+                  <button
+                    onClick={() => setBottomTab('output')}
+                    className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                      bottomTab === 'output'
+                        ? 'bg-slate-800 text-white font-bold'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Output {runOutputs && `(Result)`}
+                  </button>
+                </div>
+
+                {/* Action Buttons: Run vs Submit */}
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRunCode}
+                    isLoading={isRunning}
+                    leftIcon={<Play className="w-3.5 h-3.5" />}
+                    className="bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700 text-xs py-1"
+                  >
+                    Run Code
+                  </Button>
+
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={handleFinalSubmit}
+                    isLoading={isSubmitting}
+                    leftIcon={<Send className="w-3.5 h-3.5" />}
+                    className="text-xs py-1"
+                  >
+                    Submit Code
+                  </Button>
+                </div>
+              </div>
+
+              {/* Panel Content */}
+              <div className="p-4 overflow-y-auto text-xs font-mono text-slate-300 min-h-[140px] max-h-[220px]">
+                {bottomTab === 'sample' && (
+                  <div className="space-y-3">
+                    {(question.publicTestCases || []).map((tc, idx) => (
+                      <div key={tc.id || idx} className="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div className="flex items-center justify-between text-slate-400 text-[10px]">
+                          <span>Case {idx + 1} ({tc.name || 'Sample'})</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 text-[10px] block">Input:</span>
+                          <div className="text-slate-200 bg-slate-900 p-1.5 rounded">{tc.input}</div>
+                        </div>
                         <div>
                           <span className="text-slate-500 text-[10px] block">Expected Output:</span>
                           <div className="text-emerald-400 bg-slate-900 p-1.5 rounded">{tc.expectedOutput}</div>
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {bottomTab === 'output' && (
-                <div className="space-y-3">
-                  {latestSubmission ? (
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs text-slate-400">Submission Result:</span>
-                          <VerdictBadge verdict={latestSubmission.verdict} />
-                        </div>
-                        <span className="text-[11px] text-slate-400">
-                          {latestSubmission.passedTests}/{latestSubmission.totalTests} Test Cases Passed
-                        </span>
                       </div>
+                    ))}
+                  </div>
+                )}
 
-                      {latestSubmission.publicCaseResults && (
-                        <div className="space-y-2">
-                          {latestSubmission.publicCaseResults.map((pcr) => (
-                            <div key={pcr.caseIndex} className="p-2 rounded bg-slate-950 border border-slate-800 text-[11px] space-y-1">
-                              <div className="flex items-center justify-between">
-                                <span className="font-semibold text-slate-300">Test #{pcr.caseIndex}</span>
-                                <span className={pcr.passed ? 'text-emerald-400' : 'text-rose-400'}>
-                                  {pcr.passed ? 'Passed ✓' : 'Failed ✗'}
-                                </span>
-                              </div>
-                              <div className="text-slate-400">Actual Output: <span className="text-slate-200">{pcr.actualOutput}</span></div>
-                            </div>
-                          ))}
-                        </div>
+                {bottomTab === 'custom' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400 text-xs">Your Private Test Cases:</span>
+                      {!isAddingCustom && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setIsAddingCustom(true)}
+                          leftIcon={<Plus className="w-3 h-3" />}
+                          className="text-[11px] py-0.5 bg-slate-800 border-slate-700 text-slate-200"
+                        >
+                          Add Custom Case
+                        </Button>
                       )}
                     </div>
-                  ) : runOutputs ? (
-                    <div className="space-y-2">
-                      {runOutputs.map((out, idx) => (
-                        <div key={idx} className="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1">
-                          <div className="flex items-center justify-between text-[11px]">
-                            <span className="font-bold text-slate-300">{out.name}</span>
-                            <span className={out.isPassed ? 'text-emerald-400' : 'text-amber-400'}>
-                              {out.verdict}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-slate-500 text-[10px] block">Actual Output:</span>
-                            <div className="text-slate-200 bg-slate-900 p-1.5 rounded">{out.actualOutput || '(no stdout)'}</div>
-                          </div>
-                          {out.stderr && (
-                            <div>
-                              <span className="text-rose-400 text-[10px] block">Error (stderr):</span>
-                              <div className="text-rose-300 bg-slate-900 p-1.5 rounded">{out.stderr}</div>
-                            </div>
-                          )}
+
+                    {isAddingCustom && (
+                      <form onSubmit={handleSaveCustomCase} className="p-3 rounded bg-slate-950 border border-slate-800 space-y-2">
+                        <input
+                          type="text"
+                          placeholder="Test case name (optional)"
+                          value={customCaseName}
+                          onChange={(e) => setCustomCaseName(e.target.value)}
+                          className="w-full p-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200"
+                        />
+                        <div>
+                          <label className="text-[10px] text-slate-400 block mb-0.5">Input (stdin):</label>
+                          <textarea
+                            rows={2}
+                            required
+                            value={customInput}
+                            onChange={(e) => setCustomInput(e.target.value)}
+                            placeholder="e.g. 15"
+                            className="w-full p-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200 font-mono"
+                          />
                         </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-center text-slate-500 py-6">
-                      Click "Run Code" to test against visible sample/custom cases, or "Submit Code" for judged evaluation.
-                    </div>
-                  )}
-                </div>
-              )}
+                        <div>
+                          <label className="text-[10px] text-slate-400 block mb-0.5">Expected Output (optional):</label>
+                          <input
+                            type="text"
+                            value={customExpected}
+                            onChange={(e) => setCustomExpected(e.target.value)}
+                            placeholder="e.g. 45"
+                            className="w-full p-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200 font-mono"
+                          />
+                        </div>
+                        <div className="flex justify-end gap-2 pt-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setIsAddingCustom(false)}
+                            className="text-[11px]"
+                          >
+                            Cancel
+                          </Button>
+                          <Button type="submit" variant="primary" size="sm" className="text-[11px]">
+                            Save Case
+                          </Button>
+                        </div>
+                      </form>
+                    )}
+
+                    {customTestCases.filter(c => c.problemId === question.id).map((tc) => (
+                      <div key={tc.id} className="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1.5 relative group">
+                        <div className="flex items-center justify-between text-slate-400 text-[10px]">
+                          <span>{tc.name}</span>
+                          <button
+                            onClick={() => deleteCustomTestCase(tc.id)}
+                            className="text-slate-500 hover:text-rose-400"
+                            title="Delete custom case"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 text-[10px] block">Input:</span>
+                          <div className="text-slate-200 bg-slate-900 p-1.5 rounded">{tc.input}</div>
+                        </div>
+                        {tc.expectedOutput && (
+                          <div>
+                            <span className="text-slate-500 text-[10px] block">Expected Output:</span>
+                            <div className="text-emerald-400 bg-slate-900 p-1.5 rounded">{tc.expectedOutput}</div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {bottomTab === 'output' && (
+                  <div className="space-y-3">
+                    {latestSubmission ? (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-slate-400">Submission Result:</span>
+                            <VerdictBadge verdict={latestSubmission.verdict} />
+                          </div>
+                          <span className="text-[11px] text-slate-400">
+                            {latestSubmission.passedTests}/{latestSubmission.totalTests} Test Cases Passed
+                          </span>
+                        </div>
+
+                        {latestSubmission.publicCaseResults && (
+                          <div className="space-y-2">
+                            {latestSubmission.publicCaseResults.map((pcr) => (
+                              <div key={pcr.caseIndex} className="p-2 rounded bg-slate-950 border border-slate-800 text-[11px] space-y-1">
+                                <div className="flex items-center justify-between">
+                                  <span className="font-semibold text-slate-300">Test #{pcr.caseIndex}</span>
+                                  <span className={pcr.passed ? 'text-emerald-400' : 'text-rose-400'}>
+                                    {pcr.passed ? 'Passed ✓' : 'Failed ✗'}
+                                  </span>
+                                </div>
+                                <div className="text-slate-400">Actual Output: <span className="text-slate-200">{pcr.actualOutput}</span></div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ) : runOutputs ? (
+                      <div className="space-y-2">
+                        {runOutputs.map((out, idx) => (
+                          <div key={idx} className="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1">
+                            <div className="flex items-center justify-between text-[11px]">
+                              <span className="font-bold text-slate-300">{out.name}</span>
+                              <span className={out.isPassed ? 'text-emerald-400' : 'text-amber-400'}>
+                                {out.verdict}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 text-[10px] block">Actual Output:</span>
+                              <div className="text-slate-200 bg-slate-900 p-1.5 rounded">{out.actualOutput || '(no stdout)'}</div>
+                            </div>
+                            {out.stderr && (
+                              <div>
+                                <span className="text-rose-400 text-[10px] block">Error (stderr):</span>
+                                <div className="text-rose-300 bg-slate-900 p-1.5 rounded">{out.stderr}</div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center text-slate-500 py-6">
+                        Click "Run Code" to test against visible sample/custom cases, or "Submit Code" for judged evaluation.
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Reset Confirmation Modal */}
