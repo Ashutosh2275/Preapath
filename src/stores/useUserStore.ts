@@ -8,11 +8,18 @@ import {
   Submission, 
   ProblemProgress, 
   ProgrammingLanguage,
-  TargetTrack,
   ExecutionVerdict,
   AssessmentAttempt
 } from '../types';
-import { STARTER_QUESTIONS } from '../data/starterQuestions';
+import { 
+  upsertPostgresProfile, 
+  savePostgresStudyPlan, 
+  savePostgresDraft, 
+  savePostgresCustomTestCase, 
+  deletePostgresCustomTestCase, 
+  recordPostgresSubmission, 
+  upsertPostgresProgress 
+} from '../lib/db';
 
 interface UserStoreState {
   // Authentication & Profile
@@ -74,22 +81,32 @@ export const useUserStore = create<UserStoreState>()(
     (set, get) => ({
       user: null,
       isLoadingAuth: false,
-      setUser: (user) => set({ user }),
+      setUser: (user) => {
+        set({ user });
+        if (user) {
+          upsertPostgresProfile(user).catch(err => console.debug('PG profile sync:', err));
+        }
+      },
       updateProfile: (updates) => {
         const current = get().user;
         if (!current) return;
-        set({
-          user: {
-            ...current,
-            ...updates,
-            updatedAt: new Date().toISOString(),
-          },
-        });
+        const updated = {
+          ...current,
+          ...updates,
+          updatedAt: new Date().toISOString(),
+        };
+        set({ user: updated });
+        upsertPostgresProfile(updated).catch(err => console.debug('PG profile update:', err));
       },
 
       // Study Plan
       studyPlan: null,
-      setStudyPlan: (plan) => set({ studyPlan: plan }),
+      setStudyPlan: (plan) => {
+        set({ studyPlan: plan });
+        if (plan) {
+          savePostgresStudyPlan(plan).catch(err => console.debug('PG study plan sync:', err));
+        }
+      },
       toggleTaskCompletion: (dayNumber, taskId) => {
         const plan = get().studyPlan;
         if (!plan) return;
@@ -105,13 +122,13 @@ export const useUserStore = create<UserStoreState>()(
             isCompleted: isAllDone,
           };
         });
-        set({
-          studyPlan: {
-            ...plan,
-            days: updatedDays,
-            updatedAt: new Date().toISOString(),
-          },
-        });
+        const updatedPlan: StudyPlan = {
+          ...plan,
+          days: updatedDays,
+          updatedAt: new Date().toISOString(),
+        };
+        set({ studyPlan: updatedPlan });
+        savePostgresStudyPlan(updatedPlan).catch(err => console.debug('PG task update:', err));
       },
       rescheduleIncompleteTasks: (fromDayNumber, toDayNumber) => {
         const plan = get().studyPlan;
@@ -139,30 +156,36 @@ export const useUserStore = create<UserStoreState>()(
           return day;
         });
 
-        set({
-          studyPlan: {
-            ...plan,
-            days: updatedDays,
-            updatedAt: new Date().toISOString(),
-          },
-        });
+        const updatedPlan: StudyPlan = {
+          ...plan,
+          days: updatedDays,
+          updatedAt: new Date().toISOString(),
+        };
+        set({ studyPlan: updatedPlan });
+        savePostgresStudyPlan(updatedPlan).catch(err => console.debug('PG reschedule sync:', err));
       },
 
       // Problem Drafts
       drafts: {},
       saveDraft: (problemId, language, code) => {
         const key = `${problemId}_${language}`;
+        const draft: ProblemDraft = {
+          problemId,
+          language,
+          sourceCode: code,
+          updatedAt: new Date().toISOString(),
+        };
         set((state) => ({
           drafts: {
             ...state.drafts,
-            [key]: {
-              problemId,
-              language,
-              sourceCode: code,
-              updatedAt: new Date().toISOString(),
-            },
+            [key]: draft,
           },
         }));
+
+        const user = get().user;
+        if (user) {
+          savePostgresDraft(user.uid, problemId, language, code).catch(err => console.debug('PG draft save:', err));
+        }
       },
       getDraft: (problemId, language) => {
         const key = `${problemId}_${language}`;
@@ -193,21 +216,24 @@ export const useUserStore = create<UserStoreState>()(
         set((state) => ({
           customTestCases: [newCase, ...state.customTestCases],
         }));
+        savePostgresCustomTestCase(newCase).catch(err => console.debug('PG custom test case save:', err));
         return newCase;
       },
       updateCustomTestCase: (id, updates) => {
         set((state) => ({
-          customTestCases: state.customTestCases.map((tc) =>
-            tc.id === id
-              ? { ...tc, ...updates, updatedAt: new Date().toISOString() }
-              : tc
-          ),
+          customTestCases: state.customTestCases.map((tc) => {
+            if (tc.id !== id) return tc;
+            const updated = { ...tc, ...updates, updatedAt: new Date().toISOString() };
+            savePostgresCustomTestCase(updated).catch(err => console.debug('PG custom test case update:', err));
+            return updated;
+          }),
         }));
       },
       deleteCustomTestCase: (id) => {
         set((state) => ({
           customTestCases: state.customTestCases.filter((tc) => tc.id !== id),
         }));
+        deletePostgresCustomTestCase(id).catch(err => console.debug('PG custom test case delete:', err));
       },
       getCustomTestCases: (problemId) => {
         return get().customTestCases.filter((tc) => tc.problemId === problemId);
@@ -219,6 +245,7 @@ export const useUserStore = create<UserStoreState>()(
         set((state) => ({
           submissions: [submission, ...state.submissions],
         }));
+        recordPostgresSubmission(submission).catch(err => console.debug('PG submission save:', err));
       },
       getSubmissions: (problemId) => {
         return get().submissions.filter((s) => s.problemId === problemId);
@@ -264,6 +291,10 @@ export const useUserStore = create<UserStoreState>()(
             [problemId]: updated,
           },
         });
+
+        if (state.user) {
+          upsertPostgresProgress(updated, state.user.uid).catch(err => console.debug('PG progress update:', err));
+        }
       },
 
       toggleBookmark: (problemId) => {
@@ -278,16 +309,20 @@ export const useUserStore = create<UserStoreState>()(
           revealedHintsCount: 0,
         };
         const newBookmarked = !existing.bookmarked;
+        const updated = {
+          ...existing,
+          bookmarked: newBookmarked,
+          updatedAt: new Date().toISOString(),
+        };
         set({
           problemProgress: {
             ...state.problemProgress,
-            [problemId]: {
-              ...existing,
-              bookmarked: newBookmarked,
-              updatedAt: new Date().toISOString(),
-            },
+            [problemId]: updated,
           },
         });
+        if (state.user) {
+          upsertPostgresProgress(updated, state.user.uid).catch(err => console.debug('PG bookmark update:', err));
+        }
         return newBookmarked;
       },
 
@@ -303,16 +338,20 @@ export const useUserStore = create<UserStoreState>()(
           revealedHintsCount: 0,
         };
         const newRevision = !existing.needsRevision;
+        const updated = {
+          ...existing,
+          needsRevision: newRevision,
+          updatedAt: new Date().toISOString(),
+        };
         set({
           problemProgress: {
             ...state.problemProgress,
-            [problemId]: {
-              ...existing,
-              needsRevision: newRevision,
-              updatedAt: new Date().toISOString(),
-            },
+            [problemId]: updated,
           },
         });
+        if (state.user) {
+          upsertPostgresProgress(updated, state.user.uid).catch(err => console.debug('PG revision update:', err));
+        }
         return newRevision;
       },
 
@@ -328,16 +367,20 @@ export const useUserStore = create<UserStoreState>()(
           revealedHintsCount: 0,
         };
         const nextCount = Math.min(maxHints, existing.revealedHintsCount + 1);
+        const updated = {
+          ...existing,
+          revealedHintsCount: nextCount,
+          updatedAt: new Date().toISOString(),
+        };
         set({
           problemProgress: {
             ...state.problemProgress,
-            [problemId]: {
-              ...existing,
-              revealedHintsCount: nextCount,
-              updatedAt: new Date().toISOString(),
-            },
+            [problemId]: updated,
           },
         });
+        if (state.user) {
+          upsertPostgresProgress(updated, state.user.uid).catch(err => console.debug('PG hint update:', err));
+        }
         return nextCount;
       },
 
@@ -352,16 +395,20 @@ export const useUserStore = create<UserStoreState>()(
           bookmarked: false,
           revealedHintsCount: 0,
         };
+        const updated = {
+          ...existing,
+          notes: note,
+          updatedAt: new Date().toISOString(),
+        };
         set({
           problemProgress: {
             ...state.problemProgress,
-            [problemId]: {
-              ...existing,
-              notes: note,
-              updatedAt: new Date().toISOString(),
-            },
+            [problemId]: updated,
           },
         });
+        if (state.user) {
+          upsertPostgresProgress(updated, state.user.uid).catch(err => console.debug('PG notes update:', err));
+        }
       },
 
       // Assessment Attempts

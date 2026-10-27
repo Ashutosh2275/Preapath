@@ -43,12 +43,12 @@ PrepPath is designed to definitively answer five questions every student faces d
 - **Styling & UI:** Tailwind CSS, Lucide React icons, Responsive split-pane workspace
 - **Coding Workspace:** Monaco Editor (`@monaco-editor/react`) with syntax highlighting for C, C++, Java, and Python 3, automatic indentation, and draft autosaving
 - **Data Visualization:** Recharts for genuine submission verdict distribution and topic mastery
-- **State Management & Routing:** React Router v6, Zustand (with persistent localStorage / Firestore bridge), TanStack Query
-- **Backend & Persistence:**
+- **State Management & Routing:** React Router v6, Zustand (with persistent PostgreSQL & Supabase sync), TanStack Query
+- **Backend & Relational Persistence:**
+  - PostgreSQL schema (`supabase/migrations/20241027000000_init_preppath.sql`) with 11 relational tables, foreign key constraints, indexes, and Row-Level Security (RLS)
+  - Typed Supabase client and PostgreSQL Data Access Layer (`src/lib/db.ts`, `src/lib/supabase.ts`)
   - Firebase Authentication (Email/Password & Google Sign-in)
-  - Cloud Firestore with granular `firestore.rules` (owner-isolated submissions, drafts, and custom cases)
-  - Firebase Cloud Functions / Server Execution Gateway (`functions/src/index.ts`)
-  - Firebase Local Emulator Suite support
+  - Cloud Functions / Server Execution Gateway (`functions/src/index.ts`)
 - **Code Execution:** Sandboxed Judge0 CE gateway integration with timeout protection, output normalization, and client-safe hidden grader tests
 - **Testing:** Vitest, React Testing Library, jsdom
 
@@ -56,11 +56,11 @@ PrepPath is designed to definitively answer five questions every student faces d
 
 ## 4. Hiring Tracks Overview
 
-| Track | Tier | Typical Package Est. | Focus Syllabus Areas |
+| Track | Tier | Preparation Scope | Focus Syllabus Areas |
 | :--- | :--- | :--- | :--- |
-| **TCS Ninja** | Foundation | ₹3.36 LPA – ₹3.6 LPA | Numerical Ability, Reasoning Ability, Verbal Ability, Programming Logic, Foundational Arithmetic & String Coding |
-| **TCS Digital** | Advanced | ₹7.0 LPA – ₹7.5 LPA | Advanced Quantitative, Advanced Reasoning, Data Structures (Prefix Sums, Two Pointers, 2D Grids, Strings) |
-| **TCS Prime** | Premier | ₹9.0 LPA – ₹11.5 LPA | Complex Dynamic Programming, Graph/Tree Algorithms, Bit Manipulation, Optimal Time-Space Bounds |
+| **TCS Ninja** | Foundation Pathway | Core Aptitude & Standard Coding | Numerical Ability, Reasoning Ability, Verbal Ability, Programming Logic, Foundational Arithmetic & String Coding |
+| **TCS Digital** | Advanced Pathway | Advanced Quantitative & Data Structures | Advanced Quantitative, Advanced Reasoning, Data Structures (Prefix Sums, Two Pointers, 2D Grids, Strings) |
+| **TCS Prime** | Premier Pathway | Complex Algorithms & Optimization | Complex Dynamic Programming, Graph/Tree Algorithms, Bit Manipulation, Optimal Time-Space Bounds |
 
 ---
 
@@ -100,28 +100,26 @@ Copy `.env.example` to `.env`:
 cp .env.example .env
 ```
 
-Configure your Firebase client credentials:
+Configure your PostgreSQL / Supabase and execution credentials:
 ```env
-# Public client variables (Safe for frontend)
-VITE_FIREBASE_API_KEY=your-actual-api-key
-VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your-project-id
-VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
-VITE_FIREBASE_APP_ID=your-app-id
-
-# Local dev/demo mode flag (set to true if evaluating without live Firebase project)
-VITE_USE_LOCAL_MOCK_AUTH=false
+# PostgreSQL / Supabase Configuration
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key-here
+DATABASE_URL=postgresql://postgres:your-db-password@db.your-project.supabase.co:5432/postgres
 
 # Server-Side Secrets (Used in functions/ or execution gateway)
 JUDGE0_API_URL=https://judge0-ce.p.rapidapi.com
 JUDGE0_API_KEY=your-judge0-api-key
 ```
 
-> **Note on Instant Demo Evaluation:**  
-> When running locally without Firebase keys configured, PrepPath automatically enables local persistence with pre-configured **Demo Student** and **Demo Admin** single-click access buttons on the Sign In page!
+### 3. PostgreSQL Database Setup
+Apply the schema migration to your Supabase or PostgreSQL database:
+```bash
+# Using Supabase CLI or direct SQL query
+psql $DATABASE_URL -f supabase/migrations/20241027000000_init_preppath.sql
+```
 
-### 3. Run Development Server
+### 4. Run Development Server
 ```bash
 npm run dev
 ```

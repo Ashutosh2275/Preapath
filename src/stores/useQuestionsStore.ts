@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Question, SectionType, DifficultyLevel, TargetTrack, SourceEvidenceType } from '../types';
 import { STARTER_QUESTIONS } from '../data/starterQuestions';
+import { upsertPostgresQuestion } from '../lib/db';
 
 export interface AdminAuditLog {
   id: string;
@@ -93,6 +94,8 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
           auditLogs: [auditLog, ...state.auditLogs],
         }));
 
+        upsertPostgresQuestion(newQuestion).catch(err => console.debug('PG question sync:', err));
+
         return newQuestion;
       },
 
@@ -120,6 +123,8 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
           questions: state.questions.map((q) => (q.id === id ? updated : q)),
           auditLogs: [auditLog, ...state.auditLogs],
         }));
+
+        upsertPostgresQuestion(updated).catch(err => console.debug('PG question update:', err));
       },
 
       setPublicationStatus: (id, status, adminEmail) => {
@@ -136,14 +141,18 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
           details: `Changed publication status to ${status}`,
         };
 
+        const updated = {
+          ...current,
+          publicationStatus: status,
+          updatedAt: new Date().toISOString(),
+        };
+
         set((state) => ({
-          questions: state.questions.map((q) =>
-            q.id === id
-              ? { ...q, publicationStatus: status, updatedAt: new Date().toISOString() }
-              : q
-          ),
+          questions: state.questions.map((q) => (q.id === id ? updated : q)),
           auditLogs: [auditLog, ...state.auditLogs],
         }));
+
+        upsertPostgresQuestion(updated).catch(err => console.debug('PG question status:', err));
       },
 
       getQuestionById: (id) => {

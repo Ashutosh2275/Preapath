@@ -1,295 +1,234 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { 
   Code2, 
-  Sparkles, 
-  Calendar, 
-  Award, 
-  CheckCircle2, 
   ArrowRight, 
-  Layers, 
+  ShieldCheck, 
+  Calendar, 
   Terminal, 
-  History, 
-  HelpCircle,
-  ShieldCheck,
-  Zap,
-  Target
+  History,
+  CheckCircle2
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
-import { PlatformDisclaimer } from '../components/common/PlatformDisclaimer';
 import { useUserStore } from '../stores/useUserStore';
+import { TargetTrack } from '../types';
 
 export const LandingPage: React.FC = () => {
-  const { user } = useUserStore();
+  const navigate = useNavigate();
+  const { user, updateProfile } = useUserStore();
 
-  const tracks = [
+  const handleStartPreparation = (preferredTrack?: TargetTrack) => {
+    if (!user) {
+      navigate('/signup', { state: preferredTrack ? { track: preferredTrack } : undefined });
+    } else if (!user.targetTrack || !user.proficiency) {
+      if (preferredTrack) updateProfile({ targetTrack: preferredTrack });
+      navigate('/onboarding');
+    } else {
+      if (preferredTrack) updateProfile({ targetTrack: preferredTrack });
+      navigate('/dashboard');
+    }
+  };
+
+  const tracks: { id: TargetTrack; name: string; focus: string; description: string }[] = [
     {
-      name: 'TCS Ninja Track',
-      badge: 'Foundation Tier',
-      packageEst: '₹3.36 LPA - ₹3.6 LPA',
+      id: 'NINJA',
+      name: 'TCS Ninja',
       focus: 'Foundational Aptitude & Core Coding',
-      description: 'Focuses on Numerical Ability, Reasoning Ability, Verbal Ability, Programming Logic, and a hands-on coding problem covering basic arithmetic, strings, and arrays.',
-      color: 'indigo',
+      description: 'Covers numerical ability, logical reasoning, verbal comprehension, programming logic, and essential string and arithmetic coding.',
     },
     {
-      name: 'TCS Digital Track',
-      badge: 'Advanced Tier',
-      packageEst: '₹7.0 LPA - ₹7.5 LPA',
-      focus: 'Data Structures, Prefix Sums & Grid Algos',
-      description: 'Requires higher proficiency in Advanced Quantitative analysis, Advanced Reasoning, Dynamic Programming, String Algorithms, and complex Array/Matrix manipulations.',
-      color: 'teal',
+      id: 'DIGITAL',
+      name: 'TCS Digital',
+      focus: 'Advanced Problem Solving & Algorithms',
+      description: 'Focuses on advanced quantitative analysis, advanced reasoning, data structures, prefix sums, and 2D matrix algorithms.',
     },
     {
-      name: 'TCS Prime Track',
-      badge: 'Premier Tier',
-      packageEst: '₹9.0 LPA - ₹11.5 LPA',
-      focus: 'Complex Algorithms, Trees, Graphs & Optimization',
-      description: 'Targets premier algorithmic problem solvers with deep knowledge of advanced Data Structures, dynamic programming optimization, bit manipulation, and optimal time-space bounds.',
-      color: 'purple',
+      id: 'PRIME',
+      name: 'TCS Prime',
+      focus: 'Complex Data Structures & Optimization',
+      description: 'Targets advanced dynamic programming, tree and graph traversals, bit manipulation, and optimal time-space algorithmic bounds.',
     },
   ];
 
-  const evidenceTypes = [
-    {
-      label: 'OFFICIAL_INFORMATION',
-      name: 'Official Exam Syllabus',
-      desc: 'Sourced directly from published hiring notices, test pattern announcements, and official exam structural guidelines.',
-    },
-    {
-      label: 'RECURRING_PATTERN',
-      name: 'Recurring Assessment Pattern',
-      desc: 'Validated algorithmic problem archetypes consistently verified across multiple engineering hiring test cycles.',
-    },
-    {
-      label: 'CANDIDATE_RECALLED',
-      name: 'Candidate Recalled Archetype',
-      desc: 'Based on student recollection of exam themes, formulated with precise bounds and validated test cases.',
-    },
-    {
-      label: 'ORIGINAL_PRACTICE',
-      name: 'Original Practice Question',
-      desc: 'Independently authored coding and aptitude problems designed to build specific competencies, never falsely claimed as past questions.',
-    },
+  const evidenceSources = [
+    { label: 'Official Syllabus', desc: 'Curricular structure aligned with published notifications.' },
+    { label: 'Recurring Pattern', desc: 'Algorithmic archetypes observed across test cycles.' },
+    { label: 'Candidate Recalled', desc: 'Themes recalled by students with verified test bounds.' },
+    { label: 'Original Practice', desc: 'Independently authored practice problems to build skills.' },
   ];
 
   return (
-    <div className="space-y-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Hero Section */}
-      <section className="text-center space-y-6 pt-6 sm:pt-12 max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
-          <Sparkles className="w-3.5 h-3.5" />
-          Evidence-Based TCS Placement Preparation
+    <div className="space-y-16 sm:space-y-24 py-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      {/* A. Hero Section */}
+      <section className="text-center space-y-6 pt-4 sm:pt-8 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+          TCS Placement Preparation
         </div>
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
           Your preparation. Your progress. <br />
           <span className="text-primary">Your next opportunity.</span>
         </h1>
 
-        <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
-          A dedicated, transparent full-stack preparation platform for engineering students targeting <strong className="font-semibold text-slate-900 dark:text-white">TCS Ninja, Digital, and Prime</strong> roles.
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+          Build a personalized preparation plan, practise coding problems and track your progress toward your placement goals.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-          {user ? (
-            <Link to="/dashboard">
-              <Button size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
-                Go to Dashboard
-              </Button>
-            </Link>
-          ) : (
-            <>
-              <Link to="/signup">
-                <Button size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
-                  Create Personalized Study Plan
-                </Button>
-              </Link>
-              <Link to="/problems">
-                <Button variant="outline" size="lg" leftIcon={<Code2 className="w-5 h-5" />}>
-                  Explore Problem Bank
-                </Button>
-              </Link>
-            </>
-          )}
-        </div>
+          <Button
+            size="lg"
+            onClick={() => handleStartPreparation()}
+            rightIcon={<ArrowRight className="w-4 h-4" />}
+          >
+            Start Preparation Now
+          </Button>
 
-        {/* 5 Core Questions Card */}
-        <div className="pt-8">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm text-left">
-            <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
-              Answers the 5 Essential Preparation Questions:
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {[
-                { q: "What should I study today?", a: "Daily prioritized schedule divided by minutes and topics." },
-                { q: "Which problems should I solve first?", a: "Syllabus-aligned questions ordered by your target track." },
-                { q: "How can I improve when stuck?", a: "Layered hints: observation -> pattern -> pseudocode -> solution." },
-                { q: "What did I do last time?", a: "Complete attempt history with judged snapshots and code restoration." },
-                { q: "How close am I to my goal?", a: "Real syllabus and task completion metrics without inflated stats." },
-              ].map((item, idx) => (
-                <div key={idx} className="space-y-1">
-                  <div className="text-xs font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
-                    <span className="w-4 h-4 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-center text-[10px] leading-4 font-mono font-bold">
-                      {idx + 1}
-                    </span>
-                    {item.q}
-                  </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
-                    {item.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Link to="/problems">
+            <Button variant="outline" size="lg" leftIcon={<Code2 className="w-4 h-4" />}>
+              Explore Problems
+            </Button>
+          </Link>
         </div>
       </section>
 
-      {/* Track Comparison Section */}
-      <section className="space-y-6">
-        <div className="text-center space-y-2">
+      {/* B. Preparation Tracks */}
+      <section className="space-y-8">
+        <div className="text-center space-y-1.5">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-            Tailored Tracks for Every Hiring Tier
+            Preparation Pathways
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-            Each track aligns practice tasks with the verified syllabus complexity and expected problem archetypes.
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Select a pathway aligned with your test pattern and placement requirements.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {tracks.map((track) => (
             <div
-              key={track.name}
-              className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
+              key={track.id}
+              className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all"
             >
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                    {track.badge}
-                  </span>
-                  <span className="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400">
-                    {track.packageEst}
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                     {track.name}
                   </h3>
-                  <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400 mt-0.5">
-                    {track.focus}
-                  </p>
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
+                    {track.id}
+                  </span>
                 </div>
 
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-xs font-semibold text-primary">
+                  {track.focus}
+                </p>
+
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                   {track.description}
                 </p>
               </div>
 
               <div className="pt-6 border-t border-slate-100 dark:border-slate-800 mt-6">
-                <Link to="/signup">
-                  <Button variant="outline" size="sm" className="w-full">
-                    Select {track.name.replace('TCS ', '')}
-                  </Button>
-                </Link>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full text-xs"
+                  onClick={() => handleStartPreparation(track.id)}
+                >
+                  Select {track.name}
+                </Button>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Question Bank Provenance & Evidence Types */}
-      <section className="rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-8 space-y-6">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-2.5 py-1 rounded-full border border-teal-200 dark:border-teal-800">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            Integrity & Transparency Principles
+      {/* C. Question-Source Transparency */}
+      <section className="rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-teal-600" />
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">
+              Question Provenance Transparency
+            </h3>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-            Honest Question Provenance Labels
-          </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
-            PrepPath never invents historical frequency percentages, fake exam shifts, or unverified claims. Every question explicitly states its evidence origin:
-          </p>
+          <span className="text-xs text-slate-500">
+            Every problem includes a verified origin label.
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {evidenceTypes.map((et) => (
-            <div
-              key={et.label}
-              className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-2 shadow-xs"
-            >
-              <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/80 px-2 py-0.5 rounded">
-                {et.label}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          {evidenceSources.map((source) => (
+            <div key={source.label} className="space-y-1">
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600" />
+                {source.label}
               </span>
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
-                {et.name}
-              </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
-                {et.desc}
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                {source.desc}
               </p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Feature Pillars: Workspace, Hints, Custom Cases */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
-            <Terminal className="w-5 h-5" />
+      {/* D. Feature Summary (Exactly 3 Groups, One Sentence Each) */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 space-y-2">
+          <div className="w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-primary flex items-center justify-center mb-3">
+            <Calendar className="w-4 h-4" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-            LeetCode-Style Workspace
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            Personalized Study Plans
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Monaco Editor coding environment with C, C++, Java, and Python starter code, auto-saving drafts, syntax validation, and mobile-friendly tabs.
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Generates an adaptive daily schedule structured around your target track, preparation timeline, and self-identified weak areas.
           </p>
         </div>
 
-        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center">
-            <HelpCircle className="w-5 h-5" />
+        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 space-y-2">
+          <div className="w-9 h-9 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 flex items-center justify-center mb-3">
+            <Terminal className="w-4 h-4" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-            Progressive Hint System
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            Interactive Coding Practice
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Never get stuck without learning. Reveal structured hints one step at a time, keeping the final solution hidden until you explicitly need it.
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Monaco Editor coding environment with standard I/O starter templates, syntax validation, and draft autosaving for C, C++, Java, and Python.
           </p>
         </div>
 
-        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-            <History className="w-5 h-5" />
+        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 space-y-2">
+          <div className="w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center mb-3">
+            <History className="w-4 h-4" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-            Persistent History & Custom Cases
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            Hints, Test Cases & Submissions
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Create, save, and test private custom test cases. Revisit any previous attempt and restore historical code snapshots with one click.
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Multi-tiered progressive hints, private custom test cases, and persistent submission snapshots with one-click code restoration.
           </p>
         </div>
       </section>
 
-      {/* CTA Bottom Banner */}
-      <section className="rounded-2xl bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white p-8 sm:p-12 text-center space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-          Ready to Start Structured Preparation?
+      {/* E. Final CTA Section (Guaranteed Visible Button Text) */}
+      <section className="rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-8 sm:p-12 text-center space-y-5 border border-slate-800 shadow-lg">
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          Ready to start your preparation?
         </h2>
-        <p className="text-indigo-200 max-w-xl mx-auto text-sm sm:text-base">
-          Configure your preparation timeline, identify your target track, and let PrepPath generate an actionable daily study roadmap.
+        <p className="text-slate-300 max-w-lg mx-auto text-xs sm:text-sm leading-relaxed">
+          Get a study plan based on your target, available time and current skills.
         </p>
-        <div>
-          <Link to="/signup">
-            <Button size="lg" className="bg-white text-indigo-900 hover:bg-indigo-50 border-transparent shadow-lg font-bold">
-              Start Free Preparation Now
-            </Button>
-          </Link>
+        <div className="pt-2 flex justify-center">
+          <Button
+            variant="inverted"
+            size="lg"
+            onClick={() => handleStartPreparation()}
+            rightIcon={<ArrowRight className="w-4 h-4 text-slate-950" />}
+          >
+            Start Preparation Now
+          </Button>
         </div>
       </section>
-
-      {/* Legal & Educational Disclaimer */}
-      <PlatformDisclaimer />
     </div>
   );
 };

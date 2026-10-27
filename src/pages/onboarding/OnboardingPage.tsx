@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -18,10 +18,12 @@ import { Button } from '../../components/common/Button';
 
 export const OnboardingPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, updateProfile, setStudyPlan } = useUserStore();
 
+  const initialTrackFromState = (location.state as any)?.track;
   const [step, setStep] = useState(1);
-  const [targetTrack, setTargetTrack] = useState<TargetTrack>(user?.targetTrack || 'DIGITAL');
+  const [targetTrack, setTargetTrack] = useState<TargetTrack>(initialTrackFromState || user?.targetTrack || 'DIGITAL');
   const [availableDays, setAvailableDays] = useState<number>(user?.availablePreparationDays || 21);
   const [dailyMinutes, setDailyMinutes] = useState<number>(user?.dailyAvailableMinutes || 90);
   const [examDate, setExamDate] = useState<string>(user?.examDate || '');
@@ -102,7 +104,7 @@ export const OnboardingPage: React.FC = () => {
                 Select Your Target Preparation Track
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                Choose the role tier that aligns with your placement goals and college eligibility.
+                Choose the role tier that aligns with your placement goals and preparation scope.
               </p>
             </div>
 
@@ -111,23 +113,23 @@ export const OnboardingPage: React.FC = () => {
                 {
                   id: 'NINJA' as TargetTrack,
                   name: 'TCS Ninja Track',
-                  badge: 'Foundation Tier',
-                  pkg: '₹3.36 - ₹3.6 LPA',
-                  desc: 'Aptitude, Verbal, Programming Logic and foundational coding.',
+                  badge: 'Foundation Pathway',
+                  scope: 'Numerical, Verbal & Foundational Coding',
+                  desc: 'Structured syllabus focusing on core quantitative aptitude, reasoning patterns, and standard array/string problems.',
                 },
                 {
                   id: 'DIGITAL' as TargetTrack,
                   name: 'TCS Digital Track',
-                  badge: 'Advanced Tier',
-                  pkg: '₹7.0 - ₹7.5 LPA',
-                  desc: 'Advanced Quantitative, Data Structures, Prefix sums, 2D Grids.',
+                  badge: 'Advanced Pathway',
+                  scope: 'Advanced Quant & Core Data Structures',
+                  desc: 'Rigorous preparation on advanced mathematical logic, prefix sums, hash maps, sliding windows, and 2D grid matrix traversals.',
                 },
                 {
                   id: 'PRIME' as TargetTrack,
                   name: 'TCS Prime Track',
-                  badge: 'Premier Tier',
-                  pkg: '₹9.0 - ₹11.5 LPA',
-                  desc: 'Complex Dynamic Programming, Graph algorithms and time optimization.',
+                  badge: 'Premier Pathway',
+                  scope: 'Complex Algorithms & Optimization',
+                  desc: 'Deep algorithmic focus spanning dynamic programming, tree/graph algorithms, bit manipulation, and strict time-complexity constraints.',
                 },
               ].map((t) => (
                 <div
@@ -151,8 +153,8 @@ export const OnboardingPage: React.FC = () => {
                     <h4 className="font-bold text-sm text-slate-900 dark:text-white">
                       {t.name}
                     </h4>
-                    <p className="text-xs font-mono font-medium text-emerald-600 dark:text-emerald-400">
-                      {t.pkg}
+                    <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
+                      {t.scope}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                       {t.desc}

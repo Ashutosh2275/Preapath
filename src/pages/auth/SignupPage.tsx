@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { Code2, ArrowRight, AlertCircle, Check } from 'lucide-react';
+import { Code2, ArrowRight, AlertCircle } from 'lucide-react';
 import { auth, isFirebaseConfigured } from '../../lib/firebase';
 import { useUserStore } from '../../stores/useUserStore';
 import { Button } from '../../components/common/Button';
+import { TargetTrack } from '../../types';
 
 export const SignupPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useUserStore();
+
+  const selectedTrack: TargetTrack = (location.state as any)?.track || 'NINJA';
 
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,7 +45,7 @@ export const SignupPage: React.FC = () => {
           uid: fbUser.uid,
           email: fbUser.email || email,
           displayName: displayName || email.split('@')[0],
-          targetTrack: 'NINJA',
+          targetTrack: selectedTrack,
           preferredLanguage: 'python',
           availablePreparationDays: 14,
           dailyAvailableMinutes: 90,
@@ -51,7 +55,7 @@ export const SignupPage: React.FC = () => {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
-        navigate('/onboarding');
+        navigate('/onboarding', { state: { track: selectedTrack } });
       } catch (err: any) {
         setError(err.message || 'Registration failed. Please try another email.');
       } finally {
@@ -64,7 +68,7 @@ export const SignupPage: React.FC = () => {
           uid: `user-${Date.now()}`,
           email,
           displayName: displayName || email.split('@')[0],
-          targetTrack: 'NINJA',
+          targetTrack: selectedTrack,
           preferredLanguage: 'python',
           availablePreparationDays: 14,
           dailyAvailableMinutes: 90,
@@ -75,7 +79,7 @@ export const SignupPage: React.FC = () => {
           updatedAt: new Date().toISOString(),
         });
         setIsLoading(false);
-        navigate('/onboarding');
+        navigate('/onboarding', { state: { track: selectedTrack } });
       }, 400);
     }
   };
