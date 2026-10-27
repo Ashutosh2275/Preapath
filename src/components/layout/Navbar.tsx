@@ -83,23 +83,28 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <nav className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-15">
+        <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <div className="flex items-center gap-6 sm:gap-8">
-            <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white shadow-xs group-hover:bg-primary-hover transition-colors">
-                <Code2 className="w-4 h-4" />
+            <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-md group-hover:bg-primary-hover group-hover:scale-105 transition-all">
+                <Code2 className="w-5 h-5" />
               </div>
-              <span className="font-bold text-base text-slate-900 dark:text-white tracking-tight">
-                PrepPath
-              </span>
+              <div className="flex flex-col">
+                <span className="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight leading-none">
+                  PrepPath
+                </span>
+                <span className="hidden sm:block text-[11px] font-medium text-slate-400 dark:text-slate-500 tracking-wide mt-1">
+                  TCS Preparation
+                </span>
+              </div>
             </Link>
 
             {/* Navigation Links */}
             {user ? (
-              <div className="hidden md:flex items-center gap-1">
+              <div className="hidden md:flex items-center gap-1.5 ml-2">
                 {studentLinks.map((link) => {
                   const Icon = link.icon;
                   const active = isActive(link.path);
@@ -107,13 +112,13 @@ export const Navbar: React.FC = () => {
                     <Link
                       key={link.path}
                       to={link.path}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                      className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                         active
-                          ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold'
+                          ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold shadow-xs'
                           : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60'
                       }`}
                     >
-                      <Icon className="w-3.5 h-3.5" />
+                      <Icon className="w-4 h-4" />
                       {link.label}
                     </Link>
                   );
@@ -122,28 +127,28 @@ export const Navbar: React.FC = () => {
                 {user.role === 'admin' && (
                   <Link
                     to="/admin"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                    className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                       location.pathname.startsWith('/admin')
-                        ? 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 font-semibold'
+                        ? 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 font-semibold shadow-xs'
                         : 'text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30'
                     }`}
                   >
-                    <ShieldAlert className="w-3.5 h-3.5" />
+                    <ShieldAlert className="w-4 h-4" />
                     Admin
                   </Link>
                 )}
               </div>
             ) : (
-              <div className="hidden md:flex items-center">
+              <div className="hidden md:flex items-center ml-2">
                 <Link
                   to="/problems"
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                     location.pathname.startsWith('/problems')
-                      ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60'
                   }`}
                 >
-                  <Code2 className="w-3.5 h-3.5" />
+                  <Code2 className="w-4 h-4" />
                   Problems
                 </Link>
               </div>
@@ -151,26 +156,26 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Right Header Controls */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle color theme"
-              className="p-1.5 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
             >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+              {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-600" />}
             </button>
 
             {user ? (
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left"
+                  className="flex items-center gap-2.5 p-1.5 pr-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left"
                 >
-                  <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-xs">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-sm">
                     {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline text-xs font-medium text-slate-700 dark:text-slate-300 max-w-[120px] truncate">
+                  <span className="hidden sm:inline text-sm font-medium text-slate-700 dark:text-slate-300 max-w-[130px] truncate">
                     {user.displayName || user.email}
                   </span>
                 </button>
@@ -231,13 +236,13 @@ export const Navbar: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="text-xs">
+                  <Button variant="ghost" size="md" className="text-sm font-medium px-4 py-2 rounded-xl">
                     Sign In
                   </Button>
                 </Link>
-                <Button variant="primary" size="sm" className="text-xs" onClick={handleGetStarted}>
+                <Button variant="primary" size="md" className="text-sm font-semibold px-5 py-2.5 rounded-xl shadow-xs" onClick={handleGetStarted}>
                   Get Started
                 </Button>
               </div>
@@ -246,7 +251,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

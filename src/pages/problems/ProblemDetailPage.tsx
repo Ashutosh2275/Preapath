@@ -232,7 +232,7 @@ export const ProblemDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-[calc(100vh-4rem)] bg-slate-50 dark:bg-slate-950">
+    <div className="flex-1 flex flex-col min-h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-950">
       {/* Top Problem Navigation & Action Bar */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex items-center justify-between">
         <div className="flex items-center gap-3">

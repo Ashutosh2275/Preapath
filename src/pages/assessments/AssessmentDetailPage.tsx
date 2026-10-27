@@ -375,7 +375,7 @@ export const AssessmentDetailPage: React.FC = () => {
 
   // Active Test Mode Render
   return (
-    <div className="flex-1 flex flex-col min-h-[calc(100vh-4rem)] bg-slate-50 dark:bg-slate-950">
+    <div className="flex-1 flex flex-col min-h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-950">
       {/* Test Header Bar with Live Countdown */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between sticky top-16 z-30 shadow-xs">
         <div>
