@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.admin == true || 
+         request.auth.token.role == 'admin' ||
+         exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    // Public / Approved exam profiles
+    match /examProfiles/{profileId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Public Question Bank
+    // Contains only public problem statement, examples, hints, starter code, and public test cases.
+    // Hidden grader tests are stored exclusively in the separate questions_eval collection!
+    match /questions/{questionId} {
+      allow read: if resource.data.publicationStatus == 'PUBLISHED' || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Private Question Evaluation Data (Hidden Grader Test Cases & Reference Solutions)
+    // NEVER readable or writable by normal students!
+    match /questions_eval/{questionId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Source provenance records
+    match /sourceRecords/{sourceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Admin audit logs
+    match /adminAuditLogs/{logId} {
+      allow read, write: if isAdmin();
+    }
+
+    // User Accounts & Profiles
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) && 
+        // Prevent users from granting themselves admin roles
+        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin', 'role']);
+      allow delete: if isOwner(userId) || isAdmin();
+
+      // User's Subcollections
+      
+      // Problem Drafts (autosaved code per problem and language)
+      match /problemDrafts/{draftId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Custom Test Cases (private to student, size-limited payload)
+      match /customTestCases/{caseId} {
+        allow read, write, delete: if isOwner(userId) &&
+          (request.method == 'delete' || 
+           (request.resource.data.input.size() <= 20000 &&
+            (!('expectedOutput' in request.resource.data) || request.resource.data.expectedOutput.size() <= 20000)));
+      }
+
+      // Submissions (Judged submission history)
+      match /submissions/{submissionId} {
+        allow read: if isOwner(userId) || isAdmin();
+        // Submissions can be written by owner or trusted backend service
+        allow create: if isOwner(userId);
+        // Historical submissions cannot be edited or tampered with
+        allow update, delete: if isAdmin();
+      }
+
+      // Problem Progress (attempted, solved, revision status)
+      match /problemProgress/{problemId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId);
+      }
+
+      // Bookmarks & Notes
+      match /bookmarks/{bookmarkId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Assessment Attempts
+      match /assessmentAttempts/{attemptId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // Study Plans
+    match /studyPlans/{planId} {
+      allow read: if isAuthenticated() && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAuthenticated() && (resource.data.uid == request.auth.uid || isAdmin());
+
+      match /days/{dayId} {
+        allow read, write: if isAuthenticated() && 
+          (get(/databases/$(database)/documents/studyPlans/$(planId)).data.uid == request.auth.uid || isAdmin());
+      }
+    }
+  }
+}
