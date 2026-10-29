@@ -14,7 +14,8 @@ import {
   Calculator,
   Brain,
   MessageSquare,
-  Binary
+  Binary,
+  Sparkles
 } from 'lucide-react';
 import { useQuestionsStore } from '../../stores/useQuestionsStore';
 import { useUserStore } from '../../stores/useUserStore';
@@ -36,6 +37,7 @@ export const ProblemListPage: React.FC = () => {
       CODING: questions.filter(q => q.sections.includes('CODING')).length,
       NUMERICAL: questions.filter(q => q.sections.includes('NUMERICAL')).length,
       REASONING: questions.filter(q => q.sections.includes('REASONING')).length,
+      ADVANCED_QUANT: questions.filter(q => q.sections.includes('ADVANCED_QUANT')).length,
       VERBAL: questions.filter(q => q.sections.includes('VERBAL')).length,
       PROGRAMMING: questions.filter(q => q.sections.includes('PROGRAMMING')).length,
     };
@@ -104,6 +106,7 @@ export const ProblemListPage: React.FC = () => {
     { id: 'CODING', label: 'Coding Practice', icon: <Code2 className="w-4 h-4" />, count: sectionCounts.CODING },
     { id: 'NUMERICAL', label: 'Numerical Ability', icon: <Calculator className="w-4 h-4" />, count: sectionCounts.NUMERICAL },
     { id: 'REASONING', label: 'Reasoning Ability', icon: <Brain className="w-4 h-4" />, count: sectionCounts.REASONING },
+    { id: 'ADVANCED_QUANT', label: 'Advanced Quant', icon: <Sparkles className="w-4 h-4" />, count: sectionCounts.ADVANCED_QUANT },
     { id: 'VERBAL', label: 'Verbal Ability', icon: <MessageSquare className="w-4 h-4" />, count: sectionCounts.VERBAL },
     { id: 'PROGRAMMING', label: 'Programming Logic', icon: <Binary className="w-4 h-4" />, count: sectionCounts.PROGRAMMING },
   ];

@@ -184,14 +184,80 @@ export interface ProblemProgress {
   updatedAt?: string;
 }
 
+export type StudyPlanStageType = 
+  | 'STAGE_A_MCQ' 
+  | 'STAGE_B_EASY_CODING' 
+  | 'STAGE_C_MEDIUM_CODING' 
+  | 'STAGE_D_REVIEW' 
+  | 'MOCK_ASSESSMENT';
+
 export interface StudyPlanTask {
   id: string;
   type: 'CONCEPT' | 'PRACTICE_CODING' | 'APTITUDE_QUIZ' | 'REVISION' | 'MOCK_ASSESSMENT';
+  stage?: StudyPlanStageType;
+  stageLabel?: string;
   title: string;
   description: string;
   estimatedMinutes: number;
   problemId?: string;
+  catalogNumber?: number;
+  budgetReason?: string;
   completed: boolean;
+  completedAt?: string;
+}
+
+export interface SpacedReviewItem {
+  id: string;
+  userId: string;
+  problemId: string;
+  problemTitle: string;
+  catalogNumber?: number;
+  problemFormat: 'STANDARD_IO' | 'FUNCTION_SIGNATURE' | 'MULTIPLE_CHOICE';
+  section: SectionType;
+  difficulty: DifficultyLevel;
+  lastAttemptAt: string;
+  lastVerdict: ExecutionVerdict;
+  attemptCount: number;
+  isAccepted: boolean;
+  revealedHintsCount: number;
+  timeSpentSeconds?: number;
+  nextReviewDate: string; // ISO Date YYYY-MM-DD
+  intervalDays: number;   // 1, 2, 3, 7, 14
+  repetitionCount: number;
+  consecutiveCorrect: number;
+  isMastered: boolean;
+  status: 'PENDING' | 'COMPLETED' | 'SNOOZED';
+  updatedAt: string;
+}
+
+export type NotificationFrequency = 'DAILY' | 'EVERY_OTHER_DAY' | 'WEEKLY' | 'DISABLED';
+
+export interface NotificationPreferences {
+  userId: string;
+  enabled: boolean;
+  frequency: NotificationFrequency;
+  reminderTime: string; // "19:00"
+  timezone: string;
+  remindReviewsDue: boolean;
+  quietHoursEnabled: boolean;
+  quietHoursStart: string; // "22:00"
+  quietHoursEnd: string;   // "08:00"
+  pushToken?: string;
+  browserPermission: 'default' | 'granted' | 'denied' | 'unsupported';
+  pausedUntil?: string;
+  updatedAt: string;
+}
+
+export interface InAppNotification {
+  id: string;
+  userId: string;
+  title: string;
+  body: string;
+  type: 'DAILY_STUDY_REMINDER' | 'REVIEW_DUE' | 'STREAK_MILESTONE' | 'SYSTEM';
+  targetUrl: string;
+  read: boolean;
+  createdAt: string;
+  sentViaPush: boolean;
 }
 
 export interface StudyPlanDay {

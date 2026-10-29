@@ -175,7 +175,7 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
       },
     }),
     {
-      name: 'preppath_questions_storage_v2',
+      name: 'preppath_questions_storage_v3',
       merge: (persistedState: any, currentState) => {
         const persistedQuestions: Question[] = persistedState?.questions || [];
         const combined = [...STARTER_QUESTIONS];

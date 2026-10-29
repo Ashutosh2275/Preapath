@@ -9,7 +9,10 @@ import {
   ProblemProgress, 
   ProgrammingLanguage,
   ExecutionVerdict,
-  AssessmentAttempt
+  AssessmentAttempt,
+  SpacedReviewItem,
+  NotificationPreferences,
+  InAppNotification
 } from '../types';
 import { 
   upsertPostgresProfile, 
@@ -20,6 +23,8 @@ import {
   recordPostgresSubmission, 
   upsertPostgresProgress 
 } from '../lib/db';
+import { calculateNextSpacedReview } from '../lib/spacedRepetition';
+import { ALL_QUESTIONS } from '../data/questions';
 
 interface UserStoreState {
   // Authentication & Profile
@@ -71,6 +76,18 @@ interface UserStoreState {
   // Assessment Attempts
   assessmentAttempts: AssessmentAttempt[];
   recordAssessmentAttempt: (attempt: AssessmentAttempt) => void;
+
+  // Spaced Revision System
+  spacedReviewItems: Record<string, SpacedReviewItem>;
+  markReviewCompleted: (problemId: string) => void;
+
+  // Study Reminders & Push Notifications
+  notificationPreferences: NotificationPreferences;
+  updateNotificationPreferences: (updates: Partial<NotificationPreferences>) => void;
+  inAppNotifications: InAppNotification[];
+  addInAppNotification: (notif: Omit<InAppNotification, 'id' | 'createdAt'>) => void;
+  markNotificationRead: (id: string) => void;
+  clearAllNotifications: () => void;
 
   // System stats & helper actions
   resetAccountData: () => void;
@@ -292,6 +309,27 @@ export const useUserStore = create<UserStoreState>()(
           },
         });
 
+        // Calculate and update Spaced Review Item based on real submission performance
+        const question = ALL_QUESTIONS.find(q => q.id === problemId);
+        if (question) {
+          const previousReview = state.spacedReviewItems?.[problemId];
+          const updatedReview = calculateNextSpacedReview({
+            userId: state.user?.uid || 'guest-user',
+            question,
+            verdict,
+            revealedHintsCount: existing.revealedHintsCount,
+            timeSpentSeconds: timeMs ? Math.round(timeMs / 1000) : undefined,
+            previousRecord: previousReview,
+          });
+
+          set((s) => ({
+            spacedReviewItems: {
+              ...(s.spacedReviewItems || {}),
+              [problemId]: updatedReview,
+            },
+          }));
+        }
+
         if (state.user) {
           upsertPostgresProgress(updated, state.user.uid).catch(err => console.debug('PG progress update:', err));
         }
@@ -419,6 +457,85 @@ export const useUserStore = create<UserStoreState>()(
         }));
       },
 
+      // Spaced Revision System
+      spacedReviewItems: {},
+      markReviewCompleted: (problemId) => {
+        const state = get();
+        const existing = state.spacedReviewItems?.[problemId];
+        if (!existing) return;
+        const updated: SpacedReviewItem = {
+          ...existing,
+          status: 'COMPLETED',
+          updatedAt: new Date().toISOString(),
+        };
+        set({
+          spacedReviewItems: {
+            ...state.spacedReviewItems,
+            [problemId]: updated,
+          },
+        });
+      },
+
+      // Study Reminders & Push Notifications
+      notificationPreferences: {
+        userId: 'guest-user',
+        enabled: false,
+        frequency: 'DAILY',
+        reminderTime: '19:00',
+        timezone: typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Kolkata' : 'Asia/Kolkata',
+        remindReviewsDue: true,
+        quietHoursEnabled: true,
+        quietHoursStart: '22:00',
+        quietHoursEnd: '08:00',
+        browserPermission: 'default',
+        updatedAt: new Date().toISOString(),
+      },
+      updateNotificationPreferences: (updates) => {
+        set((state) => ({
+          notificationPreferences: {
+            ...state.notificationPreferences,
+            ...updates,
+            updatedAt: new Date().toISOString(),
+          },
+        }));
+      },
+      inAppNotifications: [
+        {
+          id: 'welcome-reminder',
+          userId: 'guest-user',
+          title: 'Welcome to TCS NQT Daily Preparation',
+          body: 'Your personalized daily sequence (MCQs, Coding & Spaced Review) is ready. Click to begin today\'s practice.',
+          type: 'DAILY_STUDY_REMINDER',
+          targetUrl: '/study-plan',
+          read: false,
+          createdAt: new Date().toISOString(),
+          sentViaPush: false,
+        }
+      ],
+      addInAppNotification: (notif) => {
+        const id = `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+        set((state) => ({
+          inAppNotifications: [
+            {
+              ...notif,
+              id,
+              createdAt: new Date().toISOString(),
+            },
+            ...(state.inAppNotifications || []),
+          ],
+        }));
+      },
+      markNotificationRead: (id) => {
+        set((state) => ({
+          inAppNotifications: (state.inAppNotifications || []).map((n) =>
+            n.id === id ? { ...n, read: true } : n
+          ),
+        }));
+      },
+      clearAllNotifications: () => {
+        set({ inAppNotifications: [] });
+      },
+
       resetAccountData: () => {
         set({
           user: null,
@@ -429,11 +546,13 @@ export const useUserStore = create<UserStoreState>()(
           submissions: [],
           problemProgress: {},
           assessmentAttempts: [],
+          spacedReviewItems: {},
+          inAppNotifications: [],
         });
       },
     }),
     {
-      name: 'preppath_user_storage_v1',
+      name: 'preppath_user_storage_v2',
     }
   )
 );

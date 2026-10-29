@@ -6,7 +6,10 @@ import {
   Submission, 
   ProblemProgress, 
   CustomTestCase,
-  AssessmentAttempt
+  AssessmentAttempt,
+  SpacedReviewItem,
+  NotificationPreferences,
+  InAppNotification
 } from '../types';
 
 /**
@@ -348,3 +351,126 @@ export async function deletePostgresCustomTestCase(caseId: string): Promise<bool
 
   return !error;
 }
+
+// 8. SPACED REVIEW ITEMS
+export async function upsertPostgresSpacedReviewItem(item: SpacedReviewItem): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  const { error } = await supabase
+    .from('spaced_review_items')
+    .upsert({
+      id: item.id,
+      user_id: item.userId,
+      problem_id: item.problemId,
+      problem_title: item.problemTitle,
+      catalog_number: item.catalogNumber || null,
+      problem_format: item.problemFormat,
+      section: item.section,
+      difficulty: item.difficulty,
+      last_attempt_at: item.lastAttemptAt,
+      last_verdict: item.lastVerdict,
+      attempt_count: item.attemptCount,
+      is_accepted: item.isAccepted,
+      revealed_hints_count: item.revealedHintsCount,
+      time_spent_seconds: item.timeSpentSeconds || null,
+      next_review_date: item.nextReviewDate,
+      interval_days: item.intervalDays,
+      repetition_count: item.repetitionCount,
+      consecutive_correct: item.consecutiveCorrect,
+      is_mastered: item.isMastered,
+      status: item.status,
+      updated_at: new Date().toISOString(),
+    });
+
+  return !error;
+}
+
+export async function fetchPostgresSpacedReviews(userId: string): Promise<SpacedReviewItem[]> {
+  if (!isPostgresConfigured() || !supabase) return [];
+
+  const { data, error } = await supabase
+    .from('spaced_review_items')
+    .select('*')
+    .eq('user_id', userId)
+    .order('next_review_date', { ascending: true });
+
+  if (error || !data) return [];
+
+  return data.map((row: any) => ({
+    id: row.id,
+    userId: row.user_id,
+    problemId: row.problem_id,
+    problemTitle: row.problem_title,
+    catalogNumber: row.catalog_number || undefined,
+    problemFormat: row.problem_format,
+    section: row.section,
+    difficulty: row.difficulty,
+    lastAttemptAt: row.last_attempt_at,
+    lastVerdict: row.last_verdict,
+    attemptCount: row.attempt_count,
+    isAccepted: row.is_accepted,
+    revealedHintsCount: row.revealed_hints_count,
+    timeSpentSeconds: row.time_spent_seconds || undefined,
+    nextReviewDate: row.next_review_date,
+    intervalDays: row.interval_days,
+    repetitionCount: row.repetition_count,
+    consecutiveCorrect: row.consecutive_correct,
+    isMastered: row.is_mastered,
+    status: row.status,
+    updatedAt: row.updated_at,
+  }));
+}
+
+// 9. NOTIFICATION PREFERENCES & LOGS
+export async function upsertPostgresNotificationPreferences(prefs: NotificationPreferences): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  const { error } = await supabase
+    .from('notification_preferences')
+    .upsert({
+      user_id: prefs.userId,
+      enabled: prefs.enabled,
+      frequency: prefs.frequency,
+      reminder_time: prefs.reminderTime,
+      timezone: prefs.timezone,
+      remind_reviews_due: prefs.remindReviewsDue,
+      quiet_hours_enabled: prefs.quietHoursEnabled,
+      quiet_hours_start: prefs.quietHoursStart,
+      quiet_hours_end: prefs.quietHoursEnd,
+      push_token: prefs.pushToken || null,
+      browser_permission: prefs.browserPermission,
+      paused_until: prefs.pausedUntil || null,
+      updated_at: new Date().toISOString(),
+    });
+
+  return !error;
+}
+
+export async function logPostgresNotificationDelivery(log: {
+  userId: string;
+  type: string;
+  title: string;
+  body: string;
+  status: 'SENT' | 'FAILED' | 'SKIPPED_QUIET_HOURS' | 'SKIPPED_ALREADY_COMPLETED';
+  idempotencyKey?: string;
+  errorMessage?: string;
+}): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  const { error } = await supabase
+    .from('notification_logs')
+    .insert({
+      id: `log_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      user_id: log.userId,
+      notification_type: log.type,
+      title: log.title,
+      body: log.body,
+      status: log.status,
+      idempotency_key: log.idempotencyKey || null,
+      error_message: log.errorMessage || null,
+      sent_at: new Date().toISOString(),
+    });
+
+  return !error;
+}
+

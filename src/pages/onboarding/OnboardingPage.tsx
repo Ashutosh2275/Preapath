@@ -19,13 +19,15 @@ import { Button } from '../../components/common/Button';
 export const OnboardingPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, updateProfile, setStudyPlan } = useUserStore();
+  const { user, updateProfile, setStudyPlan, updateNotificationPreferences } = useUserStore();
 
   const initialTrackFromState = (location.state as any)?.track;
   const [step, setStep] = useState(1);
   const [targetTrack, setTargetTrack] = useState<TargetTrack>(initialTrackFromState || user?.targetTrack || 'DIGITAL');
   const [availableDays, setAvailableDays] = useState<number>(user?.availablePreparationDays || 21);
   const [dailyMinutes, setDailyMinutes] = useState<number>(user?.dailyAvailableMinutes || 90);
+  const [startDate, setStartDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [reminderTime, setReminderTime] = useState<string>('19:00');
   const [examDate, setExamDate] = useState<string>(user?.examDate || '');
   const [preferredLanguage, setPreferredLanguage] = useState<ProgrammingLanguage>(user?.preferredLanguage || 'python');
   const [proficiency, setProficiency] = useState<ProficiencyLevel>(user?.proficiency || 'INTERMEDIATE');
@@ -73,6 +75,12 @@ export const OnboardingPage: React.FC = () => {
       proficiency,
       weakTopics: selectedWeakTopics,
       examDate: examDate || undefined,
+      startDate,
+    });
+
+    updateNotificationPreferences({
+      reminderTime,
+      enabled: true,
     });
 
     setStudyPlan(plan);
@@ -236,17 +244,45 @@ export const OnboardingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Exam Date */}
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Target Exam Date (Optional)
-              </label>
-              <input
-                type="date"
-                value={examDate}
-                onChange={(e) => setExamDate(e.target.value)}
-                className="w-full sm:w-1/2 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {/* Preparation Start Date */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Preparation Start Date
+                </label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              {/* Exam Date */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Target Exam Date (Optional)
+                </label>
+                <input
+                  type="date"
+                  value={examDate}
+                  onChange={(e) => setExamDate(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              {/* Preferred Reminder Time */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Daily Study Reminder Time
+                </label>
+                <input
+                  type="time"
+                  value={reminderTime}
+                  onChange={(e) => setReminderTime(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">

@@ -14,7 +14,8 @@ import {
   Sun, 
   Moon,
   Settings,
-  Sparkles
+  Sparkles,
+  Bell
 } from 'lucide-react';
 import { useUserStore } from '../../stores/useUserStore';
 import { Button } from '../common/Button';
@@ -22,10 +23,12 @@ import { Button } from '../common/Button';
 export const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, setUser } = useUserStore();
+  const { user, setUser, inAppNotifications, markNotificationRead } = useUserStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const unreadCount = (inAppNotifications || []).filter(n => !n.read).length;
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('preppath_theme');
@@ -165,6 +168,76 @@ export const Navbar: React.FC = () => {
             >
               {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-600" />}
             </button>
+
+            {/* In-App Notifications Bell */}
+            {user && (
+              <div className="relative">
+                <button
+                  onClick={() => setNotifDropdownOpen(!notifDropdownOpen)}
+                  aria-label="Open notifications"
+                  className="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative"
+                >
+                  <Bell className="w-5 h-5" />
+                  {unreadCount > 0 && (
+                    <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
+                </button>
+
+                {notifDropdownOpen && (
+                  <div 
+                    className="absolute right-0 mt-2 w-80 rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 p-3 z-50 animate-in fade-in"
+                    onMouseLeave={() => setNotifDropdownOpen(false)}
+                  >
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800 text-xs">
+                      <span className="font-bold text-slate-900 dark:text-white">
+                        Study Reminders ({unreadCount} unread)
+                      </span>
+                      <Link 
+                        to="/settings" 
+                        onClick={() => setNotifDropdownOpen(false)}
+                        className="text-primary hover:underline text-[11px]"
+                      >
+                        Settings
+                      </Link>
+                    </div>
+
+                    <div className="space-y-1.5 max-h-60 overflow-y-auto">
+                      {(inAppNotifications || []).slice(0, 5).map((notif) => (
+                        <div
+                          key={notif.id}
+                          onClick={() => {
+                            markNotificationRead(notif.id);
+                            setNotifDropdownOpen(false);
+                            navigate(notif.targetUrl || '/study-plan');
+                          }}
+                          className={`p-2.5 rounded-xl text-left cursor-pointer transition-colors ${
+                            notif.read
+                              ? 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-850'
+                              : 'bg-primary/5 dark:bg-primary/10 text-slate-900 dark:text-white font-medium hover:bg-primary/10'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between text-xs font-semibold mb-0.5">
+                            <span className="truncate max-w-[200px]">{notif.title}</span>
+                            {!notif.read && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
+                          </div>
+                          <p className="text-[11px] text-slate-500 line-clamp-2">
+                            {notif.body}
+                          </p>
+                        </div>
+                      ))}
+
+                      {(!inAppNotifications || inAppNotifications.length === 0) && (
+                        <div className="py-6 text-center text-xs text-slate-400">
+                          No notifications yet.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {user ? (
               <div className="relative">

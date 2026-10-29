@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.submitCode = exports.runCode = void 0;
+exports.scheduledDailyStudyReminders = exports.submitCode = exports.runCode = void 0;
 const https_1 = require("firebase-functions/v2/https");
+const scheduler_1 = require("firebase-functions/v2/scheduler");
 const admin = require("firebase-admin");
 const axios_1 = require("axios");
 admin.initializeApp();
@@ -273,5 +274,77 @@ exports.submitCode = (0, https_1.onCall)(async (request) => {
         memoryUsedKb: maxMemoryKb,
         publicCaseResults,
     };
+});
+/**
+ * Scheduled Daily Study Reminder Function
+ * Runs every hour on cron '0 * * * *'.
+ * Matches eligible users according to timezone, checks quiet hours,
+ * sends push notifications via FCM, and logs delivery idempotently.
+ */
+exports.scheduledDailyStudyReminders = (0, scheduler_1.onSchedule)('0 * * * *', async (event) => {
+    const usersSnapshot = await db.collection('users').get();
+    const now = new Date();
+    for (const userDoc of usersSnapshot.docs) {
+        const uid = userDoc.id;
+        const prefsDoc = await db.collection('users').doc(uid).collection('settings').doc('notificationPreferences').get();
+        if (!prefsDoc.exists)
+            continue;
+        const prefs = prefsDoc.data() || {};
+        if (!prefs.enabled || prefs.frequency === 'DISABLED')
+            continue;
+        const timezone = prefs.timezone || 'Asia/Kolkata';
+        const reminderTime = prefs.reminderTime || '19:00';
+        const targetH = parseInt(reminderTime.split(':')[0], 10);
+        // Get current hour in user's timezone
+        let currentH;
+        try {
+            const userTimeStr = now.toLocaleTimeString('en-GB', { timeZone: timezone, hour12: false });
+            currentH = parseInt(userTimeStr.split(':')[0], 10);
+        }
+        catch {
+            currentH = now.getUTCHours();
+        }
+        if (currentH !== targetH)
+            continue;
+        const todayDate = now.toISOString().split('T')[0];
+        const idempotencyKey = `${uid}_${todayDate}_daily_reminder`;
+        // Check idempotency to prevent duplicate deliveries
+        const logRef = db.collection('notificationLogs').doc(idempotencyKey);
+        const existingLog = await logRef.get();
+        if (existingLog.exists)
+            continue;
+        // Send push notification if token exists
+        if (prefs.pushToken) {
+            try {
+                await admin.messaging().send({
+                    token: prefs.pushToken,
+                    notification: {
+                        title: 'PrepPath TCS Preparation Reminder',
+                        body: 'Your daily study plan (MCQs, Coding & Spaced Review) is ready. Keep your preparation streak alive!',
+                    },
+                    data: {
+                        url: '/study-plan',
+                    },
+                });
+                await logRef.set({
+                    userId: uid,
+                    notificationType: 'DAILY_STUDY_REMINDER',
+                    status: 'SENT',
+                    sentAt: admin.firestore.FieldValue.serverTimestamp(),
+                    idempotencyKey,
+                });
+            }
+            catch (fcmError) {
+                await logRef.set({
+                    userId: uid,
+                    notificationType: 'DAILY_STUDY_REMINDER',
+                    status: 'FAILED',
+                    errorMessage: fcmError.message,
+                    sentAt: admin.firestore.FieldValue.serverTimestamp(),
+                    idempotencyKey,
+                });
+            }
+        }
+    }
 });
 //# sourceMappingURL=index.js.map

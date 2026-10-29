@@ -7,6 +7,8 @@ import { NUMERICAL_QUESTIONS } from './numericalQuestions';
 import { REASONING_QUESTIONS } from './reasoningQuestions';
 import { VERBAL_QUESTIONS } from './verbalQuestions';
 import { PROGRAMMING_QUESTIONS } from './programmingQuestions';
+import { ADVANCED_QUANT_QUESTIONS } from './advancedQuantQuestions';
+import { ADDITIONAL_MCQ_QUESTIONS } from './additionalMcqQuestions';
 
 export const ALL_QUESTIONS: Question[] = [
   ...CODING_QUESTIONS_PART1,
@@ -17,6 +19,8 @@ export const ALL_QUESTIONS: Question[] = [
   ...REASONING_QUESTIONS,
   ...VERBAL_QUESTIONS,
   ...PROGRAMMING_QUESTIONS,
+  ...ADVANCED_QUANT_QUESTIONS,
+  ...ADDITIONAL_MCQ_QUESTIONS,
 ];
 
 // Helper functions for question discovery
@@ -30,7 +34,7 @@ export function getQuestionByCatalogNumber(num: number): Question | undefined {
 
 export function getQuestionBySlug(slug: string): Question | undefined {
   return ALL_QUESTIONS.find(
-    (q) => q.slug === slug || q.id === slug || (q.catalogNumber && String(q.catalogNumber) === slug)
+    (q) => q.slug === slug || q.id === slug || (q.catalogNumber !== undefined && String(q.catalogNumber) === slug)
   );
 }
 
@@ -55,4 +59,6 @@ export {
   REASONING_QUESTIONS,
   VERBAL_QUESTIONS,
   PROGRAMMING_QUESTIONS,
+  ADVANCED_QUANT_QUESTIONS,
+  ADDITIONAL_MCQ_QUESTIONS,
 };
