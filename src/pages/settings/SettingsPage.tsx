@@ -124,24 +124,24 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
           <Settings className="w-7 h-7 text-primary" />
           Account & Notification Settings
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">
           Configure study reminders, quiet hours, push notifications, and local session preferences.
         </p>
       </div>
 
       {/* Push Notifications & Study Reminders Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-primary flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-primary flex items-center justify-center">
               <Bell className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              <h3 className="text-base font-bold text-slate-900">
                 Study Reminders & Push Notifications
               </h3>
               <p className="text-xs text-slate-500">
@@ -153,10 +153,10 @@ export const SettingsPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <span className={`text-[11px] font-bold uppercase px-2.5 py-1 rounded-full border ${
               permissionState === 'granted'
-                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                 : permissionState === 'denied'
-                ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
+                ? 'bg-rose-50 text-rose-700 border-rose-200'
+                : 'bg-slate-100 text-slate-600 border-slate-200'
             }`}>
               Permission: {permissionState}
             </span>
@@ -165,12 +165,12 @@ export const SettingsPage: React.FC = () => {
 
         {/* Enable / Request Permission CTA */}
         {permissionState !== 'granted' && (
-          <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="p-4 rounded-xl bg-indigo-50/50 border border-indigo-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h4 className="text-xs font-bold text-indigo-950 dark:text-indigo-200">
+              <h4 className="text-xs font-bold text-indigo-950">
                 Enable Browser Push Notifications
               </h4>
-              <p className="text-xs text-indigo-800 dark:text-indigo-300">
+              <p className="text-xs text-indigo-800">
                 Explicit permission is required to send background reminder alerts even when PrepPath is minimized.
               </p>
             </div>
@@ -190,13 +190,13 @@ export const SettingsPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
           {/* Reminder Frequency */}
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+            <label className="block font-semibold text-slate-700 mb-1.5">
               Reminder Cadence
             </label>
             <select
               value={notificationPreferences.frequency}
               onChange={(e) => updateNotificationPreferences({ frequency: e.target.value as NotificationFrequency })}
-              className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             >
               <option value="DAILY">Daily Study Reminder</option>
               <option value="EVERY_OTHER_DAY">Every Other Day (Default)</option>
@@ -207,7 +207,7 @@ export const SettingsPage: React.FC = () => {
 
           {/* Reminder Time */}
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+            <label className="block font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-slate-400" />
               Preferred Reminder Time
             </label>
@@ -215,14 +215,14 @@ export const SettingsPage: React.FC = () => {
               type="time"
               value={notificationPreferences.reminderTime}
               onChange={(e) => updateNotificationPreferences({ reminderTime: e.target.value })}
-              className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             />
           </div>
 
           {/* Quiet Hours */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <label className="font-semibold text-slate-700 flex items-center gap-1.5">
                 <Moon className="w-3.5 h-3.5 text-slate-400" />
                 Quiet Hours (No Notifications)
               </label>
@@ -241,7 +241,7 @@ export const SettingsPage: React.FC = () => {
                   disabled={!notificationPreferences.quietHoursEnabled}
                   value={notificationPreferences.quietHoursStart}
                   onChange={(e) => updateNotificationPreferences({ quietHoursStart: e.target.value })}
-                  className="w-full px-2 py-1.5 text-xs rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white disabled:opacity-50"
+                  className="w-full px-2 py-1.5 text-xs rounded border border-slate-300 bg-white text-slate-900 disabled:opacity-50"
                 />
               </div>
               <div>
@@ -251,7 +251,7 @@ export const SettingsPage: React.FC = () => {
                   disabled={!notificationPreferences.quietHoursEnabled}
                   value={notificationPreferences.quietHoursEnd}
                   onChange={(e) => updateNotificationPreferences({ quietHoursEnd: e.target.value })}
-                  className="w-full px-2 py-1.5 text-xs rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white disabled:opacity-50"
+                  className="w-full px-2 py-1.5 text-xs rounded border border-slate-300 bg-white text-slate-900 disabled:opacity-50"
                 />
               </div>
             </div>
@@ -266,19 +266,19 @@ export const SettingsPage: React.FC = () => {
                 onChange={(e) => updateNotificationPreferences({ remindReviewsDue: e.target.checked })}
                 className="w-4 h-4 rounded text-primary focus:ring-primary"
               />
-              <span className="font-semibold text-slate-700 dark:text-slate-300">
+              <span className="font-semibold text-slate-700">
                 Remind when Spaced Reviews are Due or Overdue
               </span>
             </label>
             <p className="text-[11px] text-slate-400">
-              Timezone: <strong className="text-slate-600 dark:text-slate-300 font-mono">{notificationPreferences.timezone}</strong>
+              Timezone: <strong className="text-slate-600 font-mono">{notificationPreferences.timezone}</strong>
             </p>
           </div>
         </div>
 
         {/* Test Notification Feedback */}
         {testNotificationFeedback && (
-          <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+          <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
             <Check className="w-4 h-4 shrink-0" />
             <span>{testNotificationFeedback}</span>
           </div>
@@ -299,18 +299,18 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* In-App Notification Center & History */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
             <Bell className="w-4 h-4 text-primary" />
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            <h3 className="text-base font-bold text-slate-900">
               In-App Notification History ({inAppNotifications.length})
             </h3>
           </div>
           {inAppNotifications.length > 0 && (
             <button
               onClick={clearAllNotifications}
-              className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+              className="text-xs text-slate-400 hover:text-slate-600"
             >
               Clear All
             </button>
@@ -325,8 +325,8 @@ export const SettingsPage: React.FC = () => {
                 onClick={() => markNotificationRead(notif.id)}
                 className={`p-3.5 rounded-xl border text-xs flex items-start justify-between gap-3 transition-colors cursor-pointer ${
                   notif.read
-                    ? 'border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 text-slate-600 dark:text-slate-400'
-                    : 'border-primary/30 bg-primary/5 dark:bg-primary/10 text-slate-900 dark:text-white font-medium'
+                    ? 'border-slate-100 bg-slate-50/50 text-slate-600'
+                    : 'border-primary/30 bg-primary/5 text-slate-900 font-medium'
                 }`}
               >
                 <div className="space-y-1">
@@ -354,27 +354,27 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Account Role & Danger Zone */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-sm">
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
+          <h3 className="text-base font-bold text-slate-900 mb-1">
             Account Role & Authentication
           </h3>
           <p className="text-xs text-slate-500">
-            Current account is logged in as: <strong className="text-slate-700 dark:text-slate-300 font-mono">{user?.email || 'Student'}</strong> ({user?.role?.toUpperCase() || 'STUDENT'})
+            Current account is logged in as: <strong className="text-slate-700 font-mono">{user?.email || 'Student'}</strong> ({user?.role?.toUpperCase() || 'STUDENT'})
           </p>
         </div>
 
-        <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider text-xs">
+        <div className="pt-6 border-t border-slate-100 space-y-4">
+          <h3 className="text-sm font-bold text-rose-600 uppercase tracking-wider text-xs">
             Danger Zone
           </h3>
 
-          <div className="p-4 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/50 dark:bg-rose-950/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="p-4 rounded-xl border border-rose-200 bg-rose-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h4 className="text-xs font-bold text-rose-900 dark:text-rose-200">
+              <h4 className="text-xs font-bold text-rose-900">
                 Clear Local Preparation Data
               </h4>
-              <p className="text-xs text-rose-700 dark:text-rose-300">
+              <p className="text-xs text-rose-700">
                 Resets all local drafts, test cases, and custom study plans back to default initial state.
               </p>
             </div>
@@ -389,9 +389,9 @@ export const SettingsPage: React.FC = () => {
             </Button>
           </div>
 
-          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-200">
+              <h4 className="text-xs font-bold text-slate-900">
                 Sign Out of Current Session
               </h4>
               <p className="text-xs text-slate-500">

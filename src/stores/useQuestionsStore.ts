@@ -95,7 +95,7 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
           auditLogs: [auditLog, ...state.auditLogs],
         }));
 
-        upsertPostgresQuestion(newQuestion).catch(err => console.debug('PG question sync:', err));
+        upsertPostgresQuestion(newQuestion).catch((err: unknown) => console.debug('PG question sync:', err));
 
         return newQuestion;
       },
@@ -125,7 +125,7 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
           auditLogs: [auditLog, ...state.auditLogs],
         }));
 
-        upsertPostgresQuestion(updated).catch(err => console.debug('PG question update:', err));
+        upsertPostgresQuestion(updated).catch((err: unknown) => console.debug('PG question update:', err));
       },
 
       setPublicationStatus: (id, status, adminEmail) => {
@@ -153,7 +153,7 @@ export const useQuestionsStore = create<QuestionsStoreState>()(
           auditLogs: [auditLog, ...state.auditLogs],
         }));
 
-        upsertPostgresQuestion(updated).catch(err => console.debug('PG question status:', err));
+        upsertPostgresQuestion(updated).catch((err: unknown) => console.debug('PG question status:', err));
       },
 
       getQuestionById: (id) => {

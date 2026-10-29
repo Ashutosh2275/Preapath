@@ -68,7 +68,8 @@ export const LoginPage: React.FC = () => {
       if (isFirebaseConfigured() && auth) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const fbUser = userCredential.user;
-        setUser({
+        const profile = await getPostgresProfile(fbUser.uid);
+        setUser(profile || {
           uid: fbUser.uid,
           email: fbUser.email || email,
           displayName: fbUser.displayName || email.split('@')[0],
@@ -78,7 +79,7 @@ export const LoginPage: React.FC = () => {
           dailyAvailableMinutes: 90,
           proficiency: 'INTERMEDIATE',
           weakTopics: [],
-          role: email.includes('admin') ? 'admin' : 'student',
+          role: 'student',
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
@@ -86,23 +87,10 @@ export const LoginPage: React.FC = () => {
         return;
       }
 
-      // 3. Authenticate with real local persistent user account
-      const cleanEmail = email.trim().toLowerCase();
-      setUser({
-        uid: `usr_${Date.now()}`,
-        email: cleanEmail,
-        displayName: cleanEmail.split('@')[0],
-        targetTrack: 'NINJA',
-        preferredLanguage: 'python',
-        availablePreparationDays: 21,
-        dailyAvailableMinutes: 90,
-        proficiency: 'INTERMEDIATE',
-        weakTopics: [],
-        role: cleanEmail.includes('admin') ? 'admin' : 'student',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-      navigate(from, { replace: true });
+      // 3. Honest configuration error if no real auth provider is configured
+      setError(
+        'Authentication provider is not configured. Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (or Firebase) in your .env environment file to sign in.'
+      );
     } catch (err: any) {
       setError(err.message || 'Invalid email or password. Please verify your credentials.');
     } finally {

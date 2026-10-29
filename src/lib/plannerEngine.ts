@@ -343,7 +343,7 @@ export function generateStudyPlan(input: PlannerInput): StudyPlan {
   const endDateStr = endDateObj.toISOString().split('T')[0];
 
   return {
-    id: `plan-${input.userId}-${Date.now()}`,
+    id: `plan-${input.userId}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
     userId: input.userId,
     targetTrack: input.targetTrack,
     startDate: startDateStr,
@@ -351,9 +351,51 @@ export function generateStudyPlan(input: PlannerInput): StudyPlan {
     dailyAvailableMinutes: dailyMins,
     days: generatedDays,
     status: 'ACTIVE',
+    version: 1,
+    generationSeed: planSeed,
+    inputSnapshot: {
+      targetTrack: input.targetTrack,
+      availablePreparationDays: daysCount,
+      dailyAvailableMinutes: dailyMins,
+      proficiency: input.proficiency,
+      weakTopics: input.weakTopics,
+      examDate: input.examDate,
+    },
+    activatedAt: new Date().toISOString(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
+}
+
+/**
+ * Checks if a study plan is currently active and locked against silent modifications
+ */
+export function isPlanActive(plan: StudyPlan | null | undefined): boolean {
+  return Boolean(plan && plan.status === 'ACTIVE');
+}
+
+/**
+ * Safely creates a new plan while archiving the previous active plan
+ */
+export function createNewPlanWithArchival(
+  input: PlannerInput,
+  currentPlan?: StudyPlan | null
+): { newPlan: StudyPlan; archivedPlan: StudyPlan | null } {
+  let archivedPlan: StudyPlan | null = null;
+  if (currentPlan && currentPlan.status === 'ACTIVE') {
+    archivedPlan = {
+      ...currentPlan,
+      status: 'ARCHIVED',
+      archivedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  const newPlan = generateStudyPlan(input);
+  if (currentPlan) {
+    newPlan.version = (currentPlan.version || 1) + 1;
+  }
+  return { newPlan, archivedPlan };
 }
 
 function formatSectionTitle(sec: SectionType): string {

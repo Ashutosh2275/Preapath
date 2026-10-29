@@ -23,15 +23,15 @@ export const OnboardingPage: React.FC = () => {
 
   const initialTrackFromState = (location.state as any)?.track;
   const [step, setStep] = useState(1);
-  const [targetTrack, setTargetTrack] = useState<TargetTrack>(initialTrackFromState || user?.targetTrack || 'DIGITAL');
-  const [availableDays, setAvailableDays] = useState<number>(user?.availablePreparationDays || 21);
-  const [dailyMinutes, setDailyMinutes] = useState<number>(user?.dailyAvailableMinutes || 90);
+  const [targetTrack, setTargetTrack] = useState<TargetTrack>(initialTrackFromState || user?.targetTrack || 'NINJA');
+  const [availableDays, setAvailableDays] = useState<number>(user?.availablePreparationDays || 14);
+  const [dailyMinutes, setDailyMinutes] = useState<number>(user?.dailyAvailableMinutes || 60);
   const [startDate, setStartDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [reminderTime, setReminderTime] = useState<string>('19:00');
   const [examDate, setExamDate] = useState<string>(user?.examDate || '');
   const [preferredLanguage, setPreferredLanguage] = useState<ProgrammingLanguage>(user?.preferredLanguage || 'python');
-  const [proficiency, setProficiency] = useState<ProficiencyLevel>(user?.proficiency || 'INTERMEDIATE');
-  const [selectedWeakTopics, setSelectedWeakTopics] = useState<string[]>(user?.weakTopics || ['Dynamic Programming']);
+  const [proficiency, setProficiency] = useState<ProficiencyLevel>(user?.proficiency || 'BEGINNER');
+  const [selectedWeakTopics, setSelectedWeakTopics] = useState<string[]>(user?.weakTopics || []);
 
   const topicsList = [
     'Numerical Ability (Time-Work, Percentages)',

@@ -141,7 +141,8 @@ export type ExecutionVerdict =
   | 'Runtime Error' 
   | 'Time Limit Exceeded' 
   | 'Memory Limit Exceeded' 
-  | 'Internal Execution Error';
+  | 'Internal Execution Error'
+  | 'Execution Service Unavailable';
 
 export interface TestCaseResult {
   caseIndex: number;
@@ -165,6 +166,9 @@ export interface Submission {
   memoryUsedKb: number;
   submittedAt: string;
   publicCaseResults?: TestCaseResult[];
+  submissionToken?: string;
+  executionStatus?: 'QUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+  errorDetails?: string;
 }
 
 export interface ProblemProgress {
@@ -204,6 +208,10 @@ export interface StudyPlanTask {
   budgetReason?: string;
   completed: boolean;
   completedAt?: string;
+  isRescheduled?: boolean;
+  originalDayNumber?: number;
+  rescheduledToDay?: number;
+  rescheduledAt?: string;
 }
 
 export interface SpacedReviewItem {
@@ -260,6 +268,8 @@ export interface InAppNotification {
   sentViaPush: boolean;
 }
 
+export type StudyPlanStatus = 'DRAFT' | 'ACTIVE' | 'PAUSED' | 'COMPLETED' | 'ARCHIVED';
+
 export interface StudyPlanDay {
   dayNumber: number;
   date: string;
@@ -278,9 +288,40 @@ export interface StudyPlan {
   endDate: string;
   dailyAvailableMinutes: number;
   days: StudyPlanDay[];
-  status: 'ACTIVE' | 'COMPLETED' | 'PAUSED';
+  status: StudyPlanStatus;
+  version?: number;
+  generationSeed?: string;
+  inputSnapshot?: Record<string, any>;
+  activatedAt?: string;
+  archivedAt?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ExamProfile {
+  id: string;
+  track: TargetTrack;
+  title: string;
+  version: number;
+  sections: {
+    section: string;
+    questionsCount: number;
+    durationMinutes: number;
+  }[];
+  totalDurationMinutes: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface HiddenTestCase {
+  id: string;
+  questionId: string;
+  input: string;
+  expectedOutput: string;
+  timeLimitMs?: number;
+  memoryLimitKb?: number;
+  isSecret?: boolean;
 }
 
 export interface AssessmentSection {

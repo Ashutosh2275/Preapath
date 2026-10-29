@@ -4,15 +4,11 @@ import {
   Sparkles, 
   Calendar, 
   Code2, 
-  Award, 
   CheckCircle2, 
-  Clock, 
   ArrowRight, 
   Bookmark, 
-  AlertCircle,
   TrendingUp,
-  RotateCcw,
-  Zap
+  RotateCcw
 } from 'lucide-react';
 import { useUserStore } from '../../stores/useUserStore';
 import { useQuestionsStore } from '../../stores/useQuestionsStore';
@@ -58,13 +54,13 @@ export const DashboardPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               Hello, {user?.displayName || 'Student'}
             </h1>
             {user?.targetTrack && <TrackBadge track={user.targetTrack} />}
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            {user?.availablePreparationDays} Days Preparation Journey • {user?.dailyAvailableMinutes} minutes/day target
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            {user?.availablePreparationDays || 14} Days Preparation Journey • {user?.dailyAvailableMinutes || 60} minutes/day target
           </p>
         </div>
 
@@ -84,12 +80,12 @@ export const DashboardPage: React.FC = () => {
 
       {/* Metrics Row (Genuine Data Only - No Fabricated Numbers) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 space-y-1">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 space-y-1 shadow-xs">
+          <span className="text-xs font-semibold text-slate-500 flex items-center justify-between">
             Unique Solved
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
           </span>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+          <div className="text-2xl font-bold text-slate-900">
             {solvedCount}
           </div>
           <p className="text-[11px] text-slate-400">
@@ -97,12 +93,12 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 space-y-1">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 space-y-1 shadow-xs">
+          <span className="text-xs font-semibold text-slate-500 flex items-center justify-between">
             Plan Progress
             <TrendingUp className="w-4 h-4 text-indigo-500" />
           </span>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+          <div className="text-2xl font-bold text-slate-900">
             {planCompletionPct}%
           </div>
           <p className="text-[11px] text-slate-400">
@@ -110,12 +106,12 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 space-y-1">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 space-y-1 shadow-xs">
+          <span className="text-xs font-semibold text-slate-500 flex items-center justify-between">
             Judged Submissions
             <Code2 className="w-4 h-4 text-primary" />
           </span>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+          <div className="text-2xl font-bold text-slate-900">
             {totalSubmissionsCount}
           </div>
           <p className="text-[11px] text-slate-400">
@@ -123,12 +119,12 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 space-y-1">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 space-y-1 shadow-xs">
+          <span className="text-xs font-semibold text-slate-500 flex items-center justify-between">
             Needs Revision
             <Bookmark className="w-4 h-4 text-amber-500" />
           </span>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+          <div className="text-2xl font-bold text-slate-900">
             {revisionCount}
           </div>
           <p className="text-[11px] text-slate-400">
@@ -138,124 +134,115 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left 2 Cols: Today's Tasks & Recommended Problems */}
+        {/* Left Column: Today's Tasks */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Question 1: What should I study today? */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
-                <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
-                  Question 1: What should I study today?
+                <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">
+                  Today's Session
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mt-0.5">
+                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2 mt-0.5">
                   <Calendar className="w-5 h-5 text-primary" />
-                  Day {todayPlanDay?.dayNumber || 1} Schedule: {todayPlanDay?.topic || 'Foundational Study'}
+                  Day {todayPlanDay?.dayNumber || 1} — {todayPlanDay?.topic || 'Foundation Practice'}
                 </h3>
               </div>
-              <span className="text-xs font-medium text-slate-500 flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5" />
-                {todayPlanDay?.totalPlannedMinutes || user?.dailyAvailableMinutes || 90} mins
-              </span>
-            </div>
-
-            {todayPlanDay?.tasks && todayPlanDay.tasks.length > 0 ? (
-              <div className="space-y-2.5">
-                {todayPlanDay.tasks.map((task) => (
-                  <div
-                    key={task.id}
-                    className={`flex items-start justify-between p-3.5 rounded-xl border transition-colors ${
-                      task.completed
-                        ? 'border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-950/20'
-                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <button
-                        onClick={() => toggleTaskCompletion(todayPlanDay.dayNumber, task.id)}
-                        className={`mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
-                          task.completed
-                            ? 'bg-emerald-500 border-emerald-500 text-white'
-                            : 'border-slate-300 dark:border-slate-700 hover:border-emerald-500'
-                        }`}
-                        aria-label="Toggle task status"
-                      >
-                        {task.completed && <CheckCircle2 className="w-3.5 h-3.5" />}
-                      </button>
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className={`text-xs font-semibold ${task.completed ? 'line-through text-slate-400' : 'text-slate-800 dark:text-slate-200'}`}>
-                            {task.title}
-                          </span>
-                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 font-mono">
-                            {task.estimatedMinutes}m
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">
-                          {task.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {task.problemId && (
-                      <Link to={`/problems/${task.problemId}`}>
-                        <Button variant="outline" size="sm" className="text-xs shrink-0 ml-2">
-                          Solve
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="p-6 text-center text-xs text-slate-500 border border-dashed rounded-xl">
-                No active tasks scheduled for today. You can regenerate your study plan from the Study Plan page.
-              </div>
-            )}
-          </div>
-
-          {/* Question 2: Which problems should I solve first? */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">
-                  Question 2: Which problems should I solve first?
-                </span>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-0.5">
-                  Recommended for {user?.targetTrack || 'All'} Track
-                </h3>
-              </div>
-              <Link to="/problems" className="text-xs font-semibold text-primary hover:text-primary-hover flex items-center gap-1">
-                View All Problems
-                <ArrowRight className="w-3.5 h-3.5" />
+              <Link to="/study-plan" className="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                Full Schedule <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
+            {/* Task list for today */}
             <div className="space-y-3">
-              {recommendedProblems.map((q) => (
+              {todayPlanDay?.tasks.map((task) => (
                 <div
-                  key={q.id}
-                  className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
+                  key={task.id}
+                  className={`p-3.5 rounded-xl border transition-all flex items-start justify-between gap-3 ${
+                    task.completed
+                      ? 'border-emerald-200 bg-emerald-50/30'
+                      : 'border-slate-200 hover:border-slate-300 bg-white'
+                  }`}
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <Link
-                        to={`/problems/${q.id}`}
-                        className="text-sm font-semibold text-slate-900 dark:text-white hover:text-primary transition-colors"
-                      >
-                        {q.title}
-                      </Link>
-                      <DifficultyBadge difficulty={q.difficulty} />
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                      <span>{q.topics.join(', ')}</span>
-                      <span>•</span>
-                      <span>~{q.estimatedMinutes} mins</span>
+                  <div className="flex items-start gap-3">
+                    <button
+                      onClick={() => todayPlanDay && toggleTaskCompletion(todayPlanDay.dayNumber, task.id)}
+                      className={`mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
+                        task.completed
+                          ? 'bg-emerald-500 border-emerald-500 text-white'
+                          : 'border-slate-300 hover:border-emerald-500 bg-white'
+                      }`}
+                    >
+                      {task.completed && <CheckCircle2 className="w-3.5 h-3.5" />}
+                    </button>
+                    <div className="space-y-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-xs font-semibold ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+                          {task.title}
+                        </span>
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-500 font-mono">
+                          {task.estimatedMinutes}m
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500">
+                        {task.description}
+                      </p>
                     </div>
                   </div>
 
-                  <Link to={`/problems/${q.id}`}>
-                    <Button variant="primary" size="sm">
-                      Start Code
+                  {task.problemId && (
+                    <Link to={`/problems/${task.problemId}`}>
+                      <Button variant="ghost" size="sm" className="text-xs shrink-0">
+                        Solve
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recommended Practice Problems */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div>
+                <span className="text-[10px] font-bold text-teal-600 uppercase tracking-wider">
+                  Target Tier Recommendation
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 mt-0.5">
+                  High-Priority Practice Problems
+                </h3>
+              </div>
+              <Link to="/problems" className="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                View All <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="divide-y divide-slate-100">
+              {recommendedProblems.map((prob) => (
+                <div
+                  key={prob.id}
+                  className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors bg-white my-1"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <DifficultyBadge difficulty={prob.difficulty} />
+                      <Link
+                        to={`/problems/${prob.id}`}
+                        className="text-sm font-semibold text-slate-900 hover:text-primary transition-colors"
+                      >
+                        {prob.catalogNumber ? `#${prob.catalogNumber} ` : ''}{prob.title}
+                      </Link>
+                    </div>
+                    <div className="text-[11px] text-slate-400 flex items-center gap-2">
+                      <span>{prob.sections.join(', ')}</span>
+                      <span>•</span>
+                      <span>{prob.estimatedMinutes} mins</span>
+                    </div>
+                  </div>
+
+                  <Link to={`/problems/${prob.id}`}>
+                    <Button variant="outline" size="sm" className="text-xs">
+                      Practice
                     </Button>
                   </Link>
                 </div>
@@ -264,89 +251,83 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Col: Question 4 & 5 (History, Weak Areas) */}
+        {/* Right Column: Recent Activity & Quick Tools */}
         <div className="space-y-6">
-          {/* Question 4: What did I do last time? */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
+          {/* Submissions Feed */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
             <div>
-              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
-                Question 4: What did I do last time?
+              <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">
+                Submission History
               </span>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white mt-0.5">
+              <h3 className="text-base font-bold text-slate-900 mt-0.5">
                 Recent Judged Submissions
               </h3>
             </div>
 
-            {recentSubmissions.length > 0 ? (
-              <div className="space-y-2.5">
-                {recentSubmissions.map((sub) => {
+            <div className="space-y-2">
+              {recentSubmissions.length > 0 ? (
+                recentSubmissions.map((sub) => {
                   const prob = questions.find(q => q.id === sub.problemId);
                   return (
                     <div
                       key={sub.id}
-                      className="p-3 rounded-lg border border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-950/40 text-xs space-y-1.5"
+                      className="p-3 rounded-lg border border-slate-100 bg-slate-50/50 text-xs space-y-1.5"
                     >
                       <div className="flex items-center justify-between">
                         <Link
                           to={`/problems/${sub.problemId}`}
-                          className="font-semibold text-slate-900 dark:text-white hover:text-primary truncate max-w-[140px]"
+                          className="font-semibold text-slate-900 hover:text-primary truncate max-w-[140px]"
                         >
                           {prob?.title || sub.problemId}
                         </Link>
                         <VerdictBadge verdict={sub.verdict} />
                       </div>
-                      <div className="flex items-center justify-between text-slate-500 text-[11px]">
-                        <span className="font-mono uppercase">{sub.language}</span>
-                        <span>{new Date(sub.submittedAt).toLocaleDateString()}</span>
+                      <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                        <span className="capitalize">{sub.language}</span>
+                        <span>{sub.passedTests}/{sub.totalTests} passed</span>
+                        <span>{new Date(sub.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
                     </div>
                   );
-                })}
-              </div>
-            ) : (
-              <div className="p-4 text-center text-xs text-slate-500 border border-dashed rounded-xl space-y-1">
-                <RotateCcw className="w-5 h-5 mx-auto text-slate-400" />
-                <p>No judged submissions yet.</p>
-                <p className="text-[10px] text-slate-400">
-                  Open any problem and submit code to see real judgment history.
-                </p>
-              </div>
-            )}
+                })
+              ) : (
+                <div className="p-6 text-center text-xs text-slate-400 border border-dashed rounded-xl">
+                  No submissions yet. Practice a problem to generate your judged performance record!
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Weak Topics Card */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Zap className="w-4 h-4 text-amber-500" />
-              Focus Areas & Weak Topics
+          {/* Quick Revision Reminder */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <RotateCcw className="w-4 h-4 text-amber-500" />
+              Flagged For Revision
             </h3>
-
-            {user?.weakTopics && user.weakTopics.length > 0 ? (
-              <div className="space-y-2">
-                {user.weakTopics.map((topic) => (
-                  <div
-                    key={topic}
-                    className="p-2.5 rounded-lg bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-900 dark:text-amber-200 font-medium flex items-center justify-between"
+            <p className="text-xs text-slate-500">
+              Problems marked for revision are scheduled in Stage D of your daily plan.
+            </p>
+            <div className="space-y-2">
+              {progressEntries.filter(p => p.needsRevision).slice(0, 3).map((item) => {
+                const p = questions.find(q => q.id === item.problemId);
+                return (
+                  <Link
+                    key={item.problemId}
+                    to={`/problems/${item.problemId}`}
+                    className="p-2.5 rounded-lg bg-amber-50/50 border border-amber-200 text-xs text-amber-900 font-medium flex items-center justify-between hover:bg-amber-50 transition-colors"
                   >
-                    <span>{topic}</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 text-amber-700 font-mono">
-                      High Priority
+                    <span className="truncate max-w-[180px]">{p?.title || item.problemId}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-white text-amber-700 font-mono border border-amber-200">
+                      Revisit
                     </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-slate-500">
-                No specific weak topics tagged. Update your profile settings to prioritize targeted modules.
-              </p>
-            )}
-
-            <div className="pt-2">
-              <Link to="/assessments">
-                <Button variant="outline" size="sm" className="w-full text-xs" leftIcon={<Award className="w-3.5 h-3.5" />}>
-                  Take a Diagnostic Mock Test
-                </Button>
-              </Link>
+                  </Link>
+                );
+              })}
+              {progressEntries.filter(p => p.needsRevision).length === 0 && (
+                <div className="text-center text-xs text-slate-400 py-4">
+                  No questions currently flagged for revision.
+                </div>
+              )}
             </div>
           </div>
         </div>

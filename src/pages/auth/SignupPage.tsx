@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { auth, isFirebaseConfigured } from '../../lib/firebase';
+import { supabase, isPostgresConfigured } from '../../lib/supabase';
 import { useUserStore } from '../../stores/useUserStore';
 import { Button } from '../../components/common/Button';
 import { TargetTrack } from '../../types';
@@ -55,8 +56,46 @@ export const SignupPage: React.FC = () => {
 
     setIsLoading(true);
 
-    if (isFirebaseConfigured() && auth) {
-      try {
+    try {
+      // 1. Preferred Production Path: Supabase Auth (UUID matches PostgreSQL auth.uid())
+      if (isPostgresConfigured() && supabase) {
+        const { data, error: supaError } = await supabase.auth.signUp({
+          email: cleanEmail,
+          password,
+          options: {
+            data: {
+              displayName: cleanName,
+              targetTrack: selectedTrack,
+            },
+          },
+        });
+
+        if (supaError) {
+          throw supaError;
+        }
+
+        if (data.user) {
+          setUser({
+            uid: data.user.id,
+            email: data.user.email || cleanEmail,
+            displayName: cleanName,
+            targetTrack: selectedTrack,
+            preferredLanguage: 'python',
+            availablePreparationDays: 14,
+            dailyAvailableMinutes: 90,
+            proficiency: 'BEGINNER',
+            weakTopics: [],
+            role: 'student', // Roles are never client-assigned
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+          navigate('/onboarding', { state: { track: selectedTrack } });
+          return;
+        }
+      }
+
+      // 2. Alternative Auth: Firebase Auth
+      if (isFirebaseConfigured() && auth) {
         const userCredential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
         const fbUser = userCredential.user;
         setUser({
@@ -69,36 +108,22 @@ export const SignupPage: React.FC = () => {
           dailyAvailableMinutes: 90,
           proficiency: 'BEGINNER',
           weakTopics: [],
-          role: 'student',
+          role: 'student', // Roles are never client-assigned
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
         navigate('/onboarding', { state: { track: selectedTrack } });
-      } catch (err: any) {
-        setError(err.message || 'Registration failed. Please try another email address.');
-      } finally {
-        setIsLoading(false);
+        return;
       }
-    } else {
-      // Authoritative persistent account initialization
-      setTimeout(() => {
-        setUser({
-          uid: `user-${Date.now()}`,
-          email: cleanEmail,
-          displayName: cleanName,
-          targetTrack: selectedTrack,
-          preferredLanguage: 'python',
-          availablePreparationDays: 14,
-          dailyAvailableMinutes: 90,
-          proficiency: 'BEGINNER',
-          weakTopics: [],
-          role: cleanEmail.includes('admin') ? 'admin' : 'student',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        setIsLoading(false);
-        navigate('/onboarding', { state: { track: selectedTrack } });
-      }, 400);
+
+      // 3. Neither provider configured: Honest configuration error instead of fake user
+      setError(
+        'Authentication provider is not configured. Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (or Firebase) in your .env environment file to register genuine persistent accounts.'
+      );
+    } catch (err: any) {
+      setError(err.message || 'Registration failed. Please check your network connection.');
+    } finally {
+      setIsLoading(false);
     }
   };
 

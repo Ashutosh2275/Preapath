@@ -1,5 +1,6 @@
 import { ProgrammingLanguage, ExecutionVerdict, TestCase, Submission, TestCaseResult } from '../types';
 import { STARTER_QUESTIONS } from '../data/starterQuestions';
+import { recordPostgresSubmission } from './db';
 
 export interface RunResult {
   caseId: string;
@@ -9,13 +10,48 @@ export interface RunResult {
   actualOutput: string;
   stderr?: string;
   compileOutput?: string;
-  verdict: string;
+  verdict: ExecutionVerdict | string;
   isPassed: boolean;
   timeMs: number;
   memoryKb: number;
 }
 
-export function normalizeOutput(output: string): string {
+export interface Judge0SubmissionPayload {
+  source_code: string;
+  language_id: number;
+  stdin: string;
+  expected_output?: string;
+  cpu_time_limit?: number; // seconds
+  memory_limit?: number;   // KB
+}
+
+export interface Judge0Response {
+  stdout: string | null;
+  stderr: string | null;
+  compile_output: string | null;
+  time: string | null;
+  memory: number | null;
+  token?: string;
+  status: {
+    id: number;
+    description: string;
+  };
+}
+
+// Supported Judge0 Language ID Mapping (GCC / OpenJDK / Python3)
+export const JUDGE0_LANGUAGE_IDS: Record<ProgrammingLanguage, number> = {
+  c: 50,      // C (GCC 9.2.0)
+  cpp: 54,    // C++ (GCC 9.2.0)
+  java: 62,   // Java (OpenJDK 13/17)
+  python: 71, // Python (3.8.1)
+};
+
+export const MAX_SOURCE_CODE_BYTES = 64 * 1024; // 64 KB limit
+export const MAX_INPUT_BYTES = 256 * 1024;      // 256 KB limit
+export const DEFAULT_CPU_TIME_LIMIT_SEC = 2.0;
+export const DEFAULT_MEMORY_LIMIT_KB = 128000;
+
+export function normalizeOutput(output: string | null | undefined): string {
   if (!output) return '';
   return output
     .replace(/\r\n/g, '\n')
@@ -26,194 +62,244 @@ export function normalizeOutput(output: string): string {
 }
 
 /**
- * Sandboxed code execution simulator
- * Used in local/demo environment or when external Judge0 credentials are unconfigured.
- * Executes JavaScript/Python/C-like logic deterministically against known questions,
- * or simulates compile/runtime/logic checks.
+ * Check if the real Judge0 execution service is configured.
  */
-function localSimulateExecution(
-  problemId: string,
-  language: ProgrammingLanguage,
+export function isExecutionServiceConfigured(): boolean {
+  const url = import.meta.env.VITE_JUDGE0_API_URL;
+  return Boolean(
+    url &&
+    url.startsWith('http') &&
+    !url.includes('placeholder')
+  );
+}
+
+/**
+ * Custom fetcher / transport hook for testing and alternative sandboxes
+ */
+type ExecutionTransport = (
+  payload: Judge0SubmissionPayload
+) => Promise<Judge0Response>;
+
+let customTransport: ExecutionTransport | null = null;
+
+export function setCustomExecutionTransport(transport: ExecutionTransport | null) {
+  customTransport = transport;
+}
+
+/**
+ * Map Judge0 status ID to application ExecutionVerdict
+ */
+export function mapJudge0StatusToVerdict(statusId: number): ExecutionVerdict {
+  switch (statusId) {
+    case 3:
+      return 'Accepted';
+    case 4:
+      return 'Wrong Answer';
+    case 5:
+      return 'Time Limit Exceeded';
+    case 6:
+      return 'Compilation Error';
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+      return 'Runtime Error';
+    default:
+      return 'Internal Execution Error';
+  }
+}
+
+/**
+ * Execute code via real Judge0 service API
+ */
+export async function executeJudge0Case(
   sourceCode: string,
-  input: string
-): {
+  language: ProgrammingLanguage,
+  input: string,
+  expectedOutput?: string
+): Promise<{
   stdout: string;
   stderr: string;
   compileOutput: string;
   verdict: ExecutionVerdict;
   timeMs: number;
   memoryKb: number;
-} {
-  // Basic Syntax checking simulation
-  if (language === 'python' && sourceCode.includes('def ') && !sourceCode.includes(':')) {
-    return {
-      stdout: '',
-      stderr: 'SyntaxError: expected \':\'',
-      compileOutput: '',
-      verdict: 'Compilation Error',
-      timeMs: 10,
-      memoryKb: 3400,
-    };
-  }
-  if ((language === 'c' || language === 'cpp' || language === 'java') && !sourceCode.includes('main')) {
-    return {
-      stdout: '',
-      stderr: 'undefined reference to `main`',
-      compileOutput: 'error: undefined reference to `main`',
-      verdict: 'Compilation Error',
-      timeMs: 15,
-      memoryKb: 2100,
-    };
+  isPassed: boolean;
+  token?: string;
+}> {
+  // Validate language
+  const languageId = JUDGE0_LANGUAGE_IDS[language];
+  if (!languageId) {
+    throw new Error(`Unsupported programming language: ${language}. Supported languages are C, C++, Java, and Python 3.`);
   }
 
-  // Check if source code has infinite loop indicator
-  if (sourceCode.includes('while (true)') && !sourceCode.includes('break')) {
-    return {
-      stdout: '',
-      stderr: 'Process terminated after 2000ms',
-      compileOutput: '',
-      verdict: 'Time Limit Exceeded',
-      timeMs: 2000,
-      memoryKb: 15000,
-    };
+  // Validate limits
+  if (new Blob([sourceCode]).size > MAX_SOURCE_CODE_BYTES) {
+    throw new Error(`Source code exceeds maximum size limit of ${MAX_SOURCE_CODE_BYTES / 1024} KB.`);
+  }
+  if (new Blob([input]).size > MAX_INPUT_BYTES) {
+    throw new Error(`Input payload exceeds maximum size limit of ${MAX_INPUT_BYTES / 1024} KB.`);
   }
 
-  // Check if user submitted code that explicitly prints a literal output
-  const literalPrintMatch = sourceCode.match(/print\s*\(\s*["']?([^"'\)]+)["']?\s*\)/);
-  if (literalPrintMatch && !sourceCode.includes('for ') && !sourceCode.includes('while ') && !sourceCode.includes('%')) {
-    return {
-      stdout: literalPrintMatch[1].trim(),
-      stderr: '',
-      compileOutput: '',
-      verdict: 'Accepted',
-      timeMs: 15,
-      memoryKb: 3400,
-    };
-  }
+  // If a custom transport is provided (e.g. in test suites or local proxy), use it
+  if (customTransport) {
+    const res = await customTransport({
+      source_code: sourceCode,
+      language_id: languageId,
+      stdin: input,
+      expected_output: expectedOutput,
+      cpu_time_limit: DEFAULT_CPU_TIME_LIMIT_SEC,
+      memory_limit: DEFAULT_MEMORY_LIMIT_KB,
+    });
 
-  // Verify solution plausibility: code must contain logic relevant to the problem
-  const hasLogic = 
-    (problemId === 'tcs-cp-001' && (sourceCode.includes('%') || sourceCode.includes('3') || sourceCode.includes('5'))) ||
-    (problemId === 'tcs-cp-002' && (sourceCode.includes('count') || sourceCode.includes('+') || sourceCode.includes('len'))) ||
-    (problemId === 'tcs-cp-003' && (sourceCode.includes('sum') || sourceCode.includes('map') || sourceCode.includes('k'))) ||
-    (problemId === 'tcs-cp-004' && (sourceCode.includes('top') || sourceCode.includes('bottom') || sourceCode.includes('left'))) ||
-    (problemId === 'tcs-cp-005' && (sourceCode.includes('%') || sourceCode.includes('d') || sourceCode.includes('count'))) ||
-    (problemId === 'tcs-cp-006' && (sourceCode.includes('dp') || sourceCode.includes('min') || sourceCode.includes('amount')));
-
-  if (!hasLogic) {
-    return {
-      stdout: '0',
-      stderr: '',
-      compileOutput: '',
-      verdict: 'Accepted',
-      timeMs: 20,
-      memoryKb: 3200,
-    };
-  }
-
-  // Find question to match known reference solutions
-  const q = STARTER_QUESTIONS.find(item => item.id === problemId);
-  const cleanInput = input.trim();
-
-  // Check public test cases
-  if (q) {
-    const publicMatch = q.publicTestCases.find(tc => tc.input.trim() === cleanInput);
-    if (publicMatch) {
-      return {
-        stdout: publicMatch.expectedOutput,
-        stderr: '',
-        compileOutput: '',
-        verdict: 'Accepted',
-        timeMs: Math.floor(Math.random() * 30) + 15,
-        memoryKb: Math.floor(Math.random() * 1200) + 4800,
-      };
-    }
-
-    const hiddenMatch = q.hiddenTestCases?.find(tc => tc.input.trim() === cleanInput);
-    if (hiddenMatch) {
-      return {
-        stdout: hiddenMatch.expectedOutput,
-        stderr: '',
-        compileOutput: '',
-        verdict: 'Accepted',
-        timeMs: Math.floor(Math.random() * 30) + 15,
-        memoryKb: Math.floor(Math.random() * 1200) + 4800,
-      };
-    }
-  }
-
-  // Fallback for custom user inputs: evaluate question math where applicable
-  if (problemId === 'tcs-cp-001') {
-    const n = parseInt(cleanInput, 10);
-    if (!isNaN(n)) {
-      let sum = 0;
-      for (let i = 1; i < n; i++) {
-        if (i % 3 === 0 || i % 5 === 0) sum += i;
-      }
-      return {
-        stdout: sum.toString(),
-        stderr: '',
-        compileOutput: '',
-        verdict: 'Accepted',
-        timeMs: 22,
-        memoryKb: 5200,
-      };
-    }
-  } else if (problemId === 'tcs-cp-002') {
-    let result = '';
-    let count = 1;
-    for (let i = 0; i < cleanInput.length; i++) {
-      if (i + 1 < cleanInput.length && cleanInput[i] === cleanInput[i + 1]) {
-        count++;
+    const stdout = res.stdout || '';
+    const stderr = res.stderr || '';
+    const compileOutput = res.compile_output || '';
+    const timeMs = Math.round(parseFloat(res.time || '0') * 1000);
+    const memoryKb = res.memory || 0;
+    const verdict = mapJudge0StatusToVerdict(res.status?.id || 3);
+    
+    let isPassed = false;
+    if (verdict === 'Accepted') {
+      if (expectedOutput !== undefined) {
+        isPassed = normalizeOutput(stdout) === normalizeOutput(expectedOutput);
       } else {
-        result += cleanInput[i] + count;
-        count = 1;
+        isPassed = true;
       }
     }
+
     return {
-      stdout: result,
-      stderr: '',
-      compileOutput: '',
-      verdict: 'Accepted',
-      timeMs: 18,
-      memoryKb: 5100,
+      stdout,
+      stderr,
+      compileOutput,
+      verdict: isPassed ? 'Accepted' : verdict === 'Accepted' ? 'Wrong Answer' : verdict,
+      timeMs,
+      memoryKb,
+      isPassed,
+      token: res.token,
     };
-  } else if (problemId === 'tcs-cp-005') {
-    let m = parseInt(cleanInput, 10);
-    if (!isNaN(m) && m > 0) {
-      let count = 0;
-      if (m % 2 === 0) {
-        count++;
-        while (m % 2 === 0) m /= 2;
-      }
-      for (let d = 3; d * d <= m; d += 2) {
-        if (m % d === 0) {
-          count++;
-          while (m % d === 0) m /= d;
+  }
+
+  // Check if live Judge0 endpoint is configured
+  if (!isExecutionServiceConfigured()) {
+    return {
+      stdout: '',
+      stderr: 'Compiler execution gateway is unconfigured.',
+      compileOutput: 'Real compiler execution service is not configured. Configure VITE_JUDGE0_API_URL and VITE_JUDGE0_API_KEY in your environment to execute code.',
+      verdict: 'Execution Service Unavailable',
+      timeMs: 0,
+      memoryKb: 0,
+      isPassed: false,
+    };
+  }
+
+  const judge0Url = import.meta.env.VITE_JUDGE0_API_URL;
+  const judge0Key = import.meta.env.VITE_JUDGE0_API_KEY;
+  const judge0Host = import.meta.env.VITE_JUDGE0_HOST || (judge0Url ? new URL(judge0Url).host : '');
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (judge0Key) {
+    headers['X-RapidAPI-Key'] = judge0Key;
+    headers['X-RapidAPI-Host'] = judge0Host;
+  }
+
+  // Step 1: Create submission with wait=false for asynchronous bounded judging
+  const createRes = await fetch(`${judge0Url}/submissions?base64_encoded=false&wait=false`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      source_code: sourceCode,
+      language_id: languageId,
+      stdin: input,
+      expected_output: expectedOutput,
+      cpu_time_limit: DEFAULT_CPU_TIME_LIMIT_SEC,
+      memory_limit: DEFAULT_MEMORY_LIMIT_KB,
+    }),
+  });
+
+  if (!createRes.ok) {
+    const errorText = await createRes.text();
+    throw new Error(`Execution provider rejected request [HTTP ${createRes.status}]: ${errorText}`);
+  }
+
+  const { token } = await createRes.json();
+  if (!token) {
+    throw new Error('Execution provider did not return a valid submission token.');
+  }
+
+  // Step 2: Poll with bounded retries and exponential backoff
+  let attempts = 0;
+  const maxAttempts = 12;
+  let delayMs = 350;
+
+  while (attempts < maxAttempts) {
+    await new Promise(resolve => setTimeout(resolve, delayMs));
+    attempts++;
+
+    const pollRes = await fetch(`${judge0Url}/submissions/${token}?base64_encoded=false`, {
+      method: 'GET',
+      headers,
+    });
+
+    if (!pollRes.ok) {
+      continue;
+    }
+
+    const data: Judge0Response = await pollRes.json();
+    const statusId = data.status?.id || 1;
+
+    // Status 1 = In Queue, 2 = Processing
+    if (statusId > 2) {
+      const stdout = data.stdout || '';
+      const stderr = data.stderr || '';
+      const compileOutput = data.compile_output || '';
+      const timeMs = Math.round(parseFloat(data.time || '0') * 1000);
+      const memoryKb = data.memory || 0;
+      const rawVerdict = mapJudge0StatusToVerdict(statusId);
+
+      let isPassed = false;
+      if (rawVerdict === 'Accepted') {
+        if (expectedOutput !== undefined) {
+          isPassed = normalizeOutput(stdout) === normalizeOutput(expectedOutput);
+        } else {
+          isPassed = true;
         }
       }
-      if (m > 1) count++;
+
       return {
-        stdout: count.toString(),
-        stderr: '',
-        compileOutput: '',
-        verdict: 'Accepted',
-        timeMs: 12,
-        memoryKb: 4900,
+        stdout,
+        stderr,
+        compileOutput,
+        verdict: isPassed ? 'Accepted' : rawVerdict === 'Accepted' ? 'Wrong Answer' : rawVerdict,
+        timeMs,
+        memoryKb,
+        isPassed,
+        token,
       };
     }
+
+    delayMs = Math.min(delayMs * 1.3, 1500);
   }
 
   return {
-    stdout: cleanInput,
-    stderr: '',
+    stdout: '',
+    stderr: 'Execution timed out while waiting in judge queue.',
     compileOutput: '',
-    verdict: 'Accepted',
-    timeMs: 25,
-    memoryKb: 5500,
+    verdict: 'Time Limit Exceeded',
+    timeMs: Math.round(DEFAULT_CPU_TIME_LIMIT_SEC * 1000),
+    memoryKb: 0,
+    isPassed: false,
+    token,
   };
 }
 
+/**
+ * Run code against provided test cases without submitting
+ */
 export async function runCodeGateway(
   problemId: string,
   language: ProgrammingLanguage,
@@ -223,38 +309,46 @@ export async function runCodeGateway(
   const results: RunResult[] = [];
 
   for (const tc of testCases) {
-    const exec = localSimulateExecution(problemId, language, sourceCode, tc.input);
-    const actualNorm = normalizeOutput(exec.stdout);
-    const expectedNorm = tc.expectedOutput ? normalizeOutput(tc.expectedOutput) : null;
+    try {
+      const exec = await executeJudge0Case(sourceCode, language, tc.input, tc.expectedOutput);
 
-    let verdict = 'Run Completed';
-    let isPassed = false;
-
-    if (exec.verdict === 'Compilation Error' || exec.verdict === 'Time Limit Exceeded') {
-      verdict = exec.verdict;
-    } else if (expectedNorm !== null) {
-      isPassed = actualNorm === expectedNorm;
-      verdict = isPassed ? 'Passed' : 'Wrong Answer';
+      results.push({
+        caseId: tc.id,
+        name: tc.name || 'Test Case',
+        input: tc.input,
+        expectedOutput: tc.expectedOutput,
+        actualOutput: exec.stdout,
+        stderr: exec.stderr,
+        compileOutput: exec.compileOutput,
+        verdict: exec.verdict,
+        isPassed: exec.isPassed,
+        timeMs: exec.timeMs,
+        memoryKb: exec.memoryKb,
+      });
+    } catch (err: any) {
+      results.push({
+        caseId: tc.id,
+        name: tc.name || 'Test Case',
+        input: tc.input,
+        expectedOutput: tc.expectedOutput,
+        actualOutput: '',
+        stderr: err.message || 'Execution error',
+        compileOutput: '',
+        verdict: 'Internal Execution Error',
+        isPassed: false,
+        timeMs: 0,
+        memoryKb: 0,
+      });
     }
-
-    results.push({
-      caseId: tc.id,
-      name: tc.name || 'Test Case',
-      input: tc.input,
-      expectedOutput: tc.expectedOutput,
-      actualOutput: exec.stdout,
-      stderr: exec.stderr,
-      compileOutput: exec.compileOutput,
-      verdict,
-      isPassed,
-      timeMs: exec.timeMs,
-      memoryKb: exec.memoryKb,
-    });
   }
 
   return results;
 }
 
+/**
+ * Officially submit code for judging across public and private test cases.
+ * Returns immutable judged snapshot and never reveals hidden test cases in response.
+ */
 export async function submitCodeGateway(
   userId: string,
   problemId: string,
@@ -269,58 +363,82 @@ export async function submitCodeGateway(
     throw new Error('Problem not found.');
   }
 
-  const allCases = [...question.publicTestCases, ...(question.hiddenTestCases || [])];
+  const publicCases = question.publicTestCases || [];
+  const hiddenCases = question.hiddenTestCases || [];
+  const allCases = [...publicCases, ...hiddenCases];
+
   let passedTests = 0;
   let overallVerdict: ExecutionVerdict = 'Accepted';
   let totalTimeMs = 0;
   let maxMemoryKb = 0;
   const publicCaseResults: TestCaseResult[] = [];
+  let executionToken: string | undefined = undefined;
 
   for (let i = 0; i < allCases.length; i++) {
     const tc = allCases[i];
-    const exec = localSimulateExecution(problemId, language, sourceCode, tc.input);
-    totalTimeMs += exec.timeMs;
-    maxMemoryKb = Math.max(maxMemoryKb, exec.memoryKb);
+    const isPublic = i < publicCases.length;
 
-    if (exec.verdict === 'Compilation Error' || exec.verdict === 'Time Limit Exceeded') {
-      overallVerdict = exec.verdict;
+    try {
+      const exec = await executeJudge0Case(sourceCode, language, tc.input, tc.expectedOutput);
+      if (exec.token) executionToken = exec.token;
+
+      totalTimeMs += exec.timeMs;
+      maxMemoryKb = Math.max(maxMemoryKb, exec.memoryKb);
+
+      if (exec.verdict === 'Execution Service Unavailable') {
+        overallVerdict = 'Execution Service Unavailable';
+        break;
+      }
+
+      if (exec.verdict === 'Compilation Error' || exec.verdict === 'Time Limit Exceeded' || exec.verdict === 'Runtime Error') {
+        overallVerdict = exec.verdict;
+        if (isPublic) {
+          publicCaseResults.push({
+            caseIndex: i + 1,
+            passed: false,
+            input: tc.input,
+            expectedOutput: tc.expectedOutput,
+            actualOutput: exec.stdout || exec.stderr || exec.compileOutput,
+            timeMs: exec.timeMs,
+          });
+        }
+        break;
+      }
+
+      if (exec.isPassed) {
+        passedTests++;
+        if (isPublic) {
+          publicCaseResults.push({
+            caseIndex: i + 1,
+            passed: true,
+            input: tc.input,
+            expectedOutput: tc.expectedOutput,
+            actualOutput: exec.stdout,
+            timeMs: exec.timeMs,
+          });
+        }
+      } else {
+        overallVerdict = 'Wrong Answer';
+        if (isPublic) {
+          publicCaseResults.push({
+            caseIndex: i + 1,
+            passed: false,
+            input: tc.input,
+            expectedOutput: tc.expectedOutput,
+            actualOutput: exec.stdout,
+            timeMs: exec.timeMs,
+          });
+        }
+        break; // Stop at first failing test case
+      }
+    } catch (err: any) {
+      overallVerdict = 'Internal Execution Error';
       break;
-    }
-
-    const actualNorm = normalizeOutput(exec.stdout);
-    const expectedNorm = normalizeOutput(tc.expectedOutput);
-
-    const isMatch = actualNorm === expectedNorm;
-    if (isMatch) {
-      passedTests++;
-      if (!tc.isHidden && i < question.publicTestCases.length) {
-        publicCaseResults.push({
-          caseIndex: i + 1,
-          passed: true,
-          input: tc.input,
-          expectedOutput: tc.expectedOutput,
-          actualOutput: exec.stdout,
-          timeMs: exec.timeMs,
-        });
-      }
-    } else {
-      overallVerdict = 'Wrong Answer';
-      if (!tc.isHidden && i < question.publicTestCases.length) {
-        publicCaseResults.push({
-          caseIndex: i + 1,
-          passed: false,
-          input: tc.input,
-          expectedOutput: tc.expectedOutput,
-          actualOutput: exec.stdout,
-          timeMs: exec.timeMs,
-        });
-      }
-      break; // Stop at first failing test
     }
   }
 
   const submission: Submission = {
-    id: `sub-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    id: `sub_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
     userId,
     problemId,
     language,
@@ -332,10 +450,17 @@ export async function submitCodeGateway(
     memoryUsedKb: maxMemoryKb,
     submittedAt: new Date().toISOString(),
     publicCaseResults,
+    submissionToken: executionToken,
+    executionStatus: 'COMPLETED',
   };
+
+  // Asynchronously record submission to PostgreSQL
+  recordPostgresSubmission(submission).catch(err => {
+    console.debug('PostgreSQL submission recording note:', err);
+  });
 
   return {
     submission,
-    isAccepted: overallVerdict === 'Accepted',
+    isAccepted: overallVerdict === 'Accepted' && passedTests === allCases.length,
   };
 }

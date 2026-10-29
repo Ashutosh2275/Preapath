@@ -15,10 +15,13 @@ import {
   Check,
   Brain,
   Code2,
-  Bookmark
+  Bookmark,
+  Lock,
+  Archive
 } from 'lucide-react';
 import { useUserStore } from '../../stores/useUserStore';
-import { generateStudyPlan } from '../../lib/plannerEngine';
+import { generateStudyPlan, createNewPlanWithArchival } from '../../lib/plannerEngine';
+import { archivePostgresStudyPlan, savePostgresStudyPlan } from '../../lib/db';
 import { getOverdueReviewItems, getDueReviewItems } from '../../lib/spacedRepetition';
 import { Button } from '../../components/common/Button';
 import { TrackBadge } from '../../components/common/Badge';
@@ -35,7 +38,9 @@ export const StudyPlanPage: React.FC = () => {
 
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
+  const [showArchiveNewPlanModal, setShowArchiveNewPlanModal] = useState(false);
   const [targetRescheduleDay, setTargetRescheduleDay] = useState(2);
+  const [isArchiving, setIsArchiving] = useState(false);
 
   const days = studyPlan?.days || [];
   const currentDay = days[selectedDayIndex] || days[0];
@@ -49,20 +54,35 @@ export const StudyPlanPage: React.FC = () => {
   const overdueReviews = getOverdueReviewItems(reviewItemsList);
   const dueReviews = getDueReviewItems(reviewItemsList);
 
-  const handleRegenerate = () => {
+  const handleConfirmArchiveAndCreateNew = async () => {
     if (!user) return;
-    const newPlan = generateStudyPlan({
-      userId: user.uid,
-      targetTrack: user.targetTrack,
-      availablePreparationDays: user.availablePreparationDays,
-      dailyAvailableMinutes: user.dailyAvailableMinutes,
-      proficiency: user.proficiency,
-      weakTopics: user.weakTopics,
-      examDate: user.examDate,
-      existingSpacedReviews: reviewItemsList,
-    });
-    setStudyPlan(newPlan);
-    setSelectedDayIndex(0);
+    setIsArchiving(true);
+
+    try {
+      if (studyPlan) {
+        await archivePostgresStudyPlan(studyPlan.id, user.uid);
+      }
+
+      const { newPlan } = createNewPlanWithArchival({
+        userId: user.uid,
+        targetTrack: user.targetTrack,
+        availablePreparationDays: user.availablePreparationDays,
+        dailyAvailableMinutes: user.dailyAvailableMinutes,
+        proficiency: user.proficiency,
+        weakTopics: user.weakTopics,
+        examDate: user.examDate,
+        existingSpacedReviews: reviewItemsList,
+      }, studyPlan);
+
+      await savePostgresStudyPlan(newPlan);
+      setStudyPlan(newPlan);
+      setSelectedDayIndex(0);
+      setShowArchiveNewPlanModal(false);
+    } catch (err) {
+      console.error('Failed to archive and create new plan:', err);
+    } finally {
+      setIsArchiving(false);
+    }
   };
 
   const handleReschedule = () => {
@@ -124,7 +144,12 @@ export const StudyPlanPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <Lock className="w-3.5 h-3.5" />
+            Active Plan (Immutable)
+          </div>
+
           <Link to="/bookmarks">
             <Button
               variant="outline"
@@ -138,10 +163,10 @@ export const StudyPlanPage: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={handleRegenerate}
-            leftIcon={<RefreshCw className="w-4 h-4" />}
+            onClick={() => setShowArchiveNewPlanModal(true)}
+            leftIcon={<Archive className="w-4 h-4 text-slate-500" />}
           >
-            Regenerate Future Tasks
+            Archive & Start New Plan
           </Button>
         </div>
       </div>
@@ -396,6 +421,56 @@ export const StudyPlanPage: React.FC = () => {
               </Button>
               <Button variant="primary" size="sm" onClick={handleReschedule}>
                 Confirm Reschedule
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Archive & Start New Plan Modal */}
+      {showArchiveNewPlanModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="bg-white rounded-xl border border-slate-200 p-6 max-w-md w-full space-y-4 shadow-xl">
+            <div className="flex items-center gap-3 text-slate-900">
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <Archive className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold">Archive & Start New Plan?</h3>
+                <p className="text-xs text-slate-500">Deliberate study plan transition</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Your existing active study plan will be transitioned to <strong>ARCHIVED</strong> status. All completed tasks, coding submissions, and spaced revision progress will remain permanently stored in your account history.
+            </p>
+
+            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+              <div className="font-semibold text-slate-900">What happens next:</div>
+              <ul className="list-disc pl-4 space-y-0.5 text-[11px] text-slate-600">
+                <li>A brand-new schedule is created using your latest profile goals.</li>
+                <li>The new plan is committed atomically and locked as your new ACTIVE plan.</li>
+                <li>Your submission history and mastered problems remain intact.</li>
+              </ul>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowArchiveNewPlanModal(false)}
+                disabled={isArchiving}
+              >
+                Keep Current Plan
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleConfirmArchiveAndCreateNew}
+                isLoading={isArchiving}
+                leftIcon={<Sparkles className="w-4 h-4" />}
+              >
+                Archive & Create New
               </Button>
             </div>
           </div>

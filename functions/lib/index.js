@@ -64,36 +64,10 @@ async function executeOnJudge0(sourceCode, language, input, timeLimitSec = 2.0, 
         }
         catch (err) {
             console.warn('Judge0 API call failed or timed out:', err.message);
+            throw new https_1.HttpsError('unavailable', `Compiler execution service error: ${err.message}`);
         }
     }
-    return simulateExecution(sourceCode, language, input);
-}
-/**
- * Deterministic execution simulator for testing and offline environments
- */
-function simulateExecution(sourceCode, language, input) {
-    if (language === 'python') {
-        if (sourceCode.includes('def ') && !sourceCode.includes(':')) {
-            return {
-                stdout: '',
-                stderr: "SyntaxError: expected ':'",
-                compileOutput: '',
-                statusId: 6,
-                statusDescription: 'Compilation Error',
-                timeMs: 12,
-                memoryKb: 3400,
-            };
-        }
-    }
-    return {
-        stdout: input.trim(),
-        stderr: '',
-        compileOutput: '',
-        statusId: 3,
-        statusDescription: 'Accepted',
-        timeMs: 45,
-        memoryKb: 7200,
-    };
+    throw new https_1.HttpsError('failed-precondition', 'Real compiler execution service is not configured. Configure JUDGE0_API_URL and JUDGE0_API_KEY.');
 }
 /**
  * Cloud Function: runCode

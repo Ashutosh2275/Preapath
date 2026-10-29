@@ -16,12 +16,21 @@ import {
 } from '../types';
 import { 
   upsertPostgresProfile, 
+  getPostgresProfile,
   savePostgresStudyPlan, 
+  fetchPostgresStudyPlan,
   savePostgresDraft, 
+  fetchPostgresDrafts,
   savePostgresCustomTestCase, 
   deletePostgresCustomTestCase, 
+  fetchPostgresCustomTestCases,
   recordPostgresSubmission, 
-  upsertPostgresProgress 
+  fetchPostgresSubmissions,
+  upsertPostgresProgress,
+  fetchPostgresProgress,
+  fetchPostgresSpacedReviews,
+  fetchPostgresNotificationPreferences,
+  fetchPostgresInAppNotifications
 } from '../lib/db';
 import { calculateNextSpacedReview } from '../lib/spacedRepetition';
 import { ALL_QUESTIONS } from '../data/questions';
@@ -32,6 +41,7 @@ interface UserStoreState {
   isLoadingAuth: boolean;
   setUser: (user: UserProfile | null) => void;
   updateProfile: (updates: Partial<UserProfile>) => void;
+  loadAuthoritativeData: (userId: string) => Promise<void>;
 
   // Study Plan
   studyPlan: StudyPlan | null;
@@ -102,6 +112,7 @@ export const useUserStore = create<UserStoreState>()(
         set({ user });
         if (user) {
           upsertPostgresProfile(user).catch(err => console.debug('PG profile sync:', err));
+          get().loadAuthoritativeData(user.uid).catch(err => console.debug('PG data hydration note:', err));
         }
       },
       updateProfile: (updates) => {
@@ -114,6 +125,71 @@ export const useUserStore = create<UserStoreState>()(
         };
         set({ user: updated });
         upsertPostgresProfile(updated).catch(err => console.debug('PG profile update:', err));
+      },
+      loadAuthoritativeData: async (userId: string) => {
+        set({ isLoadingAuth: true });
+        try {
+          // Parallel fetch of authoritative PostgreSQL state
+          const [
+            dbProfile,
+            dbPlan,
+            dbProgress,
+            dbSubmissions,
+            dbDrafts,
+            dbCustomCases,
+            dbSpacedReviews,
+            dbNotificationPrefs,
+            dbInAppNotifs
+          ] = await Promise.all([
+            getPostgresProfile(userId),
+            fetchPostgresStudyPlan(userId),
+            fetchPostgresProgress(userId),
+            fetchPostgresSubmissions(userId),
+            fetchPostgresDrafts(userId),
+            fetchPostgresCustomTestCases(userId),
+            fetchPostgresSpacedReviews(userId),
+            fetchPostgresNotificationPreferences(userId),
+            fetchPostgresInAppNotifications(userId)
+          ]);
+
+          const updates: Partial<UserStoreState> = {};
+
+          if (dbProfile) {
+            updates.user = dbProfile;
+          }
+          if (dbPlan) {
+            updates.studyPlan = dbPlan;
+          }
+          if (Object.keys(dbProgress).length > 0) {
+            updates.problemProgress = { ...get().problemProgress, ...dbProgress };
+          }
+          if (dbSubmissions.length > 0) {
+            updates.submissions = dbSubmissions;
+          }
+          if (Object.keys(dbDrafts).length > 0) {
+            updates.drafts = { ...get().drafts, ...dbDrafts };
+          }
+          if (dbCustomCases.length > 0) {
+            updates.customTestCases = dbCustomCases;
+          }
+          if (dbSpacedReviews.length > 0) {
+            const reviewMap: Record<string, SpacedReviewItem> = {};
+            dbSpacedReviews.forEach(r => { reviewMap[r.problemId] = r; });
+            updates.spacedReviewItems = reviewMap;
+          }
+          if (dbNotificationPrefs) {
+            updates.notificationPreferences = dbNotificationPrefs;
+          }
+          if (dbInAppNotifs.length > 0) {
+            updates.inAppNotifications = dbInAppNotifs;
+          }
+
+          set(updates);
+        } catch (err) {
+          console.warn('PostgreSQL authoritative data loading note:', err);
+        } finally {
+          set({ isLoadingAuth: false });
+        }
       },
 
       // Study Plan

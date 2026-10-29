@@ -116,12 +116,12 @@ export const ProblemListPage: React.FC = () => {
       {/* Title & Search Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
             <Code2 className="w-7 h-7 text-primary" />
             TCS Placement Problem Bank
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            290+ research-curated practice problems with sequential LeetCode-style catalog numbering and 12-stage hints.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            400 research-curated practice problems with sequential LeetCode-style catalog numbering and progressive hints.
           </p>
         </div>
 
@@ -133,7 +133,7 @@ export const ProblemListPage: React.FC = () => {
             value={filters.searchTerm}
             onChange={(e) => setFilter('searchTerm', e.target.value)}
             placeholder="Search by problem name, number (#1), or topic..."
-            className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary"
           />
           {filters.searchTerm && (
             <button
@@ -147,7 +147,7 @@ export const ProblemListPage: React.FC = () => {
       </div>
 
       {/* Primary Section Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none border-b border-slate-200 dark:border-slate-800">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none border-b border-slate-200">
         {sectionTabs.map((tab) => {
           const isActive = filters.section === tab.id;
           return (
@@ -156,8 +156,8 @@ export const ProblemListPage: React.FC = () => {
               onClick={() => setFilter('section', tab.id)}
               className={`flex items-center gap-2 px-3.5 py-2.5 rounded-t-xl text-xs font-semibold transition-all whitespace-nowrap border-b-2 ${
                 isActive
-                  ? 'border-primary text-primary bg-primary/5 dark:bg-primary/10'
-                  : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                  ? 'border-primary text-primary bg-primary/5'
+                  : 'border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
               {tab.icon}
@@ -165,7 +165,7 @@ export const ProblemListPage: React.FC = () => {
               <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                 isActive 
                   ? 'bg-primary text-white font-bold' 
-                  : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                  : 'bg-slate-200 text-slate-600'
               }`}>
                 {tab.count}
               </span>
@@ -285,8 +285,8 @@ export const ProblemListPage: React.FC = () => {
 
       {/* Problems List Table / Cards */}
       {filteredQuestions.length > 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <div className="divide-y divide-slate-100">
             {filteredQuestions.map((q) => {
               const prog = problemProgress[q.id];
               const isSolved = prog?.currentStatus === 'SOLVED';
@@ -297,7 +297,7 @@ export const ProblemListPage: React.FC = () => {
               return (
                 <div
                   key={q.id}
-                  className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors"
+                  className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/60 transition-colors"
                 >
                   <div className="flex items-start gap-3.5 min-w-0">
                     {/* Status Icon */}
@@ -309,7 +309,7 @@ export const ProblemListPage: React.FC = () => {
                           <div className="w-2 h-2 rounded-full bg-amber-500" />
                         </div>
                       ) : (
-                        <Circle className="w-5 h-5 text-slate-300 dark:text-slate-700" />
+                        <Circle className="w-5 h-5 text-slate-300" />
                       )}
                     </div>
 
@@ -318,10 +318,10 @@ export const ProblemListPage: React.FC = () => {
                         {/* Numbered title */}
                         <Link
                           to={`/problems/${q.id}`}
-                          className="font-bold text-sm sm:text-base text-slate-900 dark:text-white hover:text-primary transition-colors flex items-center gap-1.5"
+                          className="font-bold text-sm sm:text-base text-slate-900 hover:text-primary transition-colors flex items-center gap-1.5"
                         >
                           {q.catalogNumber && (
-                            <span className="text-slate-400 dark:text-slate-500 font-mono text-xs sm:text-sm">
+                            <span className="text-slate-400 font-mono text-xs sm:text-sm">
                               {q.catalogNumber}.
                             </span>
                           )}
@@ -331,11 +331,11 @@ export const ProblemListPage: React.FC = () => {
                         <DifficultyBadge difficulty={q.difficulty} />
                         
                         {isMCQ ? (
-                          <span className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                          <span className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-purple-50 text-purple-700 border border-purple-200">
                             MCQ
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                          <span className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-blue-50 text-blue-700 border border-blue-200">
                             Coding
                           </span>
                         )}
@@ -347,7 +347,7 @@ export const ProblemListPage: React.FC = () => {
                             href={q.externalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                            className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-slate-600 transition-colors"
                             title="View problem on LeetCode"
                           >
                             <ExternalLink className="w-3 h-3" />
@@ -377,8 +377,8 @@ export const ProblemListPage: React.FC = () => {
                       onClick={() => toggleBookmark(q.id)}
                       className={`p-2 rounded-lg border transition-colors ${
                         isBookmarked
-                          ? 'border-indigo-300 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
-                          : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800'
+                          ? 'border-indigo-300 bg-indigo-50 text-indigo-600'
+                          : 'border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50'
                       }`}
                       aria-label="Bookmark problem"
                     >
@@ -399,9 +399,9 @@ export const ProblemListPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center space-y-3">
-          <Code2 className="w-10 h-10 text-slate-300 dark:text-slate-700 mx-auto" />
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-3">
+          <Code2 className="w-10 h-10 text-slate-300 mx-auto" />
+          <h3 className="text-base font-bold text-slate-900">
             No problems match your selected filters
           </h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">

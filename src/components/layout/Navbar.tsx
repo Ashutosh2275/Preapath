@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Code2, 
@@ -11,8 +11,6 @@ import {
   LogOut, 
   Menu, 
   X, 
-  Sun, 
-  Moon,
   Settings,
   Sparkles,
   Bell
@@ -27,32 +25,7 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const unreadCount = (inAppNotifications || []).filter(n => !n.read).length;
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('preppath_theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    } else {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('preppath_theme', 'light');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('preppath_theme', 'dark');
-      setIsDark(true);
-    }
-  };
 
   const handleSignOut = () => {
     setUserDropdownOpen(false);
@@ -160,22 +133,13 @@ export const Navbar: React.FC = () => {
 
           {/* Right Header Controls */}
           <div className="flex items-center gap-3">
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle color theme"
-              className="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
-            >
-              {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-600" />}
-            </button>
-
             {/* In-App Notifications Bell */}
             {user && (
               <div className="relative">
                 <button
                   onClick={() => setNotifDropdownOpen(!notifDropdownOpen)}
                   aria-label="Open notifications"
-                  className="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative"
+                  className="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors relative"
                 >
                   <Bell className="w-5 h-5" />
                   {unreadCount > 0 && (
