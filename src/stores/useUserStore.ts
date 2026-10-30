@@ -12,7 +12,9 @@ import {
   AssessmentAttempt,
   SpacedReviewItem,
   NotificationPreferences,
-  InAppNotification
+  InAppNotification,
+  TopicMasteryRecord,
+  StudyPlanRevisionRecord
 } from '../types';
 import { 
   upsertPostgresProfile, 
@@ -30,9 +32,14 @@ import {
   fetchPostgresProgress,
   fetchPostgresSpacedReviews,
   fetchPostgresNotificationPreferences,
-  fetchPostgresInAppNotifications
+  fetchPostgresInAppNotifications,
+  fetchPostgresTopicMastery,
+  upsertPostgresTopicMastery,
+  fetchPostgresPlanRevisions,
+  recordPostgresPlanRevision
 } from '../lib/db';
 import { calculateNextSpacedReview } from '../lib/spacedRepetition';
+import { evaluateTopicMastery } from '../lib/topicMastery';
 import { ALL_QUESTIONS } from '../data/questions';
 
 interface UserStoreState {
@@ -91,6 +98,14 @@ interface UserStoreState {
   spacedReviewItems: Record<string, SpacedReviewItem>;
   markReviewCompleted: (problemId: string) => void;
 
+  // Topic Mastery & Retention
+  topicMastery: Record<string, TopicMasteryRecord>;
+  updateTopicMastery: (record: TopicMasteryRecord) => void;
+
+  // Plan Revisions Audit Log
+  planRevisions: StudyPlanRevisionRecord[];
+  addPlanRevision: (revision: StudyPlanRevisionRecord) => void;
+
   // Study Reminders & Push Notifications
   notificationPreferences: NotificationPreferences;
   updateNotificationPreferences: (updates: Partial<NotificationPreferences>) => void;
@@ -139,7 +154,9 @@ export const useUserStore = create<UserStoreState>()(
             dbCustomCases,
             dbSpacedReviews,
             dbNotificationPrefs,
-            dbInAppNotifs
+            dbInAppNotifs,
+            dbTopicMastery,
+            dbPlanRevisions
           ] = await Promise.all([
             getPostgresProfile(userId),
             fetchPostgresStudyPlan(userId),
@@ -149,7 +166,9 @@ export const useUserStore = create<UserStoreState>()(
             fetchPostgresCustomTestCases(userId),
             fetchPostgresSpacedReviews(userId),
             fetchPostgresNotificationPreferences(userId),
-            fetchPostgresInAppNotifications(userId)
+            fetchPostgresInAppNotifications(userId),
+            fetchPostgresTopicMastery(userId),
+            fetchPostgresPlanRevisions(userId)
           ]);
 
           const updates: Partial<UserStoreState> = {};
@@ -176,6 +195,14 @@ export const useUserStore = create<UserStoreState>()(
             const reviewMap: Record<string, SpacedReviewItem> = {};
             dbSpacedReviews.forEach(r => { reviewMap[r.problemId] = r; });
             updates.spacedReviewItems = reviewMap;
+          }
+          if (dbTopicMastery && dbTopicMastery.length > 0) {
+            const masteryMap: Record<string, TopicMasteryRecord> = {};
+            dbTopicMastery.forEach(m => { masteryMap[m.topic] = m; });
+            updates.topicMastery = masteryMap;
+          }
+          if (dbPlanRevisions && dbPlanRevisions.length > 0) {
+            updates.planRevisions = dbPlanRevisions;
           }
           if (dbNotificationPrefs) {
             updates.notificationPreferences = dbNotificationPrefs;
@@ -404,6 +431,34 @@ export const useUserStore = create<UserStoreState>()(
               [problemId]: updatedReview,
             },
           }));
+
+          // Evaluate Topic Mastery
+          if (question.topics && question.topics.length > 0) {
+            const primaryTopic = question.topics[0];
+            const existingTopicMastery = state.topicMastery?.[primaryTopic];
+            const evaluatedMastery = evaluateTopicMastery({
+              userId: state.user?.uid || 'guest-user',
+              topic: primaryTopic,
+              section: question.sections[0] || 'CODING',
+              track: state.user?.targetTrack || 'NINJA',
+              isCorrect: isAccepted,
+              verdict,
+              hintsRevealedCount: existing.revealedHintsCount,
+              hasViewedReferenceSolution: false,
+              existingRecord: existingTopicMastery,
+            });
+
+            set((s) => ({
+              topicMastery: {
+                ...(s.topicMastery || {}),
+                [primaryTopic]: evaluatedMastery,
+              },
+            }));
+
+            if (state.user) {
+              upsertPostgresTopicMastery(evaluatedMastery).catch(err => console.debug('PG topic mastery sync:', err));
+            }
+          }
         }
 
         if (state.user) {
@@ -552,6 +607,31 @@ export const useUserStore = create<UserStoreState>()(
         });
       },
 
+      // Topic Mastery & Retention
+      topicMastery: {},
+      updateTopicMastery: (record) => {
+        set((state) => ({
+          topicMastery: {
+            ...state.topicMastery,
+            [record.topic]: record,
+          },
+        }));
+        if (get().user) {
+          upsertPostgresTopicMastery(record).catch(err => console.debug('PG topic mastery sync:', err));
+        }
+      },
+
+      // Plan Revisions Audit Log
+      planRevisions: [],
+      addPlanRevision: (revision) => {
+        set((state) => ({
+          planRevisions: [revision, ...(state.planRevisions || [])],
+        }));
+        if (get().user) {
+          recordPostgresPlanRevision(revision).catch(err => console.debug('PG plan revision sync:', err));
+        }
+      },
+
       // Study Reminders & Push Notifications
       notificationPreferences: {
         userId: 'guest-user',
@@ -623,6 +703,8 @@ export const useUserStore = create<UserStoreState>()(
           problemProgress: {},
           assessmentAttempts: [],
           spacedReviewItems: {},
+          topicMastery: {},
+          planRevisions: [],
           inAppNotifications: [],
         });
       },

@@ -44,8 +44,9 @@ export const App: React.FC = () => {
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
         
-        {/* Problem Bank is publicly browsable */}
-        <Route path="problems" element={<ProblemListPage />} />
+        {/* Question Explorer (Canonical /practice) */}
+        <Route path="practice" element={<ProblemListPage />} />
+        <Route path="problems" element={<Navigate to="/practice" replace />} />
 
         {/* Authenticated Student Routes */}
         <Route

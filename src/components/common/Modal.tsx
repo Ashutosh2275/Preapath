@@ -60,22 +60,22 @@ export const Modal: React.FC<ModalProps> = ({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={`relative w-full ${maxWidthClasses} rounded-xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 p-6 z-10 transition-all max-h-[90vh] overflow-y-auto`}
+        className={`relative w-full ${maxWidthClasses} rounded-xl bg-white shadow-2xl border border-slate-200 p-6 z-10 transition-all max-h-[90vh] overflow-y-auto`}
       >
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 id="modal-title" className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            <h3 id="modal-title" className="text-lg font-semibold text-slate-900">
               {title}
             </h3>
             {description && (
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              <p className="text-sm text-slate-500 mt-1">
                 {description}
               </p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />

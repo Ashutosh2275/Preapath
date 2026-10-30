@@ -132,20 +132,20 @@ export const SignupPage: React.FC = () => {
       <div className="w-full max-w-[460px] space-y-6">
         {/* Typographic Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
             Create your PrepPath Account
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
+          <p className="text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
             Start your structured preparation plan for TCS Ninja, Digital, or Prime assessments.
           </p>
         </div>
 
         {/* Focused Registration Card */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-sm">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
           {error && (
             <div 
               role="alert"
-              className="mb-5 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 flex items-start gap-2.5 text-xs text-rose-700 dark:text-rose-300"
+              className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-xs text-rose-700"
             >
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span className="leading-relaxed">{error}</span>
@@ -156,7 +156,7 @@ export const SignupPage: React.FC = () => {
             <div>
               <label 
                 htmlFor="display-name-input"
-                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                className="block text-xs font-semibold text-slate-700 mb-1.5"
               >
                 Full Name
               </label>
@@ -167,7 +167,7 @@ export const SignupPage: React.FC = () => {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Leonid_OP"
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
               <p className="text-[11px] text-slate-400 mt-1">
                 Used to personalize your study plan and dashboard greetings
@@ -177,7 +177,7 @@ export const SignupPage: React.FC = () => {
             <div>
               <label 
                 htmlFor="email-input"
-                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                className="block text-xs font-semibold text-slate-700 mb-1.5"
               >
                 Email Address
               </label>
@@ -189,7 +189,7 @@ export const SignupPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="leonido@gmail.com"
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
 
@@ -197,7 +197,7 @@ export const SignupPage: React.FC = () => {
               <div className="flex items-center justify-between mb-1.5">
                 <label 
                   htmlFor="password-input"
-                  className="block text-xs font-semibold text-slate-700 dark:text-slate-300"
+                  className="block text-xs font-semibold text-slate-700"
                 >
                   Password
                 </label>
@@ -210,14 +210,14 @@ export const SignupPage: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
 
             <div>
               <label 
                 htmlFor="confirm-password-input"
-                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                className="block text-xs font-semibold text-slate-700 mb-1.5"
               >
                 Confirm Password
               </label>
@@ -228,7 +228,7 @@ export const SignupPage: React.FC = () => {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
 
@@ -246,7 +246,7 @@ export const SignupPage: React.FC = () => {
             </div>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-6 pt-5 border-t border-slate-100 text-center text-xs text-slate-500">
             Already have an account?{' '}
             <Link to="/login" className="font-semibold text-primary hover:text-primary-hover transition-colors">
               Sign in

@@ -65,7 +65,7 @@ export const ProblemDetailPage: React.FC = () => {
   if (!question) {
     return (
       <div className="max-w-4xl mx-auto py-16 px-4 text-center space-y-4">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Problem Not Found</h2>
+        <h2 className="text-xl font-bold text-slate-900">Problem Not Found</h2>
         <p className="text-xs text-slate-500">The requested problem could not be found or has not been published yet.</p>
         <Link to="/problems">
           <Button variant="primary" size="sm">Back to Question Bank</Button>
@@ -293,34 +293,34 @@ export const ProblemDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-950">
+    <div className="flex-1 flex flex-col min-h-[calc(100vh-5rem)] bg-slate-50">
       {/* Top Problem Navigation & Action Bar */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex items-center justify-between">
+      <div className="bg-white border-b border-slate-200 px-4 py-2.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             to="/problems"
-            className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center gap-1 font-medium"
+            className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 font-medium"
           >
             ← Problem Bank
           </Link>
-          <span className="text-slate-300 dark:text-slate-700">|</span>
+          <span className="text-slate-300">|</span>
           <div className="flex items-center gap-1.5">
             {prevQuestion && (
               <Link
                 to={`/problems/${prevQuestion.catalogNumber || prevQuestion.slug || prevQuestion.id}`}
-                className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
                 title={`Previous: #${prevQuestion.catalogNumber} ${prevQuestion.title}`}
               >
                 <ChevronLeft className="w-4 h-4" />
               </Link>
             )}
-            <h1 className="font-bold text-sm text-slate-900 dark:text-white truncate max-w-[180px] sm:max-w-xs md:max-w-md">
+            <h1 className="font-bold text-sm text-slate-900 truncate max-w-[180px] sm:max-w-xs md:max-w-md">
               {question.catalogNumber ? `${question.catalogNumber}. ${question.title}` : question.title}
             </h1>
             {nextQuestion && (
               <Link
                 to={`/problems/${nextQuestion.catalogNumber || nextQuestion.slug || nextQuestion.id}`}
-                className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
                 title={`Next: #${nextQuestion.catalogNumber} ${nextQuestion.title}`}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -329,11 +329,11 @@ export const ProblemDetailPage: React.FC = () => {
           </div>
           <DifficultyBadge difficulty={question.difficulty} />
           {isMCQ ? (
-            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">
               MCQ Practice
             </span>
           ) : (
-            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
               Coding
             </span>
           )}
@@ -342,7 +342,7 @@ export const ProblemDetailPage: React.FC = () => {
               href={question.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400 hover:underline"
+              className="hidden lg:inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 hover:underline"
               title="View on LeetCode"
             >
               LeetCode #{question.externalProblemId || ''}
@@ -357,8 +357,8 @@ export const ProblemDetailPage: React.FC = () => {
             onClick={() => toggleBookmark(question.id)}
             className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 transition-colors ${
               isBookmarked
-                ? 'border-indigo-300 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
-                : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-600'
+                ? 'border-indigo-300 bg-indigo-50 text-indigo-600'
+                : 'border-slate-200 text-slate-400 hover:text-slate-600'
             }`}
             title="Bookmark this problem"
           >
@@ -371,8 +371,8 @@ export const ProblemDetailPage: React.FC = () => {
             onClick={() => toggleNeedsRevision(question.id)}
             className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 transition-colors ${
               isRevision
-                ? 'border-amber-300 bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400'
-                : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-600'
+                ? 'border-amber-300 bg-amber-50 text-amber-600'
+                : 'border-slate-200 text-slate-400 hover:text-slate-600'
             }`}
             title="Flag for later revision"
           >
@@ -383,7 +383,7 @@ export const ProblemDetailPage: React.FC = () => {
       </div>
 
       {/* Mobile Tab Switcher */}
-      <div className="md:hidden flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold">
+      <div className="md:hidden flex border-b border-slate-200 bg-white text-xs font-semibold">
         {(isMCQ ? ['problem', 'solve', 'hints'] : ['problem', 'editor', 'cases', 'output']).map((tab) => (
           <button
             key={tab}
@@ -402,17 +402,17 @@ export const ProblemDetailPage: React.FC = () => {
       {/* Main Workspace Layout (Two Columns) */}
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-0 overflow-hidden">
         {/* Left Column: Problem Details, Progressive Hints, Reference Solutions, Notes, History */}
-        <div className={`lg:col-span-5 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-full overflow-hidden ${
+        <div className={`lg:col-span-5 border-r border-slate-200 bg-white flex flex-col h-full overflow-hidden ${
           mobileTab !== 'problem' ? 'hidden md:flex' : 'flex'
         }`}>
           {/* Subtabs Header */}
-          <div className="flex items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-3 text-xs font-medium overflow-x-auto">
+          <div className="flex items-center border-b border-slate-200 bg-slate-50 px-3 text-xs font-medium overflow-x-auto">
             <button
               onClick={() => setLeftTab('problem')}
               className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'problem'
                   ? 'border-primary text-primary font-bold'
-                  : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -423,7 +423,7 @@ export const ProblemDetailPage: React.FC = () => {
               className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'hints'
                   ? 'border-primary text-primary font-bold'
-                  : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5" />
@@ -439,7 +439,7 @@ export const ProblemDetailPage: React.FC = () => {
                 className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                   leftTab === 'solutions'
                     ? 'border-primary text-primary font-bold'
-                    : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
                 <Code2 className="w-3.5 h-3.5" />
@@ -451,7 +451,7 @@ export const ProblemDetailPage: React.FC = () => {
               className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'notes'
                   ? 'border-primary text-primary font-bold'
-                  : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
               <FileCode className="w-3.5 h-3.5" />
@@ -462,7 +462,7 @@ export const ProblemDetailPage: React.FC = () => {
               className={`py-2.5 px-3 border-b-2 flex items-center gap-1.5 whitespace-nowrap ${
                 leftTab === 'history'
                   ? 'border-primary text-primary font-bold'
-                  : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
               <History className="w-3.5 h-3.5" />
@@ -471,11 +471,11 @@ export const ProblemDetailPage: React.FC = () => {
           </div>
 
           {/* Left Panel Body */}
-          <div className="flex-1 p-5 overflow-y-auto space-y-6 text-sm text-slate-700 dark:text-slate-300">
+          <div className="flex-1 p-5 overflow-y-auto space-y-6 text-sm text-slate-700">
             {leftTab === 'problem' && (
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                  <h2 className="text-xl font-bold text-slate-900 mb-2">
                     {question.catalogNumber ? `${question.catalogNumber}. ${question.title}` : question.title}
                   </h2>
                   <div className="flex flex-wrap items-center gap-2">
@@ -485,7 +485,7 @@ export const ProblemDetailPage: React.FC = () => {
                       <TrackBadge key={t} track={t} />
                     ))}
                     {question.topics?.slice(0, 3).map(topic => (
-                      <span key={topic} className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                      <span key={topic} className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600">
                         {topic}
                       </span>
                     ))}
@@ -499,18 +499,18 @@ export const ProblemDetailPage: React.FC = () => {
 
                 {/* Input & Output Format (For Coding / Standard IO) */}
                 {!isMCQ && (
-                  <div className="space-y-3 text-xs bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <div className="space-y-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px] mb-1">
+                      <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[10px] mb-1">
                         Input Format
                       </h4>
-                      <p className="text-slate-600 dark:text-slate-400">{question.inputFormat}</p>
+                      <p className="text-slate-600">{question.inputFormat}</p>
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px] mb-1">
+                      <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[10px] mb-1">
                         Output Format
                       </h4>
-                      <p className="text-slate-600 dark:text-slate-400">{question.outputFormat}</p>
+                      <p className="text-slate-600">{question.outputFormat}</p>
                     </div>
                   </div>
                 )}
@@ -518,10 +518,10 @@ export const ProblemDetailPage: React.FC = () => {
                 {/* Constraints */}
                 {question.constraints && question.constraints.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
+                    <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[10px]">
                       Constraints & Bounds
                     </h4>
-                    <ul className="list-disc pl-4 space-y-1 text-xs text-slate-600 dark:text-slate-400 font-mono">
+                    <ul className="list-disc pl-4 space-y-1 text-xs text-slate-600 font-mono">
                       {question.constraints.map((c, i) => (
                         <li key={i}>{c}</li>
                       ))}
@@ -532,26 +532,26 @@ export const ProblemDetailPage: React.FC = () => {
                 {/* Examples */}
                 {question.examples && question.examples.length > 0 && !isMCQ && (
                   <div className="space-y-4">
-                    <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
+                    <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[10px]">
                       Examples
                     </h4>
                     {question.examples.map((ex, idx) => (
                       <div
                         key={idx}
-                        className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-3.5 space-y-2 text-xs"
+                        className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 space-y-2 text-xs"
                       >
-                        <span className="font-semibold text-slate-700 dark:text-slate-300">
+                        <span className="font-semibold text-slate-700">
                           Example {idx + 1}:
                         </span>
                         <div>
                           <span className="text-[10px] text-slate-400 block font-mono uppercase">Input:</span>
-                          <pre className="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
+                          <pre className="p-2 bg-white rounded border border-slate-200 font-mono text-slate-800 overflow-x-auto">
                             {ex.input}
                           </pre>
                         </div>
                         <div>
                           <span className="text-[10px] text-slate-400 block font-mono uppercase">Output:</span>
-                          <pre className="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
+                          <pre className="p-2 bg-white rounded border border-slate-200 font-mono text-slate-800 overflow-x-auto">
                             {ex.output}
                           </pre>
                         </div>
@@ -567,7 +567,7 @@ export const ProblemDetailPage: React.FC = () => {
 
                 {/* Provenance note */}
                 {question.sourceReferences?.notes && (
-                  <div className="p-3 bg-amber-50/50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-900/40 text-[11px] text-amber-800 dark:text-amber-300">
+                  <div className="p-3 bg-amber-50/50 rounded-lg border border-amber-200 text-[11px] text-amber-800">
                     <strong>TCS Pattern Note:</strong> {question.sourceReferences.notes}
                   </div>
                 )}
@@ -578,7 +578,7 @@ export const ProblemDetailPage: React.FC = () => {
             {leftTab === 'hints' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-primary" />
                     {question.hintStages && question.hintStages.length > 0 
                       ? '12-Stage Progressive Hint System' 
@@ -595,7 +595,7 @@ export const ProblemDetailPage: React.FC = () => {
                     <span>Progress: {revealedHints} of {maxHintCount} stages unlocked</span>
                     <span>{Math.round((revealedHints / Math.max(maxHintCount, 1)) * 100)}%</span>
                   </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                     <div 
                       className="bg-primary h-full transition-all duration-300 rounded-full" 
                       style={{ width: `${Math.min(100, (revealedHints / Math.max(maxHintCount, 1)) * 100)}%` }} 
@@ -609,7 +609,7 @@ export const ProblemDetailPage: React.FC = () => {
                     {question.hintStages.slice(0, revealedHints).map((stage) => (
                       <div
                         key={stage.stage}
-                        className="p-4 rounded-xl border border-primary/20 bg-primary/5 dark:bg-primary/10 text-xs text-slate-800 dark:text-slate-200 space-y-2 animate-in fade-in"
+                        className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-xs text-slate-800 space-y-2 animate-in fade-in"
                       >
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-primary block uppercase text-[11px] tracking-wide">
@@ -617,16 +617,16 @@ export const ProblemDetailPage: React.FC = () => {
                           </span>
                           <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
                         </div>
-                        <p className="leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-300">
+                        <p className="leading-relaxed whitespace-pre-line text-slate-700">
                           {stage.content}
                         </p>
                       </div>
                     ))}
 
                     {revealedHints === 0 && (
-                      <div className="p-6 text-center rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 space-y-2">
+                      <div className="p-6 text-center rounded-xl border border-dashed border-slate-300 bg-slate-50/50 space-y-2">
                         <HelpCircle className="w-8 h-8 text-slate-400 mx-auto" />
-                        <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-xs">No Hints Revealed Yet</h4>
+                        <h4 className="font-semibold text-slate-800 text-xs">No Hints Revealed Yet</h4>
                         <p className="text-[11px] text-slate-500 max-w-xs mx-auto">
                           Try thinking through the algorithm first. When you are stuck, unlock Stage 1 to clarify the core goal.
                         </p>
@@ -639,9 +639,9 @@ export const ProblemDetailPage: React.FC = () => {
                     {question.hints.slice(0, revealedHints).map((hint, idx) => (
                       <div
                         key={idx}
-                        className="p-4 rounded-xl border border-teal-200 dark:border-teal-900/50 bg-teal-50/40 dark:bg-teal-950/20 text-xs text-slate-800 dark:text-slate-200 space-y-1.5 animate-in fade-in"
+                        className="p-4 rounded-xl border border-teal-200 bg-teal-50/40 text-xs text-slate-800 space-y-1.5 animate-in fade-in"
                       >
-                        <span className="font-bold text-teal-700 dark:text-teal-400 block uppercase text-[10px]">
+                        <span className="font-bold text-teal-700 block uppercase text-[10px]">
                           Hint {idx + 1}
                         </span>
                         <p className="leading-relaxed">{hint}</p>
@@ -666,15 +666,15 @@ export const ProblemDetailPage: React.FC = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
-                    <div className="p-4 rounded-xl border border-indigo-200 dark:border-indigo-900 bg-indigo-50/50 dark:bg-indigo-950/30 text-xs space-y-3">
-                      <span className="font-bold text-indigo-700 dark:text-indigo-400 uppercase text-[10px]">
+                  <div className="space-y-4 pt-4 border-t border-slate-200">
+                    <div className="p-4 rounded-xl border border-indigo-200 bg-indigo-50/50 text-xs space-y-3">
+                      <span className="font-bold text-indigo-700 uppercase text-[10px]">
                         Full Concept Explanation & Complexity
                       </span>
-                      <div className="whitespace-pre-line text-slate-800 dark:text-slate-200 leading-relaxed">
+                      <div className="whitespace-pre-line text-slate-800 leading-relaxed">
                         {question.explanation}
                       </div>
-                      <div className="pt-2 border-t border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between text-[11px] font-mono text-indigo-700 dark:text-indigo-300">
+                      <div className="pt-2 border-t border-indigo-100 flex items-center justify-between text-[11px] font-mono text-indigo-700">
                         <span>Time: {question.timeComplexity || 'O(N)'}</span>
                         <span>Space: {question.spaceComplexity || 'O(1)'}</span>
                       </div>
@@ -688,7 +688,7 @@ export const ProblemDetailPage: React.FC = () => {
             {leftTab === 'solutions' && question.solutions && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
                     <Code2 className="w-5 h-5 text-primary" />
                     Validated Reference Solutions
                   </h3>
@@ -699,17 +699,17 @@ export const ProblemDetailPage: React.FC = () => {
 
                 <div className="space-y-5">
                   {question.solutions.map((sol, idx) => (
-                    <div key={idx} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-4 space-y-3">
+                    <div key={idx} className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-slate-900 dark:text-white">
+                        <span className="font-bold text-xs text-slate-900">
                           {sol.approachName}
                         </span>
-                        <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                        <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-200 text-slate-700">
                           {sol.language.toUpperCase()}
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                      <p className="text-xs text-slate-600 leading-relaxed">
                         {sol.explanation}
                       </p>
 
@@ -717,7 +717,7 @@ export const ProblemDetailPage: React.FC = () => {
                         {sol.code}
                       </pre>
 
-                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1 border-t border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1 border-t border-slate-200">
                         <span>Time: {sol.timeComplexity}</span>
                         <span>Space: {sol.spaceComplexity}</span>
                       </div>
@@ -731,7 +731,7 @@ export const ProblemDetailPage: React.FC = () => {
             {leftTab === 'notes' && (
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white">
+                  <h3 className="font-bold text-base text-slate-900">
                     Private Problem Notes
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -746,7 +746,7 @@ export const ProblemDetailPage: React.FC = () => {
                     saveProblemNote(question.id, e.target.value);
                   }}
                   placeholder="Record edge cases you noticed, time complexity tradeoffs, or key syntax shortcuts..."
-                  className="w-full p-3 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary font-mono"
+                  className="w-full p-3 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary font-mono"
                 />
               </div>
             )}
@@ -755,7 +755,7 @@ export const ProblemDetailPage: React.FC = () => {
             {leftTab === 'history' && (
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white">
+                  <h3 className="font-bold text-base text-slate-900">
                     Judged Submission History
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -768,7 +768,7 @@ export const ProblemDetailPage: React.FC = () => {
                     {questionSubmissions.map((sub) => (
                       <div
                         key={sub.id}
-                        className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 text-xs space-y-2"
+                        className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-xs space-y-2"
                       >
                         <div className="flex items-center justify-between">
                           <VerdictBadge verdict={sub.verdict} />
@@ -783,7 +783,7 @@ export const ProblemDetailPage: React.FC = () => {
                         </div>
 
                         {!isMCQ && (
-                          <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                          <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
                             <Button
                               variant="outline"
                               size="sm"
@@ -813,30 +813,30 @@ export const ProblemDetailPage: React.FC = () => {
         {/* Right Column: Multiple Choice Practice Workspace OR Monaco Code Editor */}
         {isMCQ ? (
           /* MCQ Practice Interface */
-          <div className={`lg:col-span-7 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-y-auto p-6 md:p-8 ${
+          <div className={`lg:col-span-7 flex flex-col h-full bg-slate-50 overflow-y-auto p-6 md:p-8 ${
             mobileTab !== 'solve' && mobileTab !== 'editor' ? 'hidden md:flex' : 'flex'
           }`}>
             <div className="max-w-2xl w-full mx-auto space-y-6">
               {/* Card Header */}
-              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-3">
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-primary uppercase tracking-wider">
                     Aptitude & Concept Question
                   </span>
                   {progress?.currentStatus === 'SOLVED' && (
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Solved
                     </span>
                   )}
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                   {question.problemStatement}
                 </h3>
               </div>
 
               {/* Options Selection List */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   Select the correct answer:
                 </h4>
 
@@ -846,13 +846,13 @@ export const ProblemDetailPage: React.FC = () => {
                     const isCorrect = isMcqSubmitted && opt.id.toUpperCase() === (question.correctOptionId || '').toUpperCase();
                     const isWrongSelection = isMcqSubmitted && isSelected && !isCorrect;
 
-                    let cardClass = "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-primary/50 hover:bg-slate-50/50 dark:hover:bg-slate-850";
+                    let cardClass = "border-slate-200 bg-white text-slate-800 hover:border-primary/50 hover:bg-slate-50/50";
                     if (isSelected && !isMcqSubmitted) {
-                      cardClass = "border-primary bg-primary/5 text-primary dark:text-primary-light font-medium ring-1 ring-primary";
+                      cardClass = "border-primary bg-primary/5 text-primary font-medium ring-1 ring-primary";
                     } else if (isCorrect) {
-                      cardClass = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 ring-1 ring-emerald-500";
+                      cardClass = "border-emerald-500 bg-emerald-50 text-emerald-900 ring-1 ring-emerald-500";
                     } else if (isWrongSelection) {
-                      cardClass = "border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 ring-1 ring-rose-500";
+                      cardClass = "border-rose-500 bg-rose-50 text-rose-900 ring-1 ring-rose-500";
                     }
 
                     return (
@@ -870,7 +870,7 @@ export const ProblemDetailPage: React.FC = () => {
                             ? 'bg-rose-500 text-white' 
                             : isSelected 
                             ? 'bg-primary text-white' 
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                            : 'bg-slate-100 text-slate-700'
                         }`}>
                           {isCorrect ? '✓' : isWrongSelection ? '✗' : opt.id}
                         </span>
@@ -887,13 +887,13 @@ export const ProblemDetailPage: React.FC = () => {
               {mcqFeedback && (
                 <div className={`p-4 rounded-xl border flex items-start gap-3 animate-in fade-in ${
                   mcqFeedback.isCorrect 
-                    ? 'border-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300' 
-                    : 'border-rose-300 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300'
+                    ? 'border-emerald-300 bg-emerald-50 text-emerald-800' 
+                    : 'border-rose-300 bg-rose-50 text-rose-800'
                 }`}>
                   {mcqFeedback.isCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
                   )}
                   <div className="space-y-1">
                     <h5 className="font-bold text-sm">
@@ -946,12 +946,12 @@ export const ProblemDetailPage: React.FC = () => {
 
               {/* Detailed Explanation / Derivation (Visible when submitted) */}
               {isMcqSubmitted && (
-                <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-3 animate-in fade-in">
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-3 animate-in fade-in">
+                  <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-primary" />
                     Step-by-Step Derivation & Solution
                   </h4>
-                  <div className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 font-sans">
+                  <div className="text-xs text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50 p-4 rounded-xl border border-slate-200 font-sans">
                     {question.explanation}
                   </div>
                 </div>

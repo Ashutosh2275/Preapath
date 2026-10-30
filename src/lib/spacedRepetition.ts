@@ -35,7 +35,7 @@ export function calculateNextSpacedReview(input: SpacedReviewCalculationInput): 
   let isMastered = false;
 
   if (!isAccepted) {
-    // Incorrect answer: review after 1 day
+    // Incorrect response -> Next day (1 day)
     intervalDays = 1;
     consecutiveCorrect = 0;
     isMastered = false;
@@ -44,24 +44,34 @@ export function calculateNextSpacedReview(input: SpacedReviewCalculationInput): 
     const isSlow = isResponseSlow(question, timeSpentSeconds);
 
     if (revealedHintsCount >= 3) {
-      // Solved with several hints
+      // Correct after several hints -> 1 day
+      intervalDays = 1;
+      consecutiveCorrect = Math.max(1, previousConsecutive);
+      isMastered = false;
+    } else if (revealedHintsCount > 0) {
+      // Correct after limited hints (1 or 2 hints) -> 2 days
       intervalDays = 2;
       consecutiveCorrect = Math.max(1, previousConsecutive);
       isMastered = false;
     } else if (isSlow) {
-      // Correct but slow
+      // Correct independently but slowly -> 3 days
       intervalDays = 3;
       consecutiveCorrect = previousConsecutive + 1;
       isMastered = false;
-    } else if (previousConsecutive >= 2) {
-      // Repeatedly mastered question
-      intervalDays = 14;
+    } else if (previousConsecutive >= 3) {
+      // Repeatedly demonstrated mastery -> 30 days
+      intervalDays = 30;
       consecutiveCorrect = previousConsecutive + 1;
       isMastered = true;
-    } else {
-      // Correct with good confidence
-      intervalDays = 7;
+    } else if (previousConsecutive >= 1) {
+      // Successful delayed recall -> 14 days
+      intervalDays = 14;
       consecutiveCorrect = previousConsecutive + 1;
+      isMastered = previousConsecutive >= 2;
+    } else {
+      // Correct independently with confidence (0 hints) -> 7 days
+      intervalDays = 7;
+      consecutiveCorrect = 1;
       isMastered = false;
     }
   }

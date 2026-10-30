@@ -76,11 +76,11 @@ export const ProgressPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
           <BarChart2 className="w-7 h-7 text-primary" />
           Preparation Progress Analytics
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">
           Honest progress metrics computed authoritatively from your verified attempts, submissions, and assessments.
         </p>
       </div>
@@ -89,27 +89,27 @@ export const ProgressPage: React.FC = () => {
         <div className="space-y-8">
           {/* Key Metric Tiles */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
               <span className="text-xs font-semibold text-slate-400">DISTINCT SOLVED</span>
-              <div className="text-3xl font-bold text-slate-900 dark:text-white">{solvedCount}</div>
+              <div className="text-3xl font-bold text-slate-900">{solvedCount}</div>
               <p className="text-[11px] text-slate-400">{attemptedCount} unique problems attempted</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
               <span className="text-xs font-semibold text-slate-400">TOTAL SUBMISSIONS</span>
-              <div className="text-3xl font-bold text-slate-900 dark:text-white">{totalSubmissions}</div>
+              <div className="text-3xl font-bold text-slate-900">{totalSubmissions}</div>
               <p className="text-[11px] text-emerald-500">{acceptedSubmissions} accepted verdicts</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
               <span className="text-xs font-semibold text-slate-400">NEEDS REVISION</span>
-              <div className="text-3xl font-bold text-slate-900 dark:text-white">{revisionCount}</div>
+              <div className="text-3xl font-bold text-slate-900">{revisionCount}</div>
               <p className="text-[11px] text-slate-400">Flagged for reinforcement</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
               <span className="text-xs font-semibold text-slate-400">MOCK ATTEMPTS</span>
-              <div className="text-3xl font-bold text-slate-900 dark:text-white">{assessmentAttempts.length}</div>
+              <div className="text-3xl font-bold text-slate-900">{assessmentAttempts.length}</div>
               <p className="text-[11px] text-slate-400">Timed assessments taken</p>
             </div>
           </div>
@@ -117,8 +117,8 @@ export const ProgressPage: React.FC = () => {
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Topic Mastery Bar Chart */}
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+              <h3 className="font-bold text-base text-slate-900">
                 Solved Questions by Topic
               </h3>
               {topicChartData.length > 0 ? (
@@ -140,8 +140,8 @@ export const ProgressPage: React.FC = () => {
             </div>
 
             {/* Verdict Distribution Pie Chart */}
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4 shadow-sm">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+              <h3 className="font-bold text-base text-slate-900">
                 Submission Verdict Breakdown
               </h3>
               {verdictChartData.length > 0 ? (
@@ -176,11 +176,11 @@ export const ProgressPage: React.FC = () => {
         </div>
       ) : (
         /* Honest Empty State for New Accounts */
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center space-y-4 shadow-sm max-w-xl mx-auto">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-primary flex items-center justify-center mx-auto">
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-4 shadow-sm max-w-xl mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-primary flex items-center justify-center mx-auto">
             <TrendingUp className="w-6 h-6" />
           </div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-xl font-bold text-slate-900">
             No Activity Recorded Yet
           </h2>
           <p className="text-xs text-slate-500 leading-relaxed">

@@ -25,11 +25,11 @@ export const SubmissionsPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
             <History className="w-7 h-7 text-primary" />
             Judged Submission History
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Complete persistent audit records of all code submissions, verdicts, and performance metrics.
           </p>
         </div>
@@ -38,7 +38,7 @@ export const SubmissionsPage: React.FC = () => {
           <select
             value={filterVerdict}
             onChange={(e) => setFilterVerdict(e.target.value)}
-            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+            className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-900"
           >
             <option value="ALL">All Verdicts</option>
             <option value="ACCEPTED">Accepted Only</option>
@@ -48,20 +48,20 @@ export const SubmissionsPage: React.FC = () => {
       </div>
 
       {filteredSubmissions.length > 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <div className="divide-y divide-slate-100">
             {filteredSubmissions.map((sub) => {
               const q = questions.find(item => item.id === sub.problemId);
               return (
                 <div
                   key={sub.id}
-                  className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+                  className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2.5">
                       <Link
                         to={`/problems/${sub.problemId}`}
-                        className="font-bold text-sm text-slate-900 dark:text-white hover:text-primary transition-colors"
+                        className="font-bold text-sm text-slate-900 hover:text-primary transition-colors"
                       >
                         {q?.title || sub.problemId}
                       </Link>
@@ -105,9 +105,9 @@ export const SubmissionsPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center space-y-3">
-          <Code2 className="w-10 h-10 text-slate-300 dark:text-slate-700 mx-auto" />
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-3">
+          <Code2 className="w-10 h-10 text-slate-300 mx-auto" />
+          <h3 className="text-base font-bold text-slate-900">
             No submissions found
           </h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">
@@ -140,7 +140,7 @@ export const SubmissionsPage: React.FC = () => {
               <span>Runtime: {selectedSub.executionTimeMs}ms • Memory: {selectedSub.memoryUsedKb}KB</span>
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
               <Button variant="ghost" size="sm" onClick={() => setSelectedSub(null)}>
                 Close
               </Button>

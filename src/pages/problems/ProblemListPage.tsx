@@ -175,7 +175,7 @@ export const ProblemListPage: React.FC = () => {
       </div>
 
       {/* Filter Controls Row */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3 shadow-xs">
+      <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-xs">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
           {/* Track Filter */}
           <div>
@@ -185,7 +185,7 @@ export const ProblemListPage: React.FC = () => {
             <select
               value={filters.track}
               onChange={(e) => setFilter('track', e.target.value as any)}
-              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 bg-white text-slate-900"
             >
               <option value="ALL">All Tracks</option>
               <option value="NINJA">Ninja Track</option>
@@ -202,7 +202,7 @@ export const ProblemListPage: React.FC = () => {
             <select
               value={filters.difficulty}
               onChange={(e) => setFilter('difficulty', e.target.value as any)}
-              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 bg-white text-slate-900"
             >
               <option value="ALL">All Difficulties</option>
               <option value="EASY">Easy</option>
@@ -219,7 +219,7 @@ export const ProblemListPage: React.FC = () => {
             <select
               value={filters.topic}
               onChange={(e) => setFilter('topic', e.target.value)}
-              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 bg-white text-slate-900"
             >
               <option value="ALL">All Topics</option>
               {allTopics.map(t => (
@@ -236,7 +236,7 @@ export const ProblemListPage: React.FC = () => {
             <select
               value={filters.sourceType}
               onChange={(e) => setFilter('sourceType', e.target.value as any)}
-              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 bg-white text-slate-900"
             >
               <option value="ALL">All Provenances</option>
               <option value="RECURRING_PATTERN">Recurring Pattern</option>
@@ -254,7 +254,7 @@ export const ProblemListPage: React.FC = () => {
             <select
               value={filters.status}
               onChange={(e) => setFilter('status', e.target.value as any)}
-              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full text-xs p-1.5 rounded-lg border border-slate-200 bg-white text-slate-900"
             >
               <option value="ALL">All Statuses</option>
               <option value="SOLVED">Solved</option>
@@ -268,7 +268,7 @@ export const ProblemListPage: React.FC = () => {
 
         {/* Reset Filter Button if any active filter */}
         {(filters.searchTerm || filters.section !== 'ALL' || filters.difficulty !== 'ALL' || filters.track !== 'ALL' || filters.sourceType !== 'ALL' || filters.topic !== 'ALL' || filters.status !== 'ALL') && (
-          <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+          <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
             <span className="text-slate-500 font-medium">
               Showing {filteredQuestions.length} of {questions.length} problems
             </span>
@@ -355,7 +355,7 @@ export const ProblemListPage: React.FC = () => {
                         )}
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
                         <div className="flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5" />
                           <span>~{q.estimatedMinutes} mins</span>
@@ -363,7 +363,7 @@ export const ProblemListPage: React.FC = () => {
                         <span>•</span>
                         <div className="flex flex-wrap gap-1">
                           {q.topics.map(t => (
-                            <span key={t} className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px]">
+                            <span key={t} className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px]">
                               {t}
                             </span>
                           ))}

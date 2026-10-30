@@ -12,11 +12,11 @@ export const AssessmentListPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
           <Award className="w-7 h-7 text-primary" />
           Timed Practice Assessments
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">
           Full-length diagnostic exams designed to evaluate multi-section time management and test endurance.
         </p>
       </div>
@@ -30,7 +30,7 @@ export const AssessmentListPage: React.FC = () => {
           return (
             <div
               key={assessment.id}
-              className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between shadow-sm space-y-6"
+              className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -42,20 +42,20 @@ export const AssessmentListPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-lg font-bold text-slate-900">
                     {assessment.title}
                   </h3>
-                  <p className="text-xs text-indigo-600 dark:text-indigo-400 font-mono mt-0.5">
+                  <p className="text-xs text-indigo-600 font-mono mt-0.5">
                     {assessment.hiringCycle}
                   </p>
                 </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   {assessment.description}
                 </p>
 
                 {/* Section breakdown */}
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div className="pt-2 border-t border-slate-100">
                   <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
                     Sections Included:
                   </h5>
@@ -63,7 +63,7 @@ export const AssessmentListPage: React.FC = () => {
                     {assessment.sections.map((sec) => (
                       <span
                         key={sec.id}
-                        className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium"
+                        className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-medium"
                       >
                         {sec.title} ({sec.durationMinutes}m)
                       </span>
@@ -73,7 +73,7 @@ export const AssessmentListPage: React.FC = () => {
 
                 {/* Previous Attempt Summary if taken */}
                 {pastAttempt && (
-                  <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-200 flex items-center justify-between">
+                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
                     <span className="flex items-center gap-1.5 font-medium">
                       <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                       Completed on {new Date(pastAttempt.completedAt || pastAttempt.startedAt).toLocaleDateString()}
@@ -85,7 +85,7 @@ export const AssessmentListPage: React.FC = () => {
                 )}
               </div>
 
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <span className="text-xs text-slate-500 font-mono">
                   {totalQuestions} questions • {totalMarks} max marks
                 </span>

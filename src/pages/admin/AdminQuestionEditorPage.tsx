@@ -137,11 +137,11 @@ export const AdminQuestionEditorPage: React.FC = () => {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link to="/admin" className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-800">
+          <Link to="/admin" className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-800">
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
               {isNew || !existing ? 'Create New Practice Problem' : `Edit: ${existing.title}`}
             </h1>
             <p className="text-xs text-slate-500">
@@ -162,17 +162,17 @@ export const AdminQuestionEditorPage: React.FC = () => {
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-xs text-rose-700 dark:text-rose-300 flex items-center gap-2">
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm text-xs">
+      <form onSubmit={handleSave} className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-sm text-xs">
         {/* Basic Metadata */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Problem Title
             </label>
             <input
@@ -181,18 +181,18 @@ export const AdminQuestionEditorPage: React.FC = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Consecutive Prime Sum"
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             />
           </div>
 
           <div>
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Publication Status
             </label>
             <select
               value={publicationStatus}
               onChange={(e) => setPublicationStatus(e.target.value as any)}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             >
               <option value="DRAFT">Draft (Under Review)</option>
               <option value="PUBLISHED">Published (Student Accessible)</option>
@@ -201,15 +201,15 @@ export const AdminQuestionEditorPage: React.FC = () => {
         </div>
 
         {/* Difficulty, Tracks, Provenance */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
           <div>
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Difficulty Tier
             </label>
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value as DifficultyLevel)}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             >
               <option value="EASY">Easy</option>
               <option value="MEDIUM">Medium</option>
@@ -218,13 +218,13 @@ export const AdminQuestionEditorPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Evidence Provenance
             </label>
             <select
               value={sourceType}
               onChange={(e) => setSourceType(e.target.value as SourceEvidenceType)}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             >
               <option value="ORIGINAL_PRACTICE">ORIGINAL_PRACTICE</option>
               <option value="RECURRING_PATTERN">RECURRING_PATTERN</option>
@@ -234,7 +234,7 @@ export const AdminQuestionEditorPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Topic Tags (comma separated)
             </label>
             <input
@@ -242,14 +242,14 @@ export const AdminQuestionEditorPage: React.FC = () => {
               value={topicsText}
               onChange={(e) => setTopicsText(e.target.value)}
               placeholder="e.g. Arrays, Prefix Sum, Hash Map"
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             />
           </div>
         </div>
 
         {/* Problem Statement */}
-        <div className="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
-          <label className="block font-bold text-slate-700 dark:text-slate-300">
+        <div className="space-y-2 pt-4 border-t border-slate-100">
+          <label className="block font-bold text-slate-700">
             Problem Statement (Markdown supported)
           </label>
           <textarea
@@ -257,53 +257,53 @@ export const AdminQuestionEditorPage: React.FC = () => {
             required
             value={problemStatement}
             onChange={(e) => setProblemStatement(e.target.value)}
-            className="w-full p-3 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-mono"
+            className="w-full p-3 text-xs rounded-lg border border-slate-300 bg-white text-slate-900 font-mono"
           />
         </div>
 
         {/* Input / Output Format */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Input Format
             </label>
             <textarea
               rows={2}
               value={inputFormat}
               onChange={(e) => setInputFormat(e.target.value)}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             />
           </div>
           <div>
-            <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-bold text-slate-700 mb-1">
               Output Format
             </label>
             <textarea
               rows={2}
               value={outputFormat}
               onChange={(e) => setOutputFormat(e.target.value)}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
             />
           </div>
         </div>
 
         {/* Constraints */}
         <div>
-          <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+          <label className="block font-bold text-slate-700 mb-1">
             Constraints (One per line)
           </label>
           <textarea
             rows={3}
             value={constraintsText}
             onChange={(e) => setConstraintsText(e.target.value)}
-            className="w-full p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white font-mono"
+            className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900 font-mono"
           />
         </div>
 
         {/* Progressive Hints */}
-        <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <div className="space-y-3 pt-4 border-t border-slate-100">
           <div className="flex items-center justify-between">
-            <label className="font-bold text-slate-700 dark:text-slate-300">
+            <label className="font-bold text-slate-700">
               Progressive Hints (Layered)
             </label>
             <button
@@ -324,7 +324,7 @@ export const AdminQuestionEditorPage: React.FC = () => {
                   copy[i] = e.target.value;
                   setHints(copy);
                 }}
-                className="flex-1 p-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+                className="flex-1 p-2 text-xs rounded-lg border border-slate-300 bg-white text-slate-900"
               />
               <button
                 type="button"
@@ -338,11 +338,11 @@ export const AdminQuestionEditorPage: React.FC = () => {
         </div>
 
         {/* Test Cases Setup */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
           {/* Public Test Cases */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-slate-700">
                 Public Test Cases ({publicTestCases.length})
               </label>
               <button
@@ -354,9 +354,9 @@ export const AdminQuestionEditorPage: React.FC = () => {
               </button>
             </div>
             {publicTestCases.map((tc, i) => (
-              <div key={tc.id} className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-2">
+              <div key={tc.id} className="p-3 rounded-lg border border-slate-200 bg-slate-50 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-600 dark:text-slate-400">Public #{i + 1}</span>
+                  <span className="font-semibold text-slate-600">Public #{i + 1}</span>
                   {publicTestCases.length > 1 && (
                     <button
                       type="button"
@@ -376,7 +376,7 @@ export const AdminQuestionEditorPage: React.FC = () => {
                     copy[i].input = e.target.value;
                     setPublicTestCases(copy);
                   }}
-                  className="w-full p-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded font-mono"
+                  className="w-full p-1.5 text-xs bg-white border border-slate-300 rounded font-mono"
                 />
                 <input
                   type="text"
@@ -387,7 +387,7 @@ export const AdminQuestionEditorPage: React.FC = () => {
                     copy[i].expectedOutput = e.target.value;
                     setPublicTestCases(copy);
                   }}
-                  className="w-full p-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded font-mono"
+                  className="w-full p-1.5 text-xs bg-white border border-slate-300 rounded font-mono"
                 />
               </div>
             ))}
@@ -396,7 +396,7 @@ export const AdminQuestionEditorPage: React.FC = () => {
           {/* Hidden Grader Test Cases */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-slate-700">
                 Hidden Evaluation Cases ({hiddenTestCases.length})
               </label>
               <button
@@ -408,9 +408,9 @@ export const AdminQuestionEditorPage: React.FC = () => {
               </button>
             </div>
             {hiddenTestCases.map((tc, i) => (
-              <div key={tc.id} className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-2">
+              <div key={tc.id} className="p-3 rounded-lg border border-slate-200 bg-slate-50 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-purple-600 dark:text-purple-400">Hidden Evaluation #{i + 1}</span>
+                  <span className="font-semibold text-purple-600">Hidden Evaluation #{i + 1}</span>
                   <button
                     type="button"
                     onClick={() => setHiddenTestCases(hiddenTestCases.filter((_, idx) => idx !== i))}
@@ -428,7 +428,7 @@ export const AdminQuestionEditorPage: React.FC = () => {
                     copy[i].input = e.target.value;
                     setHiddenTestCases(copy);
                   }}
-                  className="w-full p-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded font-mono"
+                  className="w-full p-1.5 text-xs bg-white border border-slate-300 rounded font-mono"
                 />
                 <input
                   type="text"
@@ -439,14 +439,14 @@ export const AdminQuestionEditorPage: React.FC = () => {
                     copy[i].expectedOutput = e.target.value;
                     setHiddenTestCases(copy);
                   }}
-                  className="w-full p-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded font-mono"
+                  className="w-full p-1.5 text-xs bg-white border border-slate-300 rounded font-mono"
                 />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
           <Link to="/admin">
             <Button type="button" variant="ghost" size="sm">
               Cancel

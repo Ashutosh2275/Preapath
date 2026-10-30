@@ -18,8 +18,73 @@ export interface UserProfile {
   proficiency: ProficiencyLevel;
   weakTopics: string[];
   role: UserRole;
+  timezone?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export type TopicMasteryState = 
+  | 'NOT_STARTED'
+  | 'LEARNING'
+  | 'NEEDS_REVIEW'
+  | 'IMPROVING'
+  | 'PROVISIONALLY_MASTERED'
+  | 'MASTERED';
+
+export interface TopicMasteryRecord {
+  id?: string;
+  userId: string;
+  topic: string;
+  section: SectionType;
+  track: TargetTrack;
+  masteryState: TopicMasteryState;
+  score: number; // 0 to 100
+  totalAttempts: number;
+  successfulAttempts: number;
+  independentSolves: number; // solved with 0 hints
+  delayedRecallSuccesses: number;
+  lastAttemptAt?: string;
+  evidenceNotes?: string[];
+  updatedAt: string;
+}
+
+export interface PlanRevisionProposal {
+  currentPlanVersion: number;
+  newPlanVersion: number;
+  changeReason: 'EXAM_DATE_MOVED_EARLIER' | 'EXAM_DATE_MOVED_LATER' | 'STUDY_TIME_CHANGED' | 'MANUAL_RESCHEDULE' | 'INSUFFICIENT_TIME_PRIORITIZATION';
+  previousExamDate?: string;
+  newExamDate?: string;
+  previousRemainingDays: number;
+  newRemainingDays: number;
+  previousDailyMinutes: number;
+  newDailyMinutes: number;
+  completedDaysPreserved: number;
+  completedTasksPreserved: number;
+  futureDaysProposed: number;
+  prioritizedWeakTopics: string[];
+  deferredTopics: string[];
+  isTimeConstrained: boolean;
+  proposedDays: StudyPlanDay[];
+  summaryMessage: string;
+}
+
+export interface StudyPlanRevisionRecord {
+  id: string;
+  planId: string;
+  userId: string;
+  fromVersion: number;
+  toVersion: number;
+  changeReason: string;
+  previousExamDate?: string;
+  newExamDate?: string;
+  previousDailyMinutes: number;
+  newDailyMinutes: number;
+  completedDaysCount: number;
+  completedTasksCount: number;
+  deferredTopics: string[];
+  summaryMessage: string;
+  authorizedBy: string;
+  createdAt: string;
 }
 
 export type SectionType = 

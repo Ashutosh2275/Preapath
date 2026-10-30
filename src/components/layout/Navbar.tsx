@@ -3,9 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Code2, 
   Calendar, 
-  Award, 
   BarChart2, 
-  Bookmark, 
   ShieldAlert, 
   User, 
   LogOut, 
@@ -43,23 +41,29 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  // Section 2: Consolidated Minimal Navigation Structure
   const studentLinks = [
     { label: 'Dashboard', path: '/dashboard', icon: Sparkles },
+    { label: 'Practice', path: '/practice', icon: Code2 },
     { label: 'Study Plan', path: '/study-plan', icon: Calendar },
-    { label: 'Problems', path: '/problems', icon: Code2 },
-    { label: 'Mock Tests', path: '/assessments', icon: Award },
     { label: 'Progress', path: '/progress', icon: BarChart2 },
-    { label: 'Revision', path: '/bookmarks', icon: Bookmark },
+    { label: 'Profile', path: '/profile', icon: User },
   ];
 
   const isActive = (path: string) => {
-    if (path === '/problems') return location.pathname.startsWith('/problems');
-    if (path === '/assessments') return location.pathname.startsWith('/assessments');
+    if (path === '/practice') {
+      return location.pathname.startsWith('/practice') || location.pathname.startsWith('/problems');
+    }
+    if (path === '/study-plan') return location.pathname.startsWith('/study-plan');
+    if (path === '/progress') {
+      return location.pathname.startsWith('/progress') || location.pathname.startsWith('/submissions');
+    }
+    if (path === '/profile') return location.pathname.startsWith('/profile');
     return location.pathname === path;
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
+    <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
@@ -69,10 +73,10 @@ export const Navbar: React.FC = () => {
                 <Code2 className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight leading-none">
+                <span className="font-extrabold text-lg sm:text-xl text-slate-900 tracking-tight leading-none">
                   PrepPath
                 </span>
-                <span className="hidden sm:block text-[11px] font-medium text-slate-400 dark:text-slate-500 tracking-wide mt-1">
+                <span className="hidden sm:block text-[11px] font-medium text-slate-400 tracking-wide mt-1">
                   TCS Preparation
                 </span>
               </div>
@@ -90,8 +94,8 @@ export const Navbar: React.FC = () => {
                       to={link.path}
                       className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                         active
-                          ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold shadow-xs'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                          ? 'bg-indigo-50 text-indigo-700 font-semibold shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -105,8 +109,8 @@ export const Navbar: React.FC = () => {
                     to="/admin"
                     className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                       location.pathname.startsWith('/admin')
-                        ? 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 font-semibold shadow-xs'
-                        : 'text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30'
+                        ? 'bg-purple-50 text-purple-700 font-semibold shadow-xs'
+                        : 'text-purple-600 hover:bg-purple-50'
                     }`}
                   >
                     <ShieldAlert className="w-4 h-4" />
@@ -117,15 +121,15 @@ export const Navbar: React.FC = () => {
             ) : (
               <div className="hidden md:flex items-center ml-2">
                 <Link
-                  to="/problems"
+                  to="/practice"
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    location.pathname.startsWith('/problems')
-                      ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold shadow-xs'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                    location.pathname.startsWith('/practice') || location.pathname.startsWith('/problems')
+                      ? 'bg-indigo-50 text-indigo-700 font-semibold shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
                   <Code2 className="w-4 h-4" />
-                  Problems
+                  Practice
                 </Link>
               </div>
             )}
@@ -133,7 +137,7 @@ export const Navbar: React.FC = () => {
 
           {/* Right Header Controls */}
           <div className="flex items-center gap-3">
-            {/* In-App Notifications Bell */}
+            {/* In-App Notifications Drawer / Popup */}
             {user && (
               <div className="relative">
                 <button
@@ -151,11 +155,11 @@ export const Navbar: React.FC = () => {
 
                 {notifDropdownOpen && (
                   <div 
-                    className="absolute right-0 mt-2 w-80 rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 p-3 z-50 animate-in fade-in"
+                    className="absolute right-0 mt-2 w-80 rounded-2xl bg-white shadow-xl border border-slate-200 p-3 z-50 animate-in fade-in"
                     onMouseLeave={() => setNotifDropdownOpen(false)}
                   >
-                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800 text-xs">
-                      <span className="font-bold text-slate-900 dark:text-white">
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 text-xs">
+                      <span className="font-bold text-slate-900">
                         Study Reminders ({unreadCount} unread)
                       </span>
                       <Link 
@@ -178,8 +182,8 @@ export const Navbar: React.FC = () => {
                           }}
                           className={`p-2.5 rounded-xl text-left cursor-pointer transition-colors ${
                             notif.read
-                              ? 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-850'
-                              : 'bg-primary/5 dark:bg-primary/10 text-slate-900 dark:text-white font-medium hover:bg-primary/10'
+                              ? 'text-slate-500 hover:bg-slate-50'
+                              : 'bg-primary/5 text-slate-900 font-medium hover:bg-primary/10'
                           }`}
                         >
                           <div className="flex items-center justify-between text-xs font-semibold mb-0.5">
@@ -207,23 +211,23 @@ export const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2.5 p-1.5 pr-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left"
+                  className="flex items-center gap-2.5 p-1.5 pr-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors text-left"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-sm">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
                     {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline text-sm font-medium text-slate-700 dark:text-slate-300 max-w-[130px] truncate">
+                  <span className="hidden sm:inline text-sm font-medium text-slate-700 max-w-[130px] truncate">
                     {user.displayName || user.email}
                   </span>
                 </button>
 
                 {userDropdownOpen && (
                   <div 
-                    className="absolute right-0 mt-2 w-52 rounded-xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 py-1 z-50 animate-in fade-in slide-in-from-top-1"
+                    className="absolute right-0 mt-2 w-52 rounded-xl bg-white shadow-xl border border-slate-200 py-1 z-50 animate-in fade-in slide-in-from-top-1"
                     onMouseLeave={() => setUserDropdownOpen(false)}
                   >
-                    <div className="px-3.5 py-2 border-b border-slate-100 dark:border-slate-800">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
+                    <div className="px-3.5 py-2 border-b border-slate-100">
+                      <p className="text-xs font-semibold text-slate-900 truncate">
                         {user.displayName || 'PrepPath Student'}
                       </p>
                       <p className="text-[11px] text-slate-400 truncate">
@@ -234,16 +238,16 @@ export const Navbar: React.FC = () => {
                     <Link
                       to="/profile"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                      className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50"
                     >
                       <User className="w-3.5 h-3.5 text-slate-400" />
-                      Profile Settings
+                      Profile & Goals
                     </Link>
 
                     <Link
                       to="/settings"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                      className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50"
                     >
                       <Settings className="w-3.5 h-3.5 text-slate-400" />
                       Account Preferences
@@ -253,18 +257,18 @@ export const Navbar: React.FC = () => {
                       <Link
                         to="/admin"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2 px-3.5 py-2 text-xs text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30"
+                        className="flex items-center gap-2 px-3.5 py-2 text-xs text-purple-600 hover:bg-purple-50"
                       >
                         <ShieldAlert className="w-3.5 h-3.5" />
                         Admin Content Portal
                       </Link>
                     )}
 
-                    <div className="border-t border-slate-100 dark:border-slate-800 my-1" />
+                    <div className="border-t border-slate-100 my-1" />
 
                     <button
                       onClick={handleSignOut}
-                      className="flex items-center gap-2 w-full text-left px-3.5 py-2 text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30"
+                      className="flex items-center gap-2 w-full text-left px-3.5 py-2 text-xs text-rose-600 hover:bg-rose-50"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       Sign Out
@@ -288,7 +292,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800"
+              className="md:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -299,7 +303,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-1">
+        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
           {user ? (
             studentLinks.map((link) => {
               const Icon = link.icon;
@@ -311,8 +315,8 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium ${
                     active
-                      ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                      : 'text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -323,12 +327,12 @@ export const Navbar: React.FC = () => {
           ) : (
             <>
               <Link
-                to="/problems"
+                to="/practice"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50"
               >
                 <Code2 className="w-4 h-4" />
-                Problems
+                Practice
               </Link>
               <div className="pt-2 flex flex-col gap-2">
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)}>

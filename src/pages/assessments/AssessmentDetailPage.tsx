@@ -48,7 +48,7 @@ export const AssessmentDetailPage: React.FC = () => {
   if (!assessment) {
     return (
       <div className="max-w-4xl mx-auto py-16 px-4 text-center space-y-4">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Assessment Not Found</h2>
+        <h2 className="text-xl font-bold text-slate-900">Assessment Not Found</h2>
         <Link to="/assessments">
           <Button variant="primary" size="sm">Back to Assessments</Button>
         </Link>
@@ -167,7 +167,7 @@ export const AssessmentDetailPage: React.FC = () => {
             <span className="text-xs font-bold text-primary uppercase tracking-wider">
               Assessment Analysis & Mistake Review
             </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
               {assessment.title}
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -188,13 +188,13 @@ export const AssessmentDetailPage: React.FC = () => {
         </div>
 
         {/* Score Banner */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 shadow-sm">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 shadow-sm">
           <div className="space-y-1">
             <span className="text-xs text-slate-400 font-semibold block">TOTAL SCORE</span>
-            <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
+            <div className="text-3xl font-extrabold text-slate-900">
               {activeAttempt.score} <span className="text-sm text-slate-400 font-normal">/ {activeAttempt.totalPossibleScore}</span>
             </div>
-            <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+            <p className="text-xs font-semibold text-emerald-600">
               {scorePct}% Overall Accuracy
             </p>
           </div>
@@ -205,7 +205,7 @@ export const AssessmentDetailPage: React.FC = () => {
               {assessment.sections.map(sec => {
                 const sc = activeAttempt.sectionScores[sec.id];
                 return (
-                  <div key={sec.id} className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
+                  <div key={sec.id} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs">
                     <span className="font-semibold block truncate">{sec.title}</span>
                     <span className="text-slate-500 font-mono text-[11px]">
                       {sc ? `${sc.correct}/${sc.total} correct` : '—'}
@@ -219,7 +219,7 @@ export const AssessmentDetailPage: React.FC = () => {
 
         {/* Detailed Question Review & Explanations */}
         <div className="space-y-4">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+          <h3 className="text-lg font-bold text-slate-900">
             Mistake Analysis & Solutions
           </h3>
 
@@ -232,17 +232,17 @@ export const AssessmentDetailPage: React.FC = () => {
               return (
                 <div
                   key={q.id}
-                  className={`p-5 rounded-2xl border bg-white dark:bg-slate-900 space-y-4 ${
+                  className={`p-5 rounded-2xl border bg-white space-y-4 ${
                     isCorrect
-                      ? 'border-emerald-200 dark:border-emerald-900/60'
+                      ? 'border-emerald-200'
                       : isAnswered
-                        ? 'border-rose-200 dark:border-rose-900/60'
-                        : 'border-slate-200 dark:border-slate-800'
+                        ? 'border-rose-200'
+                        : 'border-slate-200'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold font-mono">
+                      <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold font-mono">
                         {idx + 1}
                       </span>
                       <span className="text-xs font-semibold text-slate-500">
@@ -252,9 +252,9 @@ export const AssessmentDetailPage: React.FC = () => {
 
                     <span className={`text-xs font-bold flex items-center gap-1 ${
                       isCorrect
-                        ? 'text-emerald-600 dark:text-emerald-400'
+                        ? 'text-emerald-600'
                         : isAnswered
-                          ? 'text-rose-600 dark:text-rose-400'
+                          ? 'text-rose-600'
                           : 'text-slate-400'
                     }`}>
                       {isCorrect ? (
@@ -271,7 +271,7 @@ export const AssessmentDetailPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line">
+                  <p className="text-sm font-semibold text-slate-900 leading-relaxed whitespace-pre-line">
                     {q.prompt}
                   </p>
 
@@ -287,10 +287,10 @@ export const AssessmentDetailPage: React.FC = () => {
                             key={opt.id}
                             className={`p-3 rounded-xl border flex items-center justify-between ${
                               isRight
-                                ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 font-semibold text-emerald-900 dark:text-emerald-200'
+                                ? 'border-emerald-400 bg-emerald-50 font-semibold text-emerald-900'
                                 : isChosen
-                                  ? 'border-rose-400 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200'
-                                  : 'border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+                                  ? 'border-rose-400 bg-rose-50 text-rose-900'
+                                  : 'border-slate-200 text-slate-700'
                             }`}
                           >
                             <span>{opt.text}</span>
@@ -303,8 +303,8 @@ export const AssessmentDetailPage: React.FC = () => {
                   )}
 
                   {/* Explanation Card */}
-                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                    <span className="font-bold text-slate-900 dark:text-white text-[10px] uppercase block">
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+                    <span className="font-bold text-slate-900 text-[10px] uppercase block">
                       Explanation & Solution Step
                     </span>
                     <p className="leading-relaxed">{q.explanation}</p>
@@ -322,12 +322,12 @@ export const AssessmentDetailPage: React.FC = () => {
   if (mode === 'intro') {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 space-y-8">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6">
           <div className="space-y-2">
             <span className="text-xs font-bold text-primary uppercase tracking-wider">
               Practice Assessment Brief
             </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               {assessment.title}
             </h1>
             <p className="text-xs text-slate-500">
@@ -335,15 +335,15 @@ export const AssessmentDetailPage: React.FC = () => {
             </p>
           </div>
 
-          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {assessment.description}
           </p>
 
-          <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
               Assessment Instructions:
             </h4>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600">
               {assessment.instructions.map((ins, i) => (
                 <li key={i}>{ins}</li>
               ))}
@@ -375,11 +375,11 @@ export const AssessmentDetailPage: React.FC = () => {
 
   // Active Test Mode Render
   return (
-    <div className="flex-1 flex flex-col min-h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-950">
+    <div className="flex-1 flex flex-col min-h-[calc(100vh-5rem)] bg-slate-50">
       {/* Test Header Bar with Live Countdown */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between sticky top-16 z-30 shadow-xs">
+      <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-16 z-30 shadow-xs">
         <div>
-          <h2 className="font-bold text-sm text-slate-900 dark:text-white truncate max-w-sm sm:max-w-md">
+          <h2 className="font-bold text-sm text-slate-900 truncate max-w-sm sm:max-w-md">
             {assessment.title}
           </h2>
           <span className="text-xs text-slate-400">
@@ -388,7 +388,7 @@ export const AssessmentDetailPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 font-mono font-bold text-sm">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 font-mono font-bold text-sm">
             <Clock className="w-4 h-4 text-amber-600 animate-pulse" />
             {formatTimer(timeRemainingSeconds)}
           </div>
@@ -409,7 +409,7 @@ export const AssessmentDetailPage: React.FC = () => {
         {/* Left 3 Cols: Active Question Area */}
         <div className="lg:col-span-3 space-y-6">
           {/* Section Navigation Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200 dark:border-slate-800 text-xs">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200 text-xs">
             {assessment.sections.map((sec, idx) => (
               <button
                 key={sec.id}
@@ -420,7 +420,7 @@ export const AssessmentDetailPage: React.FC = () => {
                 className={`py-2 px-3 rounded-lg font-medium whitespace-nowrap transition-colors ${
                   activeSectionIndex === idx
                     ? 'bg-primary text-white font-bold'
-                    : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
                 {sec.title} ({sec.durationMinutes}m)
@@ -429,8 +429,8 @@ export const AssessmentDetailPage: React.FC = () => {
           </div>
 
           {currentQuestion && (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm">
-              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-sm">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <span className="font-bold text-xs text-primary font-mono">
                   Question {activeQuestionIndex + 1} of {sectionQuestions.length}
                 </span>
@@ -442,8 +442,8 @@ export const AssessmentDetailPage: React.FC = () => {
                     onClick={() => handleToggleMarkReview(currentQuestion.id)}
                     className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 transition-colors ${
                       markedForReview.includes(currentQuestion.id)
-                        ? 'border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 font-semibold'
-                        : 'border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-800'
+                        ? 'border-amber-400 bg-amber-50 text-amber-700 font-semibold'
+                        : 'border-slate-200 text-slate-500 hover:text-slate-800'
                     }`}
                   >
                     <Bookmark className="w-3.5 h-3.5" />
@@ -453,7 +453,7 @@ export const AssessmentDetailPage: React.FC = () => {
               </div>
 
               {/* Prompt */}
-              <div className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line">
+              <div className="text-sm sm:text-base font-semibold text-slate-900 leading-relaxed whitespace-pre-line">
                 {currentQuestion.prompt}
               </div>
 
@@ -468,14 +468,14 @@ export const AssessmentDetailPage: React.FC = () => {
                         onClick={() => handleSelectOption(currentQuestion.id, opt.id)}
                         className={`p-3.5 rounded-xl border cursor-pointer text-xs sm:text-sm transition-all flex items-center gap-3 ${
                           isSelected
-                            ? 'border-primary ring-2 ring-primary/20 bg-indigo-50/50 dark:bg-indigo-950/40 text-primary font-bold'
-                            : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200'
+                            ? 'border-primary ring-2 ring-primary/20 bg-indigo-50/50 text-primary font-bold'
+                            : 'border-slate-200 hover:border-slate-300 text-slate-800'
                         }`}
                       >
                         <div className={`w-5 h-5 rounded-full border flex items-center justify-center text-xs font-mono font-bold ${
                           isSelected
                             ? 'border-primary bg-primary text-white'
-                            : 'border-slate-300 dark:border-slate-700'
+                            : 'border-slate-300'
                         }`}>
                           {opt.id.toUpperCase()}
                         </div>
@@ -488,11 +488,11 @@ export const AssessmentDetailPage: React.FC = () => {
 
               {/* Coding Question Reference if coding type */}
               {currentQuestion.type === 'CODING' && currentQuestion.codingProblemId && (
-                <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 text-xs space-y-2">
-                  <span className="font-bold text-indigo-700 dark:text-indigo-300 block">
+                <div className="p-4 rounded-xl bg-indigo-50/50 border border-indigo-200 text-xs space-y-2">
+                  <span className="font-bold text-indigo-700 block">
                     Hands-on Coding Assessment Module
                   </span>
-                  <p className="text-slate-600 dark:text-slate-400">
+                  <p className="text-slate-600">
                     This coding problem is linked to our interactive code editor. You can implement, run, and test with your preferred language.
                   </p>
                   <Link to={`/problems/${currentQuestion.codingProblemId}`} target="_blank">
@@ -504,7 +504,7 @@ export const AssessmentDetailPage: React.FC = () => {
               )}
 
               {/* Next/Previous Controls */}
-              <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
                 <Button
                   variant="outline"
                   size="sm"
@@ -558,8 +558,8 @@ export const AssessmentDetailPage: React.FC = () => {
 
         {/* Right Col: Question Palette */}
         <div className="space-y-4">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 shadow-sm">
-            <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4 shadow-sm">
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
               Question Palette ({currentSection?.title})
             </h4>
 
@@ -579,10 +579,10 @@ export const AssessmentDetailPage: React.FC = () => {
                         : ''
                     } ${
                       isReview
-                        ? 'bg-amber-100 text-amber-900 border-amber-300 dark:bg-amber-950/80 dark:text-amber-200'
+                        ? 'bg-amber-100 text-amber-900 border-amber-300'
                         : isAnswered
                           ? 'bg-emerald-500 text-white border-emerald-500'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+                          : 'bg-slate-100 text-slate-700 border-slate-200'
                     }`}
                   >
                     {idx + 1}
@@ -592,7 +592,7 @@ export const AssessmentDetailPage: React.FC = () => {
             </div>
 
             {/* Legend */}
-            <div className="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500">
+            <div className="space-y-2 pt-4 border-t border-slate-100 text-[11px] text-slate-500">
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-3.5 rounded bg-emerald-500 shrink-0" />
                 <span>Answered</span>
@@ -602,7 +602,7 @@ export const AssessmentDetailPage: React.FC = () => {
                 <span>Marked for Review</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-3.5 rounded bg-slate-100 dark:bg-slate-800 border shrink-0" />
+                <span className="w-3.5 h-3.5 rounded bg-slate-100 border shrink-0" />
                 <span>Unattempted</span>
               </div>
             </div>

@@ -15,14 +15,14 @@ export const AdminDashboardPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 text-xs font-semibold mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold mb-2">
             <ShieldAlert className="w-3.5 h-3.5" />
             Administrative Content Portal
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
             Question & Assessment Management
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Author, validate, and publish verified coding problems, test cases, and progressive hints.
           </p>
         </div>
@@ -43,29 +43,29 @@ export const AdminDashboardPage: React.FC = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
           <span className="text-xs font-semibold text-slate-400 uppercase">Total Questions</span>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white">{questions.length}</div>
+          <div className="text-3xl font-bold text-slate-900">{questions.length}</div>
           <p className="text-[11px] text-slate-400">In database storage</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
           <span className="text-xs font-semibold text-slate-400 uppercase">Published Active</span>
-          <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{publishedCount}</div>
+          <div className="text-3xl font-bold text-emerald-600">{publishedCount}</div>
           <p className="text-[11px] text-slate-400">Available to student bank</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+        <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1">
           <span className="text-xs font-semibold text-slate-400 uppercase">Draft Work-in-Progress</span>
-          <div className="text-3xl font-bold text-amber-600 dark:text-amber-400">{draftCount}</div>
+          <div className="text-3xl font-bold text-amber-600">{draftCount}</div>
           <p className="text-[11px] text-slate-400">Pending test case validation</p>
         </div>
       </div>
 
       {/* Questions Management Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm space-y-4 p-6">
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm space-y-4 p-6">
         <div className="flex items-center justify-between">
-          <h3 className="font-bold text-base text-slate-900 dark:text-white">
+          <h3 className="font-bold text-base text-slate-900">
             Repository Content Overview
           </h3>
           <span className="text-xs text-slate-500 font-mono">
@@ -73,20 +73,20 @@ export const AdminDashboardPage: React.FC = () => {
           </span>
         </div>
 
-        <div className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="divide-y divide-slate-100">
           {questions.map((q) => (
             <div key={q.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-bold text-sm text-slate-900 dark:text-white">
+                  <span className="font-bold text-sm text-slate-900">
                     {q.title}
                   </span>
                   <DifficultyBadge difficulty={q.difficulty} />
                   <SourceBadge sourceType={q.sourceType} />
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded font-mono ${
                     q.publicationStatus === 'PUBLISHED'
-                      ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
-                      : 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300'
+                      ? 'bg-emerald-50 text-emerald-700'
+                      : 'bg-amber-50 text-amber-700'
                   }`}>
                     {q.publicationStatus}
                   </span>

@@ -12,7 +12,9 @@ import {
   AssessmentAttempt,
   SpacedReviewItem,
   NotificationPreferences,
-  InAppNotification
+  InAppNotification,
+  TopicMasteryRecord,
+  StudyPlanRevisionRecord
 } from '../types';
 
 /**
@@ -27,7 +29,7 @@ export async function getPostgresProfile(userId: string): Promise<UserProfile | 
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, email, display_name, target_track, preferred_language, available_days, daily_minutes, exam_date, proficiency, weak_topics, role, created_at, updated_at')
+      .select('id, email, display_name, target_track, preferred_language, available_days, daily_minutes, exam_date, proficiency, weak_topics, role, timezone, created_at, updated_at')
       .eq('id', userId)
       .maybeSingle();
 
@@ -45,6 +47,7 @@ export async function getPostgresProfile(userId: string): Promise<UserProfile | 
       proficiency: data.proficiency,
       weakTopics: data.weak_topics || [],
       role: data.role,
+      timezone: data.timezone || 'Asia/Kolkata',
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -72,6 +75,7 @@ export async function upsertPostgresProfile(profile: UserProfile): Promise<boole
         proficiency: profile.proficiency,
         weak_topics: profile.weakTopics,
         role: profile.role,
+        timezone: profile.timezone || 'Asia/Kolkata',
         updated_at: new Date().toISOString(),
       });
 
@@ -856,6 +860,138 @@ export async function fetchPostgresInAppNotifications(userId: string): Promise<I
     }));
   } catch (err) {
     console.warn('Failed to fetch in-app notifications:', err);
+    return [];
+  }
+}
+
+// 10. TOPIC MASTERY & RETENTION
+export async function fetchPostgresTopicMastery(userId: string): Promise<TopicMasteryRecord[]> {
+  if (!isPostgresConfigured() || !supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('topic_mastery')
+      .select('*')
+      .eq('user_id', userId);
+
+    if (error || !data) return [];
+
+    return data.map((row: any) => ({
+      id: row.id,
+      userId: row.user_id,
+      topic: row.topic,
+      section: row.section,
+      track: row.track,
+      masteryState: row.mastery_state,
+      score: row.score,
+      totalAttempts: row.total_attempts,
+      successfulAttempts: row.successful_attempts,
+      independentSolves: row.independent_solves,
+      delayedRecallSuccesses: row.delayed_recall_successes,
+      evidenceNotes: row.evidence_notes || [],
+      lastAttemptAt: row.last_attempt_at,
+      updatedAt: row.updated_at,
+    }));
+  } catch (err) {
+    console.warn('Failed to fetch topic mastery records:', err);
+    return [];
+  }
+}
+
+export async function upsertPostgresTopicMastery(record: TopicMasteryRecord): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('topic_mastery')
+      .upsert({
+        user_id: record.userId,
+        topic: record.topic,
+        section: record.section,
+        track: record.track,
+        mastery_state: record.masteryState,
+        score: record.score,
+        total_attempts: record.totalAttempts,
+        successful_attempts: record.successfulAttempts,
+        independent_solves: record.independentSolves,
+        delayed_recall_successes: record.delayedRecallSuccesses,
+        evidence_notes: record.evidenceNotes || [],
+        last_attempt_at: record.lastAttemptAt || new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,topic' });
+
+    return !error;
+  } catch (err) {
+    console.error('Failed to upsert topic mastery:', err);
+    return false;
+  }
+}
+
+// 11. STUDY PLAN REVISIONS AUDIT LOG
+export async function recordPostgresPlanRevision(revision: StudyPlanRevisionRecord): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('study_plan_revisions')
+      .insert({
+        id: revision.id,
+        plan_id: revision.planId,
+        user_id: revision.userId,
+        from_version: revision.fromVersion,
+        to_version: revision.toVersion,
+        change_reason: revision.changeReason,
+        previous_exam_date: revision.previousExamDate || null,
+        new_exam_date: revision.newExamDate || null,
+        previous_daily_minutes: revision.previousDailyMinutes,
+        new_daily_minutes: revision.newDailyMinutes,
+        completed_days_count: revision.completedDaysCount,
+        completed_tasks_count: revision.completedTasksCount,
+        deferred_topics: revision.deferredTopics || [],
+        summary_message: revision.summaryMessage,
+        authorized_by: revision.authorizedBy,
+        created_at: revision.createdAt,
+      });
+
+    return !error;
+  } catch (err) {
+    console.error('Failed to record study plan revision:', err);
+    return false;
+  }
+}
+
+export async function fetchPostgresPlanRevisions(userId: string): Promise<StudyPlanRevisionRecord[]> {
+  if (!isPostgresConfigured() || !supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('study_plan_revisions')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error || !data) return [];
+
+    return data.map((row: any) => ({
+      id: row.id,
+      planId: row.plan_id,
+      userId: row.user_id,
+      fromVersion: row.from_version,
+      toVersion: row.to_version,
+      changeReason: row.change_reason,
+      previousExamDate: row.previous_exam_date || undefined,
+      newExamDate: row.new_exam_date || undefined,
+      previousDailyMinutes: row.previous_daily_minutes,
+      newDailyMinutes: row.new_daily_minutes,
+      completedDaysCount: row.completed_days_count,
+      completedTasksCount: row.completed_tasks_count,
+      deferredTopics: row.deferred_topics || [],
+      summaryMessage: row.summary_message,
+      authorizedBy: row.authorized_by,
+      createdAt: row.created_at,
+    }));
+  } catch (err) {
+    console.warn('Failed to fetch plan revisions:', err);
     return [];
   }
 }

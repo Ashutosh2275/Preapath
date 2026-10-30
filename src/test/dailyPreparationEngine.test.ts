@@ -106,16 +106,27 @@ describe('TCS NQT Daily Preparation Engine & Spaced Revision System', () => {
     expect(wrongAttempt.isMastered).toBe(false);
     expect(wrongAttempt.consecutiveCorrect).toBe(0);
 
-    // 2. Solved with several hints (>= 3) -> 2 days interval
-    const hintsAttempt = calculateNextSpacedReview({
+    // 2. Solved with several hints (>= 3) -> 1 day interval
+    const severalHintsAttempt = calculateNextSpacedReview({
       userId: 'test-user',
       question: sampleQuestion,
       verdict: 'Accepted',
       revealedHintsCount: 3,
       currentDate: baseDate,
     });
-    expect(hintsAttempt.intervalDays).toBe(2);
-    expect(hintsAttempt.nextReviewDate).toBe('2026-11-01');
+    expect(severalHintsAttempt.intervalDays).toBe(1);
+    expect(severalHintsAttempt.nextReviewDate).toBe('2026-10-31');
+
+    // 2b. Solved with limited hints (1 or 2) -> 2 days interval
+    const limitedHintsAttempt = calculateNextSpacedReview({
+      userId: 'test-user',
+      question: sampleQuestion,
+      verdict: 'Accepted',
+      revealedHintsCount: 1,
+      currentDate: baseDate,
+    });
+    expect(limitedHintsAttempt.intervalDays).toBe(2);
+    expect(limitedHintsAttempt.nextReviewDate).toBe('2026-11-01');
 
     // 3. Solved slow -> 3 days interval
     const slowAttempt = calculateNextSpacedReview({
@@ -129,12 +140,12 @@ describe('TCS NQT Daily Preparation Engine & Spaced Revision System', () => {
     expect(slowAttempt.intervalDays).toBe(3);
     expect(slowAttempt.nextReviewDate).toBe('2026-11-02');
 
-    // 4. Confident clean solve -> 7 days interval
+    // 4. Confident clean solve (0 hints) -> 7 days interval
     const confidentAttempt = calculateNextSpacedReview({
       userId: 'test-user',
       question: sampleQuestion,
       verdict: 'Accepted',
-      revealedHintsCount: 1,
+      revealedHintsCount: 0,
       timeSpentSeconds: 300,
       currentDate: baseDate,
     });
@@ -142,8 +153,8 @@ describe('TCS NQT Daily Preparation Engine & Spaced Revision System', () => {
     expect(confidentAttempt.nextReviewDate).toBe('2026-11-06');
     expect(confidentAttempt.consecutiveCorrect).toBe(1);
 
-    // 5. Repeated mastery (previous consecutive >= 2) -> 14 days interval
-    const masteredAttempt = calculateNextSpacedReview({
+    // 5. Successful delayed recall -> 14 days interval
+    const delayedRecallAttempt = calculateNextSpacedReview({
       userId: 'test-user',
       question: sampleQuestion,
       verdict: 'Accepted',
@@ -151,14 +162,29 @@ describe('TCS NQT Daily Preparation Engine & Spaced Revision System', () => {
       timeSpentSeconds: 250,
       previousRecord: {
         ...confidentAttempt,
-        consecutiveCorrect: 2,
+        consecutiveCorrect: 1,
       },
       currentDate: baseDate,
     });
-    expect(masteredAttempt.intervalDays).toBe(14);
-    expect(masteredAttempt.nextReviewDate).toBe('2026-11-13');
+    expect(delayedRecallAttempt.intervalDays).toBe(14);
+    expect(delayedRecallAttempt.nextReviewDate).toBe('2026-11-13');
+
+    // 6. Repeatedly demonstrated mastery (consecutive >= 3) -> 30 days interval
+    const masteredAttempt = calculateNextSpacedReview({
+      userId: 'test-user',
+      question: sampleQuestion,
+      verdict: 'Accepted',
+      revealedHintsCount: 0,
+      timeSpentSeconds: 200,
+      previousRecord: {
+        ...delayedRecallAttempt,
+        consecutiveCorrect: 3,
+      },
+      currentDate: baseDate,
+    });
+    expect(masteredAttempt.intervalDays).toBe(30);
+    expect(masteredAttempt.nextReviewDate).toBe('2026-11-29');
     expect(masteredAttempt.isMastered).toBe(true);
-    expect(masteredAttempt.consecutiveCorrect).toBe(3);
   });
 
   it('correctly calculates overnight quiet hours', () => {

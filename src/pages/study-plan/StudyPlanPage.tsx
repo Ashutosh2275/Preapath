@@ -1,46 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calendar, 
   Clock, 
   CheckCircle2, 
   RotateCcw, 
-  ArrowRight, 
-  RefreshCw, 
   AlertCircle,
-  Sparkles,
-  BookOpen,
-  Award,
-  HelpCircle,
+  Code2, 
+  Bookmark, 
+  Lock, 
+  Sliders,
   Check,
-  Brain,
-  Code2,
-  Bookmark,
-  Lock,
-  Archive
+  ChevronRight,
+  TrendingUp,
+  Brain
 } from 'lucide-react';
 import { useUserStore } from '../../stores/useUserStore';
-import { generateStudyPlan, createNewPlanWithArchival } from '../../lib/plannerEngine';
-import { archivePostgresStudyPlan, savePostgresStudyPlan } from '../../lib/db';
+import { 
+  generatePlanRevisionProposal, 
+  applyPlanRevision 
+} from '../../lib/plannerEngine';
+import { 
+  archivePostgresStudyPlan, 
+  savePostgresStudyPlan, 
+  recordPostgresPlanRevision, 
+  upsertPostgresProfile 
+} from '../../lib/db';
 import { getOverdueReviewItems, getDueReviewItems } from '../../lib/spacedRepetition';
+import { 
+  getLocalDateString, 
+  formatDateDisplay, 
+  DEFAULT_TIMEZONE 
+} from '../../lib/dateUtils';
 import { Button } from '../../components/common/Button';
 import { TrackBadge } from '../../components/common/Badge';
 
 export const StudyPlanPage: React.FC = () => {
   const { 
     user, 
+    updateProfile,
     studyPlan, 
     setStudyPlan, 
     toggleTaskCompletion, 
-    rescheduleIncompleteTasks,
-    spacedReviewItems 
+    spacedReviewItems,
+    topicMastery,
+    addPlanRevision
   } = useUserStore();
 
+  const userTimezone = user?.timezone || DEFAULT_TIMEZONE;
+  const todayStr = getLocalDateString(new Date(), userTimezone);
+
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
-  const [showRescheduleModal, setShowRescheduleModal] = useState(false);
-  const [showArchiveNewPlanModal, setShowArchiveNewPlanModal] = useState(false);
-  const [targetRescheduleDay, setTargetRescheduleDay] = useState(2);
-  const [isArchiving, setIsArchiving] = useState(false);
+  const [showAdaptiveModal, setShowAdaptiveModal] = useState(false);
+  const [isApplyingRevision, setIsApplyingRevision] = useState(false);
+
+  // Form states for adaptive plan revision modal
+  const [revisionExamDate, setRevisionExamDate] = useState<string>(user?.examDate || '');
+  const [revisionDailyMinutes, setRevisionDailyMinutes] = useState<number>(user?.dailyAvailableMinutes || 90);
+  const [revisionAvailableDays, setRevisionAvailableDays] = useState<number>(user?.availablePreparationDays || 21);
 
   const days = studyPlan?.days || [];
   const currentDay = days[selectedDayIndex] || days[0];
@@ -54,73 +71,102 @@ export const StudyPlanPage: React.FC = () => {
   const overdueReviews = getOverdueReviewItems(reviewItemsList);
   const dueReviews = getDueReviewItems(reviewItemsList);
 
-  const handleConfirmArchiveAndCreateNew = async () => {
-    if (!user) return;
-    setIsArchiving(true);
+  // Real-time proposal computation for the modal
+  const revisionProposal = useMemo(() => {
+    if (!studyPlan || !user) return null;
 
-    try {
-      if (studyPlan) {
-        await archivePostgresStudyPlan(studyPlan.id, user.uid);
-      }
-
-      const { newPlan } = createNewPlanWithArchival({
+    return generatePlanRevisionProposal(
+      studyPlan,
+      {
         userId: user.uid,
         targetTrack: user.targetTrack,
-        availablePreparationDays: user.availablePreparationDays,
-        dailyAvailableMinutes: user.dailyAvailableMinutes,
+        availablePreparationDays: revisionAvailableDays,
+        dailyAvailableMinutes: revisionDailyMinutes,
         proficiency: user.proficiency,
         weakTopics: user.weakTopics,
-        examDate: user.examDate,
-        existingSpacedReviews: reviewItemsList,
-      }, studyPlan);
+        examDate: revisionExamDate || undefined,
+      },
+      userTimezone,
+      Object.values(topicMastery || {})
+    );
+  }, [studyPlan, user, revisionExamDate, revisionDailyMinutes, revisionAvailableDays, userTimezone, topicMastery]);
 
+  const handleApplyRevision = async () => {
+    if (!revisionProposal || !studyPlan || !user) return;
+    setIsApplyingRevision(true);
+
+    try {
+      const { newPlan, archivedPlan, revisionRecord } = applyPlanRevision(
+        revisionProposal,
+        studyPlan,
+        {
+          userId: user.uid,
+          targetTrack: user.targetTrack,
+          availablePreparationDays: revisionAvailableDays,
+          dailyAvailableMinutes: revisionDailyMinutes,
+          proficiency: user.proficiency,
+          weakTopics: user.weakTopics,
+          examDate: revisionExamDate || undefined,
+        },
+        user.uid
+      );
+
+      // Persist to PostgreSQL authoritative tables
+      await archivePostgresStudyPlan(archivedPlan.id, user.uid);
       await savePostgresStudyPlan(newPlan);
-      setStudyPlan(newPlan);
-      setSelectedDayIndex(0);
-      setShowArchiveNewPlanModal(false);
-    } catch (err) {
-      console.error('Failed to archive and create new plan:', err);
-    } finally {
-      setIsArchiving(false);
-    }
-  };
+      await recordPostgresPlanRevision(revisionRecord);
 
-  const handleReschedule = () => {
-    if (!currentDay) return;
-    rescheduleIncompleteTasks(currentDay.dayNumber, targetRescheduleDay);
-    setShowRescheduleModal(false);
+      // If exam date or daily minutes changed, update user profile as well
+      if (revisionExamDate !== user.examDate || revisionDailyMinutes !== user.dailyAvailableMinutes) {
+        updateProfile({
+          examDate: revisionExamDate || undefined,
+          dailyAvailableMinutes: revisionDailyMinutes,
+          availablePreparationDays: newPlan.days.length,
+        });
+      }
+
+      // Update in-memory user store
+      setStudyPlan(newPlan);
+      addPlanRevision(revisionRecord);
+      setSelectedDayIndex(revisionProposal.completedDaysPreserved);
+      setShowAdaptiveModal(false);
+    } catch (err) {
+      console.error('Failed to apply adaptive plan revision:', err);
+    } finally {
+      setIsApplyingRevision(false);
+    }
   };
 
   const getStageBadge = (stage?: string) => {
     switch (stage) {
       case 'STAGE_A_MCQ':
         return (
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">
             Stage A • MCQ Practice
           </span>
         );
       case 'STAGE_B_EASY_CODING':
         return (
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
             Stage B • Easy Coding
           </span>
         );
       case 'STAGE_C_MEDIUM_CODING':
         return (
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
             Stage C • Medium Coding
           </span>
         );
       case 'STAGE_D_REVIEW':
         return (
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
             Stage D • Spaced Review
           </span>
         );
       case 'MOCK_ASSESSMENT':
         return (
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
-            Full Mock Exam
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
+            Full Timed Assessment
           </span>
         );
       default:
@@ -131,63 +177,58 @@ export const StudyPlanPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-              TCS NQT Daily Preparation Engine
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              TCS NQT Date-Based Preparation Engine
             </h1>
             {user?.targetTrack && <TrackBadge track={user.targetTrack} />}
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Structured daily learning sequence: Stage A (MCQs) → Stage B (Easy Coding) → Stage C (Medium Coding) → Stage D (Spaced Review).
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Authoritative syllabus schedule (v{studyPlan?.version || 1}) • Stage A (MCQs) → Stage B (Easy Coding) → Stage C (Medium Coding) → Stage D (Spaced Review).
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
             <Lock className="w-3.5 h-3.5" />
-            Active Plan (Immutable)
+            Active Plan (v{studyPlan?.version || 1})
           </div>
 
-          <Link to="/bookmarks">
-            <Button
-              variant="outline"
-              size="sm"
-              leftIcon={<Bookmark className="w-4 h-4 text-amber-500" />}
-            >
-              Review Queue {dueReviews.length > 0 && `(${dueReviews.length})`}
-            </Button>
-          </Link>
-
           <Button
-            variant="outline"
+            variant="primary"
             size="sm"
-            onClick={() => setShowArchiveNewPlanModal(true)}
-            leftIcon={<Archive className="w-4 h-4 text-slate-500" />}
+            onClick={() => {
+              setRevisionExamDate(user?.examDate || '');
+              setRevisionDailyMinutes(user?.dailyAvailableMinutes || 90);
+              setRevisionAvailableDays(user?.availablePreparationDays || 21);
+              setShowAdaptiveModal(true);
+            }}
+            leftIcon={<Sliders className="w-4 h-4" />}
           >
-            Archive & Start New Plan
+            Adjust Schedule & Exam Date
           </Button>
         </div>
       </div>
 
       {/* Overdue Spaced Reviews Alert Banner */}
       {overdueReviews.length > 0 && (
-        <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
               <RotateCcw className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-amber-950 dark:text-amber-200">
+              <h4 className="text-sm font-bold text-amber-950">
                 {overdueReviews.length} Overdue Spaced Repetition {overdueReviews.length === 1 ? 'Item' : 'Items'}
               </h4>
-              <p className="text-xs text-amber-800 dark:text-amber-300">
+              <p className="text-xs text-amber-800">
                 Spaced recall intervals have elapsed. Re-attempt these problems today to lock concepts into long-term memory.
               </p>
             </div>
           </div>
-          <Link to="/bookmarks">
+          <Link to="/practice">
             <Button variant="primary" size="sm" className="text-xs shrink-0">
               Practice Overdue Items →
             </Button>
@@ -196,281 +237,311 @@ export const StudyPlanPage: React.FC = () => {
       )}
 
       {/* Progress & Plan Overview Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
-              Structured Learning Progression • TCS NQT Syllabus
+            <span className="text-[11px] font-bold text-primary uppercase tracking-wider">
+              Preparation Progress
             </span>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-0.5">
-              Overall Syllabus Progress: {progressPct}%
+            <h3 className="text-lg font-bold text-slate-900 mt-0.5">
+              {completedTasks} of {totalTasks} Tasks Finished ({progressPct}%)
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              {completedTasks} completed tasks out of {totalTasks} scheduled practice sessions
-            </p>
           </div>
-
-          <div className="flex items-center gap-6 text-xs font-semibold">
-            <div className="text-right">
-              <span className="text-slate-400 block text-[10px]">TOTAL DURATION</span>
-              <span className="text-slate-900 dark:text-white">{days.length} Days</span>
-            </div>
-            <div className="text-right">
-              <span className="text-slate-400 block text-[10px]">DAILY TARGET</span>
-              <span className="text-slate-900 dark:text-white">{studyPlan?.dailyAvailableMinutes || 90} mins</span>
-            </div>
-            <div className="text-right">
-              <span className="text-slate-400 block text-[10px]">REVIEWS DUE</span>
-              <span className="text-amber-600 dark:text-amber-400 font-bold">{dueReviews.length} Items</span>
-            </div>
+          <div className="text-xs text-slate-500">
+            {days.length} Total Days Scheduled • Daily Budget: {studyPlan?.dailyAvailableMinutes || 90}m
           </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+        <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
           <div
-            className="h-full bg-primary transition-all duration-300 rounded-full"
+            className="bg-primary h-3 rounded-full transition-all duration-500 ease-out"
             style={{ width: `${progressPct}%` }}
           />
         </div>
       </div>
 
-      {/* Day Selector & Detailed Schedule */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Left Col: Day Navigator Timeline */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-            Preparation Timeline
-          </h4>
-          <div className="space-y-1.5 max-h-[600px] overflow-y-auto pr-1">
+      {/* Main Calendar View: Day List + Selected Day Activities */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Days Selector */}
+        <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-2 max-h-[700px] overflow-y-auto">
+          <div className="px-2 py-1 text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+            <span>Scheduled Days ({days.length})</span>
+            <span>Status</span>
+          </div>
+
+          <div className="space-y-1">
             {days.map((day, idx) => {
-              const isSelected = selectedDayIndex === idx;
-              const completedTasksCount = day.tasks.filter(t => t.completed).length;
-              const isAllDone = day.tasks.length > 0 && completedTasksCount === day.tasks.length;
+              const isSelected = idx === selectedDayIndex;
+              const isToday = day.date === todayStr;
+              const doneCount = day.tasks.filter(t => t.completed).length;
+              const isDayDone = day.isCompleted || (day.tasks.length > 0 && doneCount === day.tasks.length);
 
               return (
                 <button
                   key={day.dayNumber}
                   onClick={() => setSelectedDayIndex(idx)}
-                  className={`w-full text-left p-3 rounded-xl border text-xs transition-all flex items-center justify-between ${
+                  className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between gap-2 ${
                     isSelected
-                      ? 'border-primary ring-2 ring-primary/20 bg-indigo-50/50 dark:bg-indigo-950/40 text-slate-900 dark:text-white font-semibold'
-                      : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300'
+                      ? 'border-primary bg-indigo-50/60 shadow-xs'
+                      : isDayDone
+                      ? 'border-emerald-200 bg-emerald-50/30 hover:border-emerald-300'
+                      : 'border-slate-200 hover:border-slate-300 bg-white'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5 truncate">
-                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                      isAllDone
-                        ? 'bg-emerald-500 text-white'
-                        : isSelected
-                          ? 'bg-primary text-white'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                    }`}>
-                      {isAllDone ? '✓' : day.dayNumber}
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs font-bold ${isSelected ? 'text-primary' : 'text-slate-800'}`}>
+                        Day {day.dayNumber}
+                      </span>
+                      {isToday && (
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-700 font-semibold">
+                          Today
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-slate-500 truncate max-w-[190px]">
+                      {day.topic}
+                    </p>
+                    <span className="text-[10px] text-slate-400">
+                      {formatDateDisplay(day.date, userTimezone)}
                     </span>
-                    <span className="truncate">{day.topic}</span>
                   </div>
-                  <span className="text-[10px] text-slate-400 shrink-0 font-mono">
-                    {completedTasksCount}/{day.tasks.length}
-                  </span>
+
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="text-[10px] text-slate-400">
+                      {doneCount}/{day.tasks.length}
+                    </span>
+                    {isDayDone && (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    )}
+                  </div>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Right 3 Cols: Active Day Detailed Tasks */}
-        <div className="lg:col-span-3 space-y-6">
+        {/* Right Column: Selected Day Detail View */}
+        <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
           {currentDay ? (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-primary bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 rounded-full">
+                    <span className="text-xs font-bold text-primary uppercase tracking-wider">
                       Day {currentDay.dayNumber}
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">
-                      {currentDay.date}
-                    </span>
-                    <span className="text-xs text-slate-400 font-mono">
-                      • {currentDay.totalPlannedMinutes}m planned
+                    <span>•</span>
+                    <span className="text-xs text-slate-500">
+                      {formatDateDisplay(currentDay.date, userTimezone)}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                  <h2 className="text-xl font-bold text-slate-900 mt-1">
                     {currentDay.topic}
-                  </h3>
+                  </h2>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowRescheduleModal(true)}
-                    className="text-xs"
-                    leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
-                  >
-                    Reschedule Incomplete
-                  </Button>
+                <div className="text-right">
+                  <span className="text-xs font-semibold text-slate-700">
+                    {currentDay.totalPlannedMinutes} mins session budget
+                  </span>
+                  <p className="text-[11px] text-slate-400">
+                    {currentDay.tasks.filter(t => t.completed).length} of {currentDay.tasks.length} tasks completed
+                  </p>
                 </div>
               </div>
 
-              {/* Tasks List for Selected Day following Stage A -> B -> C -> D */}
-              <div className="space-y-4">
-                {currentDay.tasks.map((task, taskIdx) => (
+              {/* Tasks List */}
+              <div className="space-y-3.5">
+                {currentDay.tasks.map((task) => (
                   <div
                     key={task.id}
-                    className={`p-4 rounded-xl border transition-all ${
+                    className={`p-4 rounded-xl border transition-all flex items-start justify-between gap-4 ${
                       task.completed
-                        ? 'border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/20 dark:bg-emerald-950/10'
-                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900'
+                        ? 'border-emerald-200 bg-emerald-50/30'
+                        : 'border-slate-200 hover:border-slate-300 bg-white'
                     }`}
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                      <div className="flex items-start gap-3">
-                        <button
-                          onClick={() => toggleTaskCompletion(currentDay.dayNumber, task.id)}
-                          className={`mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                            task.completed
-                              ? 'bg-emerald-500 border-emerald-500 text-white'
-                              : 'border-slate-300 dark:border-slate-700 hover:border-emerald-500'
-                          }`}
-                          title={task.completed ? "Mark incomplete" : "Mark completed"}
-                        >
-                          {task.completed && <CheckCircle2 className="w-3.5 h-3.5" />}
-                        </button>
-                        <div className="space-y-1.5">
-                          <div className="flex flex-wrap items-center gap-2">
-                            {getStageBadge(task.stage)}
-                            <span className={`text-sm font-semibold ${task.completed ? 'line-through text-slate-400' : 'text-slate-900 dark:text-white'}`}>
-                              {task.title}
-                            </span>
-                            <span className="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">
-                              {task.estimatedMinutes} mins
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            {task.description}
-                          </p>
-                          {task.budgetReason && (
-                            <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
-                              Note: {task.budgetReason}
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                    <div className="flex items-start gap-3.5">
+                      <button
+                        onClick={() => toggleTaskCompletion(currentDay.dayNumber, task.id)}
+                        className={`mt-1 w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
+                          task.completed
+                            ? 'bg-emerald-500 border-emerald-500 text-white'
+                            : 'border-slate-300 hover:border-emerald-500 bg-white'
+                        }`}
+                        aria-label="Toggle task completion"
+                      >
+                        {task.completed && <CheckCircle2 className="w-3.5 h-3.5" />}
+                      </button>
 
-                      <div className="shrink-0 flex items-center gap-2 self-end sm:self-center">
-                        {task.problemId ? (
-                          <Link to={`/problems/${task.catalogNumber || task.problemId}`}>
-                            <Button variant="primary" size="sm" className="text-xs">
-                              {task.stage === 'STAGE_A_MCQ' ? 'Practice MCQs' : 'Solve Problem'}
-                            </Button>
-                          </Link>
-                        ) : task.stage === 'STAGE_D_REVIEW' ? (
-                          <Link to="/bookmarks">
-                            <Button variant="outline" size="sm" className="text-xs">
-                              Review Queue
-                            </Button>
-                          </Link>
-                        ) : null}
+                      <div className="space-y-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          {getStageBadge(task.stage)}
+                          <span className={`text-sm font-semibold ${task.completed ? 'line-through text-slate-400' : 'text-slate-900'}`}>
+                            {task.title}
+                          </span>
+                          <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono">
+                            {task.estimatedMinutes}m
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500">
+                          {task.description}
+                        </p>
+                        {task.budgetReason && (
+                          <p className="text-[11px] text-indigo-600 font-medium italic">
+                            {task.budgetReason}
+                          </p>
+                        )}
                       </div>
                     </div>
+
+                    {task.problemId && (
+                      <Link to={`/problems/${task.problemId}`}>
+                        <Button variant="outline" size="sm" className="text-xs shrink-0">
+                          Solve Problem →
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>
-            </div>
+            </>
           ) : (
-            <div className="p-8 text-center text-xs text-slate-500 border border-dashed rounded-2xl">
-              No day selected. Select a day from the left timeline to view its tasks.
+            <div className="p-8 text-center text-slate-400">
+              No day selected.
             </div>
           )}
         </div>
       </div>
 
-      {/* Reschedule Modal */}
-      {showRescheduleModal && currentDay && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 max-w-md w-full space-y-4 shadow-xl">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              Reschedule Incomplete Tasks
-            </h3>
-            <p className="text-xs text-slate-500">
-              Move all incomplete tasks from Day {currentDay.dayNumber} ({currentDay.topic}) to another upcoming day.
-            </p>
-
+      {/* ADAPTIVE SCHEDULE REVISION MODAL (Confirmed 2-Step Workflow) */}
+      {showAdaptiveModal && revisionProposal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Move to Day:
-              </label>
-              <select
-                value={targetRescheduleDay}
-                onChange={(e) => setTargetRescheduleDay(Number(e.target.value))}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
-              >
-                {days.filter(d => d.dayNumber !== currentDay.dayNumber).map(d => (
-                  <option key={d.dayNumber} value={d.dayNumber}>
-                    Day {d.dayNumber} — {d.topic}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center justify-end gap-2 pt-2">
-              <Button variant="ghost" size="sm" onClick={() => setShowRescheduleModal(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" size="sm" onClick={handleReschedule}>
-                Confirm Reschedule
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Archive & Start New Plan Modal */}
-      {showArchiveNewPlanModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white rounded-xl border border-slate-200 p-6 max-w-md w-full space-y-4 shadow-xl">
-            <div className="flex items-center gap-3 text-slate-900">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                <Archive className="w-5 h-5" />
+              <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+                <Sliders className="w-4 h-4" />
+                Adaptive Plan Revision
               </div>
+              <h3 className="text-xl font-bold text-slate-900 mt-1">
+                Recalibrate Schedule & Exam Timeline
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Adjust your examination date or daily study budget. Completed days and history are strictly preserved.
+              </p>
+            </div>
+
+            {/* Inputs */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
               <div>
-                <h3 className="text-base font-bold">Archive & Start New Plan?</h3>
-                <p className="text-xs text-slate-500">Deliberate study plan transition</p>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Target Exam Date
+                </label>
+                <input
+                  type="date"
+                  value={revisionExamDate}
+                  onChange={(e) => setRevisionExamDate(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Daily Available Study Time (Minutes)
+                </label>
+                <input
+                  type="number"
+                  min={15}
+                  max={480}
+                  value={revisionDailyMinutes}
+                  onChange={(e) => setRevisionDailyMinutes(Number(e.target.value))}
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary"
+                />
               </div>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Your existing active study plan will be transitioned to <strong>ARCHIVED</strong> status. All completed tasks, coding submissions, and spaced revision progress will remain permanently stored in your account history.
-            </p>
+            {/* Proposed Plan Comparison Breakdown */}
+            <div className="space-y-3">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Proposed Revision Preview
+              </span>
 
-            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
-              <div className="font-semibold text-slate-900">What happens next:</div>
-              <ul className="list-disc pl-4 space-y-0.5 text-[11px] text-slate-600">
-                <li>A brand-new schedule is created using your latest profile goals.</li>
-                <li>The new plan is committed atomically and locked as your new ACTIVE plan.</li>
-                <li>Your submission history and mastered problems remain intact.</li>
-              </ul>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                  <div className="text-xs text-emerald-700 font-semibold">Preserved History</div>
+                  <div className="text-lg font-bold text-emerald-900 mt-0.5">
+                    {revisionProposal.completedDaysPreserved} Days
+                  </div>
+                  <div className="text-[10px] text-emerald-600">
+                    {revisionProposal.completedTasksPreserved} tasks preserved
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-indigo-50 border border-indigo-200">
+                  <div className="text-xs text-indigo-700 font-semibold">Remaining Days</div>
+                  <div className="text-lg font-bold text-indigo-900 mt-0.5">
+                    {revisionProposal.newRemainingDays} Days
+                  </div>
+                  <div className="text-[10px] text-indigo-600">
+                    Previous: {revisionProposal.previousRemainingDays} days
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-purple-50 border border-purple-200">
+                  <div className="text-xs text-purple-700 font-semibold">Plan Version</div>
+                  <div className="text-lg font-bold text-purple-900 mt-0.5">
+                    v{revisionProposal.newPlanVersion}
+                  </div>
+                  <div className="text-[10px] text-purple-600">
+                    from v{revisionProposal.currentPlanVersion}
+                  </div>
+                </div>
+              </div>
+
+              {/* Rationale Message */}
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
+                <span className="font-semibold text-slate-800">Adaptive Rationale: </span>
+                {revisionProposal.summaryMessage}
+              </div>
+
+              {/* Deferred Topics Warning (if time constrained) */}
+              {revisionProposal.isTimeConstrained && revisionProposal.deferredTopics.length > 0 && (
+                <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-1">
+                  <div className="font-bold flex items-center gap-1.5 text-amber-950">
+                    <AlertCircle className="w-4 h-4 text-amber-600" />
+                    Preparation Time Constraint Detected
+                  </div>
+                  <p>
+                    Remaining time is insufficient for the full exhaustive syllabus. Essential foundations and weak topics have been prioritized; secondary topics have been deferred:
+                  </p>
+                  <ul className="list-disc list-inside font-medium text-amber-800">
+                    {revisionProposal.deferredTopics.map((top, i) => (
+                      <li key={i}>{top}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2">
+            {/* Modal Actions */}
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
               <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowArchiveNewPlanModal(false)}
-                disabled={isArchiving}
+                variant="outline"
+                size="md"
+                onClick={() => setShowAdaptiveModal(false)}
+                disabled={isApplyingRevision}
               >
-                Keep Current Plan
+                Cancel
               </Button>
               <Button
                 variant="primary"
-                size="sm"
-                onClick={handleConfirmArchiveAndCreateNew}
-                isLoading={isArchiving}
-                leftIcon={<Sparkles className="w-4 h-4" />}
+                size="md"
+                onClick={handleApplyRevision}
+                isLoading={isApplyingRevision}
+                leftIcon={<Check className="w-4 h-4" />}
               >
-                Archive & Create New
+                Confirm & Apply Version {revisionProposal.newPlanVersion}
               </Button>
             </div>
           </div>
