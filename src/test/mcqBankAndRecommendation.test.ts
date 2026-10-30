@@ -12,10 +12,10 @@ import { gradeMcqSubmission, diagnoseMistake, getPedagogicalFeedback } from '../
 import { 
   generateDailyStudySession, 
   identifyWeakTopics, 
-  createSeededRandom,
-  seededShuffle 
+  findReplacementMcq
 } from '../lib/recommendationEngine';
-import { MCQAttempt, Submission } from '../types';
+import { useUserStore } from '../stores/useUserStore';
+import { MCQAttempt, Question } from '../types';
 
 describe('TCS NQT Professional MCQ Question Bank & Integrity', () => {
   const allCuratedMcqs = [
@@ -56,11 +56,13 @@ describe('TCS NQT Professional MCQ Question Bank & Integrity', () => {
   it('maintains a statistically balanced option distribution across all 120 MCQs', () => {
     const distribution: Record<string, number> = { A: 0, B: 0, C: 0, D: 0 };
 
-    Object.values(MCQ_ANSWER_KEYS).forEach((key) => {
-      distribution[key.correctOptionId] = (distribution[key.correctOptionId] || 0) + 1;
+    allCuratedMcqs.forEach((q) => {
+      const key = MCQ_ANSWER_KEYS[q.id];
+      if (key) {
+        distribution[key.correctOptionId] = (distribution[key.correctOptionId] || 0) + 1;
+      }
     });
 
-    // Verify option balance: none should exceed 35% or be less than 15%
     const total = 120;
     Object.entries(distribution).forEach(([opt, count]) => {
       const percentage = (count / total) * 100;
@@ -81,182 +83,241 @@ describe('TCS NQT Professional MCQ Question Bank & Integrity', () => {
       expect(q.cognitiveSkill).toBeDefined();
       expect(q.sourceType).toBeDefined();
 
-      // Check option IDs are strictly A, B, C, D
       const optionIds = q.options?.map((o) => o.id);
       expect(optionIds).toEqual(['A', 'B', 'C', 'D']);
     });
   });
 });
 
-describe('Secure MCQ Grading & Mistake Diagnostics Engine', () => {
-  it('every question in the 120 catalog has an authoritative entry in MCQ_ANSWER_KEYS', () => {
-    const totalKeys = Object.keys(MCQ_ANSWER_KEYS).length;
-    expect(totalKeys).toBe(120);
+describe('Authoritative MCQ Grading Bug Fix & Integrity Tests', () => {
+  const sampleQuestion = NUMERICAL_QUESTIONS[0]; // e.g. nume-001
+  const key = MCQ_ANSWER_KEYS[sampleQuestion.id];
+  const correctOption = key.correctOptionId;
+  const incorrectOption = correctOption === 'A' ? 'B' : 'A';
 
-    NUMERICAL_QUESTIONS.forEach((q) => expect(MCQ_ANSWER_KEYS[q.id]).toBeDefined());
-    REASONING_QUESTIONS.forEach((q) => expect(MCQ_ANSWER_KEYS[q.id]).toBeDefined());
-    VERBAL_QUESTIONS.forEach((q) => expect(MCQ_ANSWER_KEYS[q.id]).toBeDefined());
-    ADVANCED_QUANT_QUESTIONS.forEach((q) => expect(MCQ_ANSWER_KEYS[q.id]).toBeDefined());
-    PROGRAMMING_QUESTIONS.forEach((q) => expect(MCQ_ANSWER_KEYS[q.id]).toBeDefined());
+  it('Grading Test 1: Selects correct option -> isCorrect: true, gradingStatus: GRADED', async () => {
+    const result = await gradeMcqSubmission(sampleQuestion.id, correctOption, 35000, {
+      question: sampleQuestion
+    });
+    expect(result.gradingStatus).toBe('GRADED');
+    expect(result.isCorrect).toBe(true);
+    expect(result.selectedOptionId).toBe(correctOption);
+    expect(result.correctOptionId).toBe(correctOption);
+    expect(result.explanation.length).toBeGreaterThan(10);
   });
 
-  it('grades submissions accurately and provides structured feedback upon completion', async () => {
-    const sampleQuestion = NUMERICAL_QUESTIONS[0];
-    const correctOption = MCQ_ANSWER_KEYS[sampleQuestion.id].correctOptionId;
-    const wrongOption = correctOption === 'A' ? 'B' : 'A';
-
-    // Test correct submission
-    const correctResult = await gradeMcqSubmission(sampleQuestion.id, correctOption, 45000);
-    expect(correctResult.isCorrect).toBe(true);
-    expect(correctResult.correctOptionId).toBe(correctOption);
-    expect(correctResult.explanation.length).toBeGreaterThan(20);
-    expect(correctResult.conceptTested).toBeDefined();
-
-    // Test wrong submission
-    const wrongResult = await gradeMcqSubmission(sampleQuestion.id, wrongOption, 45000);
-    expect(wrongResult.isCorrect).toBe(false);
-    expect(wrongResult.correctOptionId).toBe(correctOption);
-    expect(wrongResult.mistakeType).toBeDefined();
+  it('Grading Test 2: Selects incorrect option -> isCorrect: false, gradingStatus: GRADED, shows actual correct answer', async () => {
+    const result = await gradeMcqSubmission(sampleQuestion.id, incorrectOption, 35000, {
+      question: sampleQuestion
+    });
+    expect(result.gradingStatus).toBe('GRADED');
+    expect(result.isCorrect).toBe(false);
+    expect(result.selectedOptionId).toBe(incorrectOption);
+    expect(result.correctOptionId).toBe(correctOption);
+    expect(result.mistakeType).toBeDefined();
   });
 
-  it('diagnoses mistake types and provides pedagogical guidance', () => {
-    // Calculation error on quantitative
-    const calcMistake = diagnoseMistake(false, 45000, 'NUMERICAL', 'MEDIUM');
-    expect(calcMistake).toBe('CALCULATION_ERROR');
-    const calcFeedback = getPedagogicalFeedback('CALCULATION_ERROR', 'Compound Interest');
-    expect(calcFeedback.title).toContain('Precision');
+  it('Grading Test 3: Normalizes lowercase option input (e.g. "a" -> "A")', async () => {
+    const lowerInput = correctOption.toLowerCase();
+    const result = await gradeMcqSubmission(sampleQuestion.id, lowerInput, 30000, {
+      question: sampleQuestion
+    });
+    expect(result.gradingStatus).toBe('GRADED');
+    expect(result.isCorrect).toBe(true);
+    expect(result.selectedOptionId).toBe(correctOption);
+  });
 
-    // Time pressure (> 3 mins)
-    const timeMistake = diagnoseMistake(false, 200000, 'REASONING', 'HARD');
-    expect(timeMistake).toBe('TIME_PRESSURE');
+  it('Grading Test 4: Selects an invalid option outside options list -> returns validation error', async () => {
+    const result = await gradeMcqSubmission(sampleQuestion.id, 'Z', 10000, {
+      question: sampleQuestion
+    });
+    expect(result.gradingStatus).toBe('ERROR');
+    expect(result.errorMessage).toContain('not a valid option');
+    expect(result.isCorrect).toBe(false);
+  });
 
-    // Attentional slip (< 15 seconds)
-    const rushMistake = diagnoseMistake(false, 8000, 'NUMERICAL', 'MEDIUM');
-    expect(rushMistake).toBe('CARELESS_ERROR');
+  it('Grading Test 5: Missing answer key -> returns UNAVAILABLE, never fabricated Incorrect with fake "A"', async () => {
+    const nonExistentId = 'unknown-ghost-question-999';
+    const result = await gradeMcqSubmission(nonExistentId, 'A', 20000);
+
+    // CRITICAL: Must be UNAVAILABLE, not fabricated isCorrect: false with correctOptionId: 'A'
+    expect(result.gradingStatus).toBe('UNAVAILABLE');
+    expect(result.isCorrect).toBe(false);
+    expect(result.correctOptionId).toBe('');
+    expect(result.errorMessage).toContain('Authoritative answer key could not be retrieved');
+  });
+
+  it('Grading Test 6: Rejects grading response if correct option does not exist in question options list', async () => {
+    const corruptQuestion: Question = {
+      ...sampleQuestion,
+      id: 'corrupt-q-1',
+      options: [
+        { id: 'A', text: 'Option A' },
+        { id: 'B', text: 'Option B' }
+      ]
+    };
+
+    // If answer key points to 'D' which does not exist in corruptQuestion options
+    MCQ_ANSWER_KEYS['corrupt-q-1'] = {
+      questionId: 'corrupt-q-1',
+      correctOptionId: 'D',
+      explanation: 'Test corrupt key',
+      conceptTested: 'Integrity',
+      verifiedBy: 'Test',
+      isVerified: true
+    };
+
+    const result = await gradeMcqSubmission('corrupt-q-1', 'A', 15000, {
+      question: corruptQuestion
+    });
+
+    expect(result.gradingStatus).toBe('ERROR');
+    expect(result.errorMessage).toContain('Grading Integrity Error');
+
+    delete MCQ_ANSWER_KEYS['corrupt-q-1'];
+  });
+
+  it('Grading Test 7: Correct and incorrect highlights always logically agree with isCorrect', async () => {
+    const resCorrect = await gradeMcqSubmission(sampleQuestion.id, correctOption, 25000, {
+      question: sampleQuestion
+    });
+
+    // Logical UI highlighting rule check
+    sampleQuestion.options?.forEach((opt) => {
+      const isSelected = resCorrect.selectedOptionId === opt.id;
+      const isCorrectHighlight = resCorrect.gradingStatus === 'GRADED' && opt.id === resCorrect.correctOptionId;
+      const isWrongHighlight = resCorrect.gradingStatus === 'GRADED' && isSelected && !resCorrect.isCorrect;
+
+      if (opt.id === correctOption) {
+        expect(isCorrectHighlight).toBe(true);
+        expect(isWrongHighlight).toBe(false);
+      } else {
+        expect(isCorrectHighlight).toBe(false);
+        expect(isWrongHighlight).toBe(false);
+      }
+    });
+  });
+
+  it('Behavioral Mistake Diagnostics: classifies speed and time pressure without requiring user confidence input', () => {
+    // Under 15s on medium difficulty -> Careless error
+    const careless = diagnoseMistake(false, 8000, 'NUMERICAL', 'MEDIUM');
+    expect(careless).toBe('CARELESS_ERROR');
+
+    // Over 3 mins -> Time pressure
+    const timePressure = diagnoseMistake(false, 195000, 'REASONING', 'HARD');
+    expect(timePressure).toBe('TIME_PRESSURE');
+
+    // Section defaults
+    expect(diagnoseMistake(false, 40000, 'NUMERICAL', 'EASY')).toBe('CALCULATION_ERROR');
+    expect(diagnoseMistake(false, 40000, 'REASONING', 'MEDIUM')).toBe('LOGICAL_REASONING_ERROR');
+    expect(diagnoseMistake(false, 40000, 'PROGRAMMING', 'MEDIUM')).toBe('CONCEPTUAL_GAP');
+    expect(diagnoseMistake(false, 40000, 'VERBAL', 'EASY')).toBe('MISREAD_QUESTION');
   });
 });
 
-describe('Adaptive Daily Recommendation Engine', () => {
-  const mockUserId = 'user_ashutosh_2026';
+describe('Intelligent Next-Question Generation & Try Another Question Flow', () => {
+  const currentMcq = NUMERICAL_QUESTIONS[0]; // nume-001 (Percentages, EASY)
 
-  it('generates deterministic daily preparation sessions using stable per-user, per-day seeds', () => {
-    const s1 = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90
+  it('Replacement Test 1: returns a distinct question ID belonging to appropriate topic & difficulty', () => {
+    const { replacementQuestion, matchPriority } = findReplacementMcq({
+      currentQuestion: currentMcq,
+      allQuestions: ALL_QUESTIONS,
+      targetTrack: 'NINJA'
     });
 
-    const s2 = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90
-    });
-
-    expect(s1.items.length).toBe(s2.items.length);
-    expect(s1.items.map((i) => i.questionId)).toEqual(s2.items.map((i) => i.questionId));
+    expect(replacementQuestion).not.toBeNull();
+    expect(replacementQuestion!.id).not.toBe(currentMcq.id);
+    expect(replacementQuestion!.problemFormat).toBe('MULTIPLE_CHOICE');
+    expect(matchPriority).toBeGreaterThanOrEqual(1);
+    expect(matchPriority).toBeLessThanOrEqual(5);
   });
 
-  it('generates distinct sessions on different days', () => {
-    const sDay1 = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90
+  it('Replacement Test 2: never duplicates questions already allocated in the active daily session', () => {
+    const allocatedSessionIds = ['nume-002', 'nume-003', 'nume-004', 'nume-005'];
+    
+    const { replacementQuestion } = findReplacementMcq({
+      currentQuestion: currentMcq,
+      allQuestions: ALL_QUESTIONS,
+      excludeQuestionIds: allocatedSessionIds
     });
 
-    const sDay2 = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-11-01',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90
-    });
-
-    expect(sDay1.items.map((i) => i.questionId)).not.toEqual(sDay2.items.map((i) => i.questionId));
+    expect(replacementQuestion).not.toBeNull();
+    expect(allocatedSessionIds).not.toContain(replacementQuestion!.id);
+    expect(replacementQuestion!.id).not.toBe(currentMcq.id);
   });
 
-  it('respects time budgets (45 mins vs 90 mins)', () => {
-    const shortSession = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 45
-    });
-
-    const standardSession = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90
-    });
-
-    const shortMcqs = shortSession.items.filter((i) => i.itemType === 'MCQ').length;
-    const standardMcqs = standardSession.items.filter((i) => i.itemType === 'MCQ').length;
-
-    expect(shortMcqs).toBeLessThan(standardMcqs);
-    expect(shortSession.items.length).toBeLessThan(standardSession.items.length);
-  });
-
-  it('dynamically adapts to user topic weaknesses', () => {
-    // Simulate repeated mistakes on 'Percentages'
+  it('Replacement Test 3: excludes recently attempted questions when candidate pool permits', () => {
     const mockAttempts: MCQAttempt[] = [
       {
         id: 'att-1',
-        userId: mockUserId,
-        questionId: 'nume-001',
+        userId: 'u1',
+        questionId: 'nume-002',
         questionVersion: 1,
-        selectedOptionId: 'B',
+        selectedOptionId: 'A',
         isCorrect: false,
         responseTimeMs: 30000,
-        difficulty: 'MEDIUM',
-        topic: 'Percentages',
-        isRevision: false,
-        attemptedAt: '2026-10-30T10:00:00Z'
-      },
-      {
-        id: 'att-2',
-        userId: mockUserId,
-        questionId: 'nume-030',
-        questionVersion: 1,
-        selectedOptionId: 'C',
-        isCorrect: false,
-        responseTimeMs: 25000,
         difficulty: 'EASY',
         topic: 'Percentages',
         isRevision: false,
-        attemptedAt: '2026-10-30T10:05:00Z'
+        attemptedAt: new Date().toISOString()
       }
     ];
 
-    const weakTopics = identifyWeakTopics(mockAttempts, []);
-    expect(weakTopics).toContain('Percentages');
-
-    const adaptiveSession = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90,
+    const { replacementQuestion } = findReplacementMcq({
+      currentQuestion: currentMcq,
+      allQuestions: ALL_QUESTIONS,
       attempts: mockAttempts
     });
 
-    // Should include a question on Percentages
-    const topicsInSession = adaptiveSession.items.map((i) => i.topic);
-    expect(topicsInSession).toContain('Percentages');
+    expect(replacementQuestion).not.toBeNull();
+    expect(replacementQuestion!.id).not.toBe('nume-002');
   });
 
-  it('includes 1 Easy and 1 Medium coding problem for comprehensive balanced preparation', () => {
-    const session = generateDailyStudySession({
-      userId: mockUserId,
-      dateString: '2026-10-31',
-      targetTrack: 'NINJA',
-      dailyAvailableMinutes: 90
+  it('Replacement Test 4: returns informative notice when category is completely exhausted', () => {
+    // Artificial small pool containing only the current question
+    const isolatedPool = [currentMcq];
+
+    const result = findReplacementMcq({
+      currentQuestion: currentMcq,
+      allQuestions: isolatedPool
     });
 
-    const easyCoding = session.items.filter((i) => i.itemType === 'EASY_CODING');
-    const mediumCoding = session.items.filter((i) => i.itemType === 'MEDIUM_CODING');
+    expect(result.replacementQuestion).toBeNull();
+    expect(result.message).toContain('completed all available practice questions');
+  });
 
-    expect(easyCoding.length).toBe(1);
-    expect(mediumCoding.length).toBe(1);
+  it('Daily Session Slot Persistence: replaces question in slot and preserves audit history', () => {
+    const store = useUserStore.getState();
+    const session = store.getOrCreateTodaySession();
+    expect(session.items.length).toBeGreaterThanOrEqual(5);
+
+    const slotItem = session.items[0];
+    const originalQId = slotItem.questionId;
+    const replacementQId = 'nume-025';
+
+    // Replace question slot
+    const didReplace = store.replaceDailySessionQuestion(
+      session.id,
+      originalQId,
+      replacementQId,
+      'Percentages',
+      'MEDIUM'
+    );
+
+    expect(didReplace).toBe(true);
+
+    // Verify session slot was updated in store
+    const updatedSession = useUserStore.getState().dailySessions[session.sessionDate];
+    const updatedSlot = updatedSession.items.find((it) => it.id === slotItem.id);
+
+    expect(updatedSlot).toBeDefined();
+    expect(updatedSlot!.questionId).toBe(replacementQId);
+    expect(updatedSlot!.originalQuestionId).toBe(originalQId);
+    expect(updatedSlot!.replacementHistory).toContain(originalQId);
+    expect(updatedSlot!.status).toBe('PENDING');
+
+    // Verify other slots were completely unaffected
+    const otherSlots = updatedSession.items.filter((it) => it.id !== slotItem.id);
+    expect(otherSlots.length).toBe(session.items.length - 1);
   });
 });

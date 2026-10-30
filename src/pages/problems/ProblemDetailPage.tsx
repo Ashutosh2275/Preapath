@@ -24,13 +24,15 @@ import {
   Code2,
   Zap,
   Lightbulb,
-  Award
+  Award,
+  Calendar
 } from 'lucide-react';
 import { useQuestionsStore } from '../../stores/useQuestionsStore';
 import { useUserStore } from '../../stores/useUserStore';
 import { runCodeGateway, submitCodeGateway } from '../../lib/executionGateway';
-import { ProgrammingLanguage, TestCase, Submission, ExecutionVerdict, MCQGradingResult, ConfidenceLevel, MCQMistakeType } from '../../types';
+import { ProgrammingLanguage, TestCase, Submission, ExecutionVerdict, MCQGradingResult, MCQMistakeType } from '../../types';
 import { gradeMcqSubmission, getPedagogicalFeedback } from '../../lib/mcqEngine';
+import { findReplacementMcq } from '../../lib/recommendationEngine';
 import { DifficultyBadge, TrackBadge, SourceBadge, VerdictBadge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
@@ -57,7 +59,10 @@ export const ProblemDetailPage: React.FC = () => {
     saveProblemNote,
     submissions,
     addSubmission,
-    recordMcqAttempt
+    recordMcqAttempt,
+    getOrCreateTodaySession,
+    replaceDailySessionQuestion,
+    mcqAttempts
   } = useUserStore();
 
   const question = questions.find(
@@ -121,10 +126,11 @@ export const ProblemDetailPage: React.FC = () => {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [isMcqSubmitted, setIsMcqSubmitted] = useState<boolean>(false);
   const [mcqGrading, setMcqGrading] = useState<MCQGradingResult | null>(null);
-  const [userConfidence, setUserConfidence] = useState<ConfidenceLevel>('MEDIUM');
   const [selfMistake, setSelfMistake] = useState<MCQMistakeType | ''>('');
   const [mcqStartTime, setMcqStartTime] = useState<number>(Date.now());
   const [isSubmittingMcq, setIsSubmittingMcq] = useState(false);
+  const [isReplacingQuestion, setIsReplacingQuestion] = useState(false);
+  const [categoryExhaustedNotice, setCategoryExhaustedNotice] = useState<string | null>(null);
 
   // Custom Test Case input states
   const [customInput, setCustomInput] = useState('');
@@ -250,74 +256,126 @@ export const ProblemDetailPage: React.FC = () => {
     setIsMcqSubmitted(false);
     setMcqGrading(null);
     setSelfMistake('');
+    setCategoryExhaustedNotice(null);
     setMcqStartTime(Date.now());
   }, [question?.id]);
 
   // Submit MCQ Answer
   const handleMcqSubmit = async () => {
-    if (!selectedOptionId || !question) return;
+    if (!selectedOptionId || !question || isSubmittingMcq) return;
     setIsSubmittingMcq(true);
+    setCategoryExhaustedNotice(null);
     const responseTimeMs = Math.max(1000, Date.now() - mcqStartTime);
 
     try {
       const result = await gradeMcqSubmission(question.id, selectedOptionId, responseTimeMs, {
         userId: user?.uid,
+        question,
+        questionVersion: question.version || 1,
         section: question.sections[0],
         difficulty: question.difficulty,
-        confidence: userConfidence,
         userMistake: selfMistake ? (selfMistake as MCQMistakeType) : undefined,
       });
 
       setMcqGrading(result);
       setIsMcqSubmitted(true);
 
-      // Record in store & DB
-      recordMcqAttempt({
-        userId: user?.uid || 'guest-user',
+      // Only record attempt if grading was authoritative and valid!
+      if (result.gradingStatus === 'GRADED') {
+        recordMcqAttempt({
+          userId: user?.uid || 'guest-user',
+          questionId: question.id,
+          questionVersion: question.version || 1,
+          selectedOptionId,
+          isCorrect: result.isCorrect,
+          responseTimeMs,
+          difficulty: question.difficulty,
+          topic: question.topics[0] || 'Foundations',
+          questionArchetype: question.questionArchetype,
+          mistakeType: result.mistakeType,
+          isRevision: progress?.needsRevision || false,
+        });
+
+        const uid = user?.uid || 'guest-user';
+        const subRecord: Submission = {
+          id: `mcq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+          userId: uid,
+          problemId: question.id,
+          language: 'python',
+          sourceCodeSnapshot: `Option Selected: ${selectedOptionId}\nCorrect Option: ${result.correctOptionId}`,
+          verdict: result.isCorrect ? 'Accepted' : 'Wrong Answer',
+          executionTimeMs: Math.round(responseTimeMs / 1000),
+          memoryUsedKb: 256,
+          passedTests: result.isCorrect ? 1 : 0,
+          totalTests: 1,
+          submittedAt: new Date().toISOString(),
+        };
+
+        addSubmission(subRecord);
+        recordSubmissionResult(question.id, result.isCorrect ? 'Accepted' : 'Wrong Answer', 'python', responseTimeMs);
+      }
+    } catch (err) {
+      console.error('Failed to grade MCQ submission:', err);
+      setMcqGrading({
         questionId: question.id,
         questionVersion: question.version || 1,
         selectedOptionId,
-        isCorrect: result.isCorrect,
-        responseTimeMs,
-        difficulty: question.difficulty,
-        topic: question.topics[0] || 'Foundations',
-        questionArchetype: question.questionArchetype,
-        confidence: userConfidence,
-        mistakeType: result.mistakeType,
-        isRevision: progress?.needsRevision || false,
+        correctOptionId: '',
+        isCorrect: false,
+        explanation: '',
+        gradingStatus: 'UNAVAILABLE',
+        errorMessage: 'Authoritative grading service is currently unreachable. Please retry.'
       });
-
-      const uid = user?.uid || 'guest-user';
-      const subRecord: Submission = {
-        id: `mcq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-        userId: uid,
-        problemId: question.id,
-        language: 'python',
-        sourceCodeSnapshot: `Option Selected: ${selectedOptionId}\nCorrect Option: ${result.correctOptionId}`,
-        verdict: result.isCorrect ? 'Accepted' : 'Wrong Answer',
-        executionTimeMs: Math.round(responseTimeMs / 1000),
-        memoryUsedKb: 256,
-        passedTests: result.isCorrect ? 1 : 0,
-        totalTests: 1,
-        submittedAt: new Date().toISOString(),
-      };
-
-      addSubmission(subRecord);
-      recordSubmissionResult(question.id, result.isCorrect ? 'Accepted' : 'Wrong Answer', 'python', responseTimeMs);
-    } catch (err) {
-      console.error('Failed to grade MCQ submission:', err);
+      setIsMcqSubmitted(true);
     } finally {
       setIsSubmittingMcq(false);
     }
   };
 
-  // Reset MCQ Answer
-  const handleMcqReset = () => {
-    setSelectedOptionId(null);
-    setIsMcqSubmitted(false);
-    setMcqGrading(null);
-    setSelfMistake('');
-    setMcqStartTime(Date.now());
+  // Try Another Question - Generates a distinct question with same learning objective, topic & difficulty
+  const handleTryAnotherQuestion = () => {
+    if (!question || isReplacingQuestion) return;
+    setIsReplacingQuestion(true);
+    setCategoryExhaustedNotice(null);
+
+    try {
+      const todaySession = getOrCreateTodaySession();
+      const sessionItems = todaySession?.items || [];
+      const currentItem = sessionItems.find(it => it.questionId === question.id);
+
+      // Exclude questions already allocated in today's daily session
+      const excludeIds = sessionItems.map(it => it.questionId);
+
+      const { replacementQuestion, message } = findReplacementMcq({
+        currentQuestion: question,
+        allQuestions: questions,
+        targetTrack: user?.targetTrack,
+        attempts: mcqAttempts,
+        excludeQuestionIds: excludeIds,
+      });
+
+      if (replacementQuestion) {
+        // If current question belongs to today's daily preparation slot, replace the slot persistently!
+        if (currentItem && todaySession) {
+          replaceDailySessionQuestion(
+            todaySession.id,
+            question.id,
+            replacementQuestion.id,
+            replacementQuestion.topics[0],
+            replacementQuestion.difficulty
+          );
+        }
+
+        // Navigate to the replacement question
+        navigate(`/problems/${replacementQuestion.catalogNumber || replacementQuestion.slug || replacementQuestion.id}`);
+      } else {
+        setCategoryExhaustedNotice(
+          message || 'You have completed all available practice questions in this category.'
+        );
+      }
+    } finally {
+      setIsReplacingQuestion(false);
+    }
   };
 
   // Add custom test case
@@ -883,37 +941,17 @@ export const ProblemDetailPage: React.FC = () => {
 
               {/* Options Selection List */}
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Select the correct answer:
-                  </h4>
-                  {!isMcqSubmitted && (
-                    <div className="flex items-center gap-1.5 text-xs">
-                      <span className="text-[11px] text-slate-400 font-medium mr-1">Confidence:</span>
-                      {(['LOW', 'MEDIUM', 'HIGH'] as ConfidenceLevel[]).map((lvl) => (
-                        <button
-                          key={lvl}
-                          type="button"
-                          onClick={() => setUserConfidence(lvl)}
-                          className={`px-2 py-0.5 rounded text-[11px] font-semibold border transition-all ${
-                            userConfidence === lvl
-                              ? 'bg-primary/10 border-primary text-primary'
-                              : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800'
-                          }`}
-                        >
-                          {lvl === 'LOW' ? 'Guess' : lvl === 'MEDIUM' ? 'Medium' : 'High'}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Select the correct answer:
+                </h4>
 
                 <div className="space-y-2.5">
                   {(question.options || []).map((opt) => {
                     const isSelected = selectedOptionId === opt.id;
-                    const isCorrect = isMcqSubmitted && opt.id.toUpperCase() === (mcqGrading?.correctOptionId || '').toUpperCase();
-                    const isWrongSelection = isMcqSubmitted && isSelected && !isCorrect;
-                    const distractorNote = isMcqSubmitted && mcqGrading?.distractorExplanations?.[opt.id];
+                    const isGraded = isMcqSubmitted && mcqGrading?.gradingStatus === 'GRADED';
+                    const isCorrect = isGraded && opt.id.toUpperCase() === (mcqGrading?.correctOptionId || '').toUpperCase();
+                    const isWrongSelection = isGraded && isSelected && !mcqGrading?.isCorrect;
+                    const distractorNote = isGraded && mcqGrading?.distractorExplanations?.[opt.id];
 
                     let cardClass = "border-slate-200 bg-white text-slate-800 hover:border-primary/50 hover:bg-slate-50/50";
                     if (isSelected && !isMcqSubmitted) {
@@ -966,53 +1004,97 @@ export const ProblemDetailPage: React.FC = () => {
 
               {/* Feedback & Mistake Diagnostic Alert */}
               {isMcqSubmitted && mcqGrading && (
-                <div className={`p-4 rounded-xl border flex flex-col gap-2.5 animate-in fade-in ${
-                  mcqGrading.isCorrect 
-                    ? 'border-emerald-300 bg-emerald-50 text-emerald-800' 
-                    : 'border-rose-300 bg-rose-50 text-rose-800'
-                }`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      {mcqGrading.isCorrect ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
-                      )}
-                      <h5 className="font-bold text-sm">
-                        {mcqGrading.isCorrect 
-                          ? `Correct! Option (${mcqGrading.correctOptionId}) is verified.` 
-                          : `Incorrect. You chose (${selectedOptionId}), correct answer is (${mcqGrading.correctOptionId}).`
-                        }
-                      </h5>
+                <>
+                  {mcqGrading.gradingStatus === 'UNAVAILABLE' ? (
+                    <div className="p-4 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 flex items-start gap-3 animate-in fade-in">
+                      <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                      <div className="space-y-1.5 flex-1">
+                        <h5 className="font-bold text-sm">Grading Unavailable</h5>
+                        <p className="text-xs leading-relaxed text-amber-800">
+                          {mcqGrading.errorMessage || 'Authoritative answer key could not be retrieved for this question. No incorrect attempt has been recorded.'}
+                        </p>
+                        <div className="pt-1">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleMcqSubmit}
+                            disabled={isSubmittingMcq}
+                            leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
+                            className="bg-white border-amber-300 text-amber-900 hover:bg-amber-100/50"
+                          >
+                            Retry Grading
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                    {mcqGrading.conceptTested && (
-                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-white/70 border border-current">
-                        {mcqGrading.conceptTested}
-                      </span>
-                    )}
-                  </div>
+                  ) : mcqGrading.gradingStatus === 'ERROR' ? (
+                    <div className="p-4 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 flex items-start gap-3 animate-in fade-in">
+                      <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                      <div className="space-y-1">
+                        <h5 className="font-bold text-sm">Grading Error</h5>
+                        <p className="text-xs leading-relaxed text-rose-800">
+                          {mcqGrading.errorMessage || 'An error occurred while evaluating your submission. No attempt has been recorded.'}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={`p-4 rounded-xl border flex flex-col gap-2.5 animate-in fade-in ${
+                      mcqGrading.isCorrect 
+                        ? 'border-emerald-300 bg-emerald-50 text-emerald-800' 
+                        : 'border-rose-300 bg-rose-50 text-rose-800'
+                    }`}>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {mcqGrading.isCorrect ? (
+                            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                          ) : (
+                            <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                          )}
+                          <h5 className="font-bold text-sm">
+                            {mcqGrading.isCorrect 
+                              ? `Correct! Option (${mcqGrading.correctOptionId}) is verified.` 
+                              : `Incorrect. You chose (${selectedOptionId}), correct answer is (${mcqGrading.correctOptionId}).`
+                            }
+                          </h5>
+                        </div>
+                        {mcqGrading.conceptTested && (
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-white/70 border border-current">
+                            {mcqGrading.conceptTested}
+                          </span>
+                        )}
+                      </div>
 
-                  {!mcqGrading.isCorrect && (
-                    <div className="pt-2 border-t border-rose-200/60 space-y-1.5">
-                      {(() => {
-                        const feedback = getPedagogicalFeedback(
-                          mcqGrading.mistakeType || 'CONCEPTUAL_GAP',
-                          mcqGrading.conceptTested || 'this question'
-                        );
-                        return (
-                          <div className="text-xs space-y-1 bg-white/80 p-3 rounded-lg border border-rose-200">
-                            <span className="font-bold text-rose-900 flex items-center gap-1.5">
-                              <AlertCircle className="w-4 h-4 text-rose-600" />
-                              Diagnostic: {feedback.title}
-                            </span>
-                            <p className="text-slate-700 leading-relaxed">
-                              {feedback.advice}
-                            </p>
-                          </div>
-                        );
-                      })()}
+                      {!mcqGrading.isCorrect && (
+                        <div className="pt-2 border-t border-rose-200/60 space-y-1.5">
+                          {(() => {
+                            const feedback = getPedagogicalFeedback(
+                              mcqGrading.mistakeType || 'CONCEPTUAL_GAP',
+                              mcqGrading.conceptTested || 'this question'
+                            );
+                            return (
+                              <div className="text-xs space-y-1 bg-white/80 p-3 rounded-lg border border-rose-200">
+                                <span className="font-bold text-rose-900 flex items-center gap-1.5">
+                                  <AlertCircle className="w-4 h-4 text-rose-600" />
+                                  Diagnostic: {feedback.title}
+                                </span>
+                                <p className="text-slate-700 leading-relaxed">
+                                  {feedback.advice}
+                                </p>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      )}
                     </div>
                   )}
+                </>
+              )}
+
+              {/* Category Exhausted Notice */}
+              {categoryExhaustedNotice && (
+                <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 flex items-center gap-2 animate-in fade-in">
+                  <AlertCircle className="w-4 h-4 text-slate-500 shrink-0" />
+                  <span>{categoryExhaustedNotice}</span>
                 </div>
               )}
 
@@ -1030,14 +1112,26 @@ export const ProblemDetailPage: React.FC = () => {
                       {isSubmittingMcq ? 'Grading...' : 'Submit Answer'}
                     </Button>
                   ) : (
-                    <Button
-                      variant="outline"
-                      size="md"
-                      onClick={handleMcqReset}
-                      leftIcon={<RotateCcw className="w-4 h-4" />}
-                    >
-                      Try Again
-                    </Button>
+                    <>
+                      <Button
+                        variant="primary"
+                        size="md"
+                        onClick={handleTryAnotherQuestion}
+                        disabled={isReplacingQuestion}
+                        leftIcon={<Sparkles className="w-4 h-4 text-white" />}
+                      >
+                        {isReplacingQuestion ? 'Finding next question...' : 'Try Another Question'}
+                      </Button>
+                      <Link to="/dashboard">
+                        <Button
+                          variant="outline"
+                          size="md"
+                          leftIcon={<Calendar className="w-4 h-4 text-slate-500" />}
+                        >
+                          Back to Today's Plan
+                        </Button>
+                      </Link>
+                    </>
                   )}
                 </div>
 
@@ -1055,7 +1149,7 @@ export const ProblemDetailPage: React.FC = () => {
               </div>
 
               {/* Formula & Speed Shortcut Callouts */}
-              {isMcqSubmitted && mcqGrading && (
+              {isMcqSubmitted && mcqGrading && mcqGrading.gradingStatus === 'GRADED' && (
                 <div className="space-y-3 pt-2">
                   {mcqGrading.formulaOrRule && (
                     <div className="bg-indigo-50/70 border border-indigo-200 rounded-xl p-4 space-y-1">

@@ -17,7 +17,8 @@ import {
   StudyPlanRevisionRecord,
   MCQAttempt,
   DailyStudySession,
-  DailyStudySessionItem
+  DailyStudySessionItem,
+  DifficultyLevel
 } from '../types';
 import { 
   upsertPostgresProfile, 
@@ -131,6 +132,7 @@ interface UserStoreState {
   dailySessions: Record<string, DailyStudySession>;
   getOrCreateTodaySession: () => DailyStudySession;
   updateSessionItemStatus: (sessionId: string, itemId: string, status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'SKIPPED') => void;
+  replaceDailySessionQuestion: (sessionId: string, currentQuestionId: string, newQuestionId: string, newQuestionTopic?: string, newQuestionDifficulty?: DifficultyLevel) => boolean;
 
   // System stats & helper actions
   resetAccountData: () => void;
@@ -854,6 +856,52 @@ export const useUserStore = create<UserStoreState>()(
 
           return { dailySessions: sessions };
         });
+      },
+
+      replaceDailySessionQuestion: (sessionId, currentQuestionId, newQuestionId, newQuestionTopic, newQuestionDifficulty) => {
+        let replaced = false;
+        set((state) => {
+          const sessions = { ...state.dailySessions };
+          let targetDate: string | null = null;
+
+          for (const [dateKey, session] of Object.entries(sessions)) {
+            if (session.id === sessionId) {
+              targetDate = dateKey;
+              const updatedItems = session.items.map((it) => {
+                if (it.questionId === currentQuestionId) {
+                  replaced = true;
+                  const originalQId = it.originalQuestionId || it.questionId;
+                  const prevHistory = it.replacementHistory || [];
+                  return {
+                    ...it,
+                    questionId: newQuestionId,
+                    originalQuestionId: originalQId,
+                    replacementHistory: [...prevHistory, currentQuestionId],
+                    topic: newQuestionTopic || it.topic,
+                    difficulty: newQuestionDifficulty || it.difficulty,
+                    status: 'PENDING' as const,
+                  };
+                }
+                return it;
+              });
+
+              sessions[dateKey] = {
+                ...session,
+                items: updatedItems,
+              };
+              break;
+            }
+          }
+
+          if (targetDate && sessions[targetDate]) {
+            savePostgresDailySession(sessions[targetDate]).catch((err) =>
+              console.debug('PG update session replacement note:', err)
+            );
+          }
+
+          return { dailySessions: sessions };
+        });
+        return replaced;
       },
 
       resetAccountData: () => {

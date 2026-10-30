@@ -172,15 +172,20 @@ export interface MCQAnswerKey {
 }
 
 export interface MCQGradingResult {
-  isCorrect: boolean;
+  questionId: string;
+  questionVersion: number;
+  selectedOptionId: string;
   correctOptionId: string;
+  isCorrect: boolean;
   explanation: string;
   formulaOrRule?: string;
   distractorExplanations?: Record<string, string>;
   misconceptionNotes?: string;
   shortcutTechnique?: string;
-  conceptTested: string;
+  conceptTested?: string;
   mistakeType?: MCQMistakeType;
+  gradingStatus: 'GRADED' | 'ERROR' | 'UNAVAILABLE';
+  errorMessage?: string;
 }
 
 export interface MCQAttempt {
@@ -208,6 +213,8 @@ export interface DailyStudySessionItem {
   section: SectionType;
   topic: string;
   questionId: string;
+  originalQuestionId?: string;
+  replacementHistory?: string[];
   difficulty: DifficultyLevel;
   estimatedMinutes: number;
   status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'SKIPPED';

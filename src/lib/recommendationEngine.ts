@@ -357,3 +357,128 @@ export function generateDailyStudySession(params: {
     createdAt: new Date().toISOString()
   };
 }
+
+export interface FindReplacementMcqParams {
+  currentQuestion: Question;
+  allQuestions?: Question[];
+  targetTrack?: TargetTrack;
+  attempts?: MCQAttempt[];
+  excludeQuestionIds?: string[];
+  seed?: string;
+}
+
+export interface ReplacementMcqResult {
+  replacementQuestion: Question | null;
+  matchPriority: 1 | 2 | 3 | 4 | 5 | null;
+  message?: string;
+}
+
+/**
+ * Retrieves a genuinely different published MCQ from the question bank matching:
+ * Same examination section, same primary topic, same difficulty level, same target track.
+ * Follows the 5-tier candidate selection priority without duplicate or repeated questions.
+ */
+export function findReplacementMcq(params: FindReplacementMcqParams): ReplacementMcqResult {
+  const {
+    currentQuestion,
+    allQuestions = ALL_QUESTIONS,
+    targetTrack,
+    attempts = [],
+    excludeQuestionIds = [],
+    seed = `${currentQuestion.id}-${Date.now()}`
+  } = params;
+
+  // 1. Base eligibility filter
+  const basePool = allQuestions.filter((q) => {
+    if (q.id === currentQuestion.id) return false;
+    if (q.problemFormat !== 'MULTIPLE_CHOICE') return false;
+    if (q.publicationStatus === 'ARCHIVED' || q.publicationStatus === 'DRAFT') return false;
+    if (!q.options || q.options.length < 4) return false;
+    if (excludeQuestionIds.includes(q.id)) return false;
+    if (targetTrack && !q.targetTracks.includes(targetTrack)) return false;
+    return true;
+  });
+
+  // Collect recently attempted question IDs (last 10 attempts unless spaced revision)
+  const recentAttemptIds = attempts.slice(0, 10).map((a) => a.questionId);
+
+  // Helper to filter out recent attempts if more candidates exist
+  const filterNonRecent = (pool: Question[]): Question[] => {
+    const nonRecent = pool.filter((q) => !recentAttemptIds.includes(q.id));
+    return nonRecent.length > 0 ? nonRecent : pool;
+  };
+
+  const rng = createSeededRandom(seed);
+  const currentTopics = currentQuestion.topics || [];
+  const currentSection = currentQuestion.sections[0];
+  const currentDifficulty = currentQuestion.difficulty;
+  const currentArchetype = currentQuestion.questionArchetype;
+  const currentObjective = currentQuestion.learningObjective;
+
+  // Priority 1: Same topic, same difficulty, and different question archetype
+  const pool1 = basePool.filter((q) => 
+    q.difficulty === currentDifficulty &&
+    q.topics.some((t) => currentTopics.includes(t)) &&
+    q.questionArchetype &&
+    q.questionArchetype !== currentArchetype
+  );
+  if (pool1.length > 0) {
+    const candidates = seededShuffle(filterNonRecent(pool1), rng);
+    return { replacementQuestion: candidates[0], matchPriority: 1 };
+  }
+
+  // Priority 2: Same topic, same difficulty, and different approved problem structure
+  const pool2 = basePool.filter((q) =>
+    q.difficulty === currentDifficulty &&
+    q.topics.some((t) => currentTopics.includes(t)) &&
+    q.id !== currentQuestion.id
+  );
+  if (pool2.length > 0) {
+    const candidates = seededShuffle(filterNonRecent(pool2), rng);
+    return { replacementQuestion: candidates[0], matchPriority: 2 };
+  }
+
+  // Priority 3: Same subtopic/learning objective and difficulty
+  const pool3 = basePool.filter((q) =>
+    q.difficulty === currentDifficulty &&
+    ((currentObjective && q.learningObjective === currentObjective) ||
+      q.topics.some((t) => currentTopics.includes(t)))
+  );
+  if (pool3.length > 0) {
+    const candidates = seededShuffle(filterNonRecent(pool3), rng);
+    return { replacementQuestion: candidates[0], matchPriority: 3 };
+  }
+
+  // Priority 4: Same section and difficulty
+  const pool4 = basePool.filter((q) =>
+    q.difficulty === currentDifficulty &&
+    q.sections.includes(currentSection)
+  );
+  if (pool4.length > 0) {
+    const candidates = seededShuffle(filterNonRecent(pool4), rng);
+    return { replacementQuestion: candidates[0], matchPriority: 4 };
+  }
+
+  // Priority 5: Same section with nearest appropriate difficulty
+  const nearestDifficulties: DifficultyLevel[] = 
+    currentDifficulty === 'MEDIUM' ? ['EASY', 'HARD'] :
+    currentDifficulty === 'EASY' ? ['MEDIUM', 'HARD'] : ['MEDIUM', 'EASY'];
+
+  for (const diff of nearestDifficulties) {
+    const pool5 = basePool.filter((q) =>
+      q.difficulty === diff &&
+      q.sections.includes(currentSection)
+    );
+    if (pool5.length > 0) {
+      const candidates = seededShuffle(filterNonRecent(pool5), rng);
+      return { replacementQuestion: candidates[0], matchPriority: 5 };
+    }
+  }
+
+  // Pool exhausted
+  return {
+    replacementQuestion: null,
+    matchPriority: null,
+    message: 'You have completed all available practice questions in this category.'
+  };
+}

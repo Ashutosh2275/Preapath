@@ -1,4 +1,5 @@
 import { MCQAnswerKey } from '../../types';
+import { ADDITIONAL_MCQ_QUESTIONS } from './additionalMcqQuestions';
 
 /**
  * PrepPath Authoritative Protected MCQ Answer Keys & Pedagogical Explanations
@@ -2054,6 +2055,22 @@ export const MCQ_ANSWER_KEYS: Record<string, MCQAnswerKey> = {
     isVerified: true
   },
 };
+
+// Also index verified keys for additional questions if not already present
+ADDITIONAL_MCQ_QUESTIONS.forEach((q) => {
+  if (q.id && q.correctOptionId && !MCQ_ANSWER_KEYS[q.id]) {
+    MCQ_ANSWER_KEYS[q.id] = {
+      questionId: q.id,
+      correctOptionId: q.correctOptionId,
+      explanation: q.explanation || 'Verified solution breakdown.',
+      formulaOrRule: undefined,
+      distractorExplanations: {},
+      conceptTested: q.topics?.[0] || 'Aptitude & Logic',
+      verifiedBy: 'PrepPath Editorial Board',
+      isVerified: true
+    };
+  }
+});
 
 export function getMcqAnswerKey(questionId: string): MCQAnswerKey | undefined {
   return MCQ_ANSWER_KEYS[questionId];
