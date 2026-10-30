@@ -18,7 +18,9 @@ import {
   MCQAttempt,
   DailyStudySession,
   DailyStudySessionItem,
-  DifficultyLevel
+  DifficultyLevel,
+  NotificationDevice,
+  AccountSyncState
 } from '../types';
 import { 
   upsertPostgresProfile, 
@@ -44,8 +46,12 @@ import {
   recordPostgresMcqAttempt,
   fetchPostgresMcqAttempts,
   savePostgresDailySession,
-  fetchPostgresDailySessions
+  fetchPostgresDailySessions,
+  fetchPostgresNotificationDevices,
+  updatePostgresNotificationDeviceStatus,
+  deletePostgresAccount
 } from '../lib/db';
+import { signOutFromProviders } from '../lib/authService';
 import { calculateNextSpacedReview } from '../lib/spacedRepetition';
 import { evaluateTopicMastery } from '../lib/topicMastery';
 import { ALL_QUESTIONS } from '../data/questions';
@@ -55,9 +61,19 @@ interface UserStoreState {
   // Authentication & Profile
   user: UserProfile | null;
   isLoadingAuth: boolean;
+  syncState: AccountSyncState;
+  setSyncState: (state: AccountSyncState) => void;
   setUser: (user: UserProfile | null) => void;
-  updateProfile: (updates: Partial<UserProfile>) => void;
+  updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
   loadAuthoritativeData: (userId: string) => Promise<void>;
+  signOutUser: () => Promise<void>;
+  clearLocalCacheOnly: () => Promise<void>;
+  deleteAccountPermanently: () => Promise<boolean>;
+
+  // Notification Devices (Multi-device subscriptions)
+  notificationDevices: NotificationDevice[];
+  loadNotificationDevices: () => Promise<void>;
+  toggleDeviceNotifications: (deviceId: string, isActive: boolean) => Promise<boolean>;
 
   // Study Plan
   studyPlan: StudyPlan | null;
@@ -143,26 +159,77 @@ export const useUserStore = create<UserStoreState>()(
     (set, get) => ({
       user: null,
       isLoadingAuth: false,
+      syncState: 'IDLE',
+      setSyncState: (state) => set({ syncState: state }),
+      notificationDevices: [],
+
+      loadNotificationDevices: async () => {
+        const currentUser = get().user;
+        if (!currentUser?.uid) return;
+        try {
+          const devices = await fetchPostgresNotificationDevices(currentUser.uid);
+          set({ notificationDevices: devices });
+        } catch (err) {
+          console.warn('Failed to load notification devices:', err);
+        }
+      },
+
+      toggleDeviceNotifications: async (deviceId: string, isActive: boolean) => {
+        const currentUser = get().user;
+        if (!currentUser?.uid) return false;
+        try {
+          const ok = await updatePostgresNotificationDeviceStatus(currentUser.uid, deviceId, isActive);
+          if (ok) {
+            set((state) => ({
+              notificationDevices: state.notificationDevices.map((d) =>
+                d.deviceId === deviceId ? { ...d, isActive } : d
+              ),
+            }));
+          }
+          return ok;
+        } catch (err) {
+          console.warn('Failed to toggle device notification:', err);
+          return false;
+        }
+      },
+
       setUser: (user) => {
         set({ user });
         if (user) {
           upsertPostgresProfile(user).catch(err => console.debug('PG profile sync:', err));
           get().loadAuthoritativeData(user.uid).catch(err => console.debug('PG data hydration note:', err));
+          get().loadNotificationDevices().catch(() => {});
         }
       },
-      updateProfile: (updates) => {
+
+      updateProfile: async (updates) => {
         const current = get().user;
         if (!current) return;
-        const updated = {
+        const updated: UserProfile = {
           ...current,
           ...updates,
+          version: (current.version || 1) + 1,
           updatedAt: new Date().toISOString(),
         };
-        set({ user: updated });
-        upsertPostgresProfile(updated).catch(err => console.debug('PG profile update:', err));
+        set({ user: updated, syncState: 'SAVING' });
+        try {
+          const success = await upsertPostgresProfile(updated);
+          set({ syncState: success ? 'SAVED' : 'FAILED' });
+          if (success) {
+            setTimeout(() => {
+              if (get().syncState === 'SAVED') {
+                set({ syncState: 'IDLE' });
+              }
+            }, 3000);
+          }
+        } catch (err) {
+          console.error('PG profile update error:', err);
+          set({ syncState: 'FAILED' });
+        }
       },
+
       loadAuthoritativeData: async (userId: string) => {
-        set({ isLoadingAuth: true });
+        set({ isLoadingAuth: true, syncState: 'SAVING' });
         try {
           // Parallel fetch of authoritative PostgreSQL state
           const [
@@ -178,7 +245,8 @@ export const useUserStore = create<UserStoreState>()(
             dbTopicMastery,
             dbPlanRevisions,
             dbMcqAttempts,
-            dbDailySessions
+            dbDailySessions,
+            dbDevices
           ] = await Promise.all([
             getPostgresProfile(userId),
             fetchPostgresStudyPlan(userId),
@@ -192,7 +260,8 @@ export const useUserStore = create<UserStoreState>()(
             fetchPostgresTopicMastery(userId),
             fetchPostgresPlanRevisions(userId),
             fetchPostgresMcqAttempts(userId),
-            fetchPostgresDailySessions(userId)
+            fetchPostgresDailySessions(userId),
+            fetchPostgresNotificationDevices(userId)
           ]);
 
           const updates: Partial<UserStoreState> = {};
@@ -240,10 +309,19 @@ export const useUserStore = create<UserStoreState>()(
           if (dbDailySessions && Object.keys(dbDailySessions).length > 0) {
             updates.dailySessions = { ...get().dailySessions, ...dbDailySessions };
           }
+          if (dbDevices.length > 0) {
+            updates.notificationDevices = dbDevices;
+          }
 
-          set(updates);
+          set({ ...updates, syncState: 'SAVED' });
+          setTimeout(() => {
+            if (get().syncState === 'SAVED') {
+              set({ syncState: 'IDLE' });
+            }
+          }, 2500);
         } catch (err) {
           console.warn('PostgreSQL authoritative data loading note:', err);
+          set({ syncState: 'FAILED' });
         } finally {
           set({ isLoadingAuth: false });
         }
@@ -904,6 +982,48 @@ export const useUserStore = create<UserStoreState>()(
         return replaced;
       },
 
+      signOutUser: async () => {
+        try {
+          await signOutFromProviders();
+        } catch (err) {
+          console.debug('Sign out error:', err);
+        }
+        get().resetAccountData();
+        try {
+          localStorage.removeItem('preppath_user_storage_v2');
+          localStorage.removeItem('preppath_onboarding_draft');
+        } catch (e) {
+          // ignore
+        }
+      },
+
+      clearLocalCacheOnly: async () => {
+        const currentUser = get().user;
+        try {
+          localStorage.removeItem('preppath_user_storage_v2');
+          localStorage.removeItem('preppath_questions_storage');
+          localStorage.removeItem('preppath_onboarding_draft');
+        } catch (e) {
+          // ignore
+        }
+        if (currentUser?.uid) {
+          await get().loadAuthoritativeData(currentUser.uid);
+        }
+      },
+
+      deleteAccountPermanently: async () => {
+        const currentUser = get().user;
+        if (!currentUser?.uid) return false;
+        try {
+          const deleted = await deletePostgresAccount(currentUser.uid);
+          await get().signOutUser();
+          return deleted;
+        } catch (err) {
+          console.error('Failed to permanently delete account:', err);
+          return false;
+        }
+      },
+
       resetAccountData: () => {
         set({
           user: null,
@@ -920,6 +1040,8 @@ export const useUserStore = create<UserStoreState>()(
           inAppNotifications: [],
           mcqAttempts: [],
           dailySessions: {},
+          notificationDevices: [],
+          syncState: 'IDLE',
         });
       },
     }),
@@ -928,3 +1050,13 @@ export const useUserStore = create<UserStoreState>()(
     }
   )
 );
+
+// Cross-device automatic revalidation when window / tab regains focus
+if (typeof window !== 'undefined') {
+  window.addEventListener('focus', () => {
+    const state = useUserStore.getState();
+    if (state.user?.uid && !state.isLoadingAuth) {
+      state.loadAuthoritativeData(state.user.uid).catch(() => {});
+    }
+  });
+}

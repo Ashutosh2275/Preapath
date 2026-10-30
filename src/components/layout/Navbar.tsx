@@ -11,7 +11,8 @@ import {
   X, 
   Settings,
   Sparkles,
-  Bell
+  Bell,
+  Check
 } from 'lucide-react';
 import { useUserStore } from '../../stores/useUserStore';
 import { Button } from '../common/Button';
@@ -19,35 +20,40 @@ import { Button } from '../common/Button';
 export const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, setUser, inAppNotifications, markNotificationRead } = useUserStore();
+  const { 
+    user, 
+    inAppNotifications, 
+    markNotificationRead, 
+    signOutUser,
+    syncState 
+  } = useUserStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
   const unreadCount = (inAppNotifications || []).filter(n => !n.read).length;
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     setUserDropdownOpen(false);
-    setUser(null);
+    await signOutUser();
     navigate('/');
   };
 
   const handleGetStarted = () => {
     if (!user) {
       navigate('/signup');
-    } else if (!user.targetTrack || !user.proficiency) {
+    } else if (!user.onboardingCompleted) {
       navigate('/onboarding');
     } else {
       navigate('/dashboard');
     }
   };
 
-  // Section 2: Consolidated Minimal Navigation Structure
+  // Canonical Student Navigation (Profile consolidated into Settings)
   const studentLinks = [
     { label: 'Dashboard', path: '/dashboard', icon: Sparkles },
     { label: 'Practice', path: '/practice', icon: Code2 },
     { label: 'Study Plan', path: '/study-plan', icon: Calendar },
     { label: 'Progress', path: '/progress', icon: BarChart2 },
-    { label: 'Profile', path: '/profile', icon: User },
   ];
 
   const isActive = (path: string) => {
@@ -58,7 +64,6 @@ export const Navbar: React.FC = () => {
     if (path === '/progress') {
       return location.pathname.startsWith('/progress') || location.pathname.startsWith('/submissions');
     }
-    if (path === '/profile') return location.pathname.startsWith('/profile');
     return location.pathname === path;
   };
 
@@ -207,6 +212,25 @@ export const Navbar: React.FC = () => {
               </div>
             )}
 
+            {/* Authoritative PostgreSQL Sync State Indicator */}
+            {user && syncState === 'SAVING' && (
+              <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                Saving...
+              </span>
+            )}
+            {user && syncState === 'SAVED' && (
+              <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                Saved to account
+              </span>
+            )}
+            {user && syncState === 'FAILED' && (
+              <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200">
+                Synchronization failed
+              </span>
+            )}
+
             {user ? (
               <div className="relative">
                 <button
@@ -223,43 +247,34 @@ export const Navbar: React.FC = () => {
 
                 {userDropdownOpen && (
                   <div 
-                    className="absolute right-0 mt-2 w-52 rounded-xl bg-white shadow-xl border border-slate-200 py-1 z-50 animate-in fade-in slide-in-from-top-1"
+                    className="absolute right-0 mt-2 w-56 rounded-xl bg-white shadow-xl border border-slate-200 py-1 z-50 animate-in fade-in slide-in-from-top-1"
                     onMouseLeave={() => setUserDropdownOpen(false)}
                   >
-                    <div className="px-3.5 py-2 border-b border-slate-100">
+                    <div className="px-3.5 py-2.5 border-b border-slate-100">
                       <p className="text-xs font-semibold text-slate-900 truncate">
                         {user.displayName || 'PrepPath Student'}
                       </p>
-                      <p className="text-[11px] text-slate-400 truncate">
+                      <p className="text-[11px] text-slate-500 truncate mt-0.5">
                         {user.email}
                       </p>
                     </div>
 
                     <Link
-                      to="/profile"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50"
-                    >
-                      <User className="w-3.5 h-3.5 text-slate-400" />
-                      Profile & Goals
-                    </Link>
-
-                    <Link
                       to="/settings"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50"
+                      className="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
-                      <Settings className="w-3.5 h-3.5 text-slate-400" />
-                      Account Preferences
+                      <Settings className="w-4 h-4 text-slate-500" />
+                      Settings
                     </Link>
 
                     {user.role === 'admin' && (
                       <Link
                         to="/admin"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2 px-3.5 py-2 text-xs text-purple-600 hover:bg-purple-50"
+                        className="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-purple-600 hover:bg-purple-50 transition-colors"
                       >
-                        <ShieldAlert className="w-3.5 h-3.5" />
+                        <ShieldAlert className="w-4 h-4" />
                         Admin Content Portal
                       </Link>
                     )}
@@ -268,10 +283,10 @@ export const Navbar: React.FC = () => {
 
                     <button
                       onClick={handleSignOut}
-                      className="flex items-center gap-2 w-full text-left px-3.5 py-2 text-xs text-rose-600 hover:bg-rose-50"
+                      className="flex items-center gap-2.5 w-full text-left px-3.5 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors"
                     >
-                      <LogOut className="w-3.5 h-3.5" />
-                      Sign Out
+                      <LogOut className="w-4 h-4" />
+                      Sign out of this device
                     </button>
                   </div>
                 )}

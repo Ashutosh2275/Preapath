@@ -18,9 +18,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Redirect new users who haven't selected a target track to onboarding
-  if (!user.targetTrack && location.pathname !== '/onboarding') {
+  // Redirect new users who have not completed mandatory preparation onboarding
+  if (!user.onboardingCompleted && location.pathname !== '/onboarding') {
     return <Navigate to="/onboarding" replace />;
+  }
+
+  // Prevent returning users with completed onboarding from re-running initial onboarding
+  if (user.onboardingCompleted && location.pathname === '/onboarding') {
+    return <Navigate to="/dashboard" replace />;
   }
 
   // Admin access validation

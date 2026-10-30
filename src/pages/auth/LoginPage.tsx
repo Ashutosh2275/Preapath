@@ -7,6 +7,7 @@ import { supabase, isPostgresConfigured } from '../../lib/supabase';
 import { getPostgresProfile } from '../../lib/db';
 import { useUserStore } from '../../stores/useUserStore';
 import { Button } from '../../components/common/Button';
+import { UserProfile } from '../../types';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -45,21 +46,27 @@ export const LoginPage: React.FC = () => {
 
         if (data.user) {
           const profile = await getPostgresProfile(data.user.id);
-          setUser(profile || {
+          const initialUser: UserProfile = profile || {
             uid: data.user.id,
             email: data.user.email || email,
             displayName: data.user.user_metadata?.displayName || email.split('@')[0],
             targetTrack: 'NINJA',
             preferredLanguage: 'python',
             availablePreparationDays: 21,
-            dailyAvailableMinutes: 90,
+            dailyAvailableMinutes: 60,
             proficiency: 'INTERMEDIATE',
             weakTopics: [],
             role: 'student',
+            onboardingCompleted: false,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-          });
-          navigate(from, { replace: true });
+          };
+          setUser(initialUser);
+          if (initialUser.onboardingCompleted) {
+            navigate(from, { replace: true });
+          } else {
+            navigate('/onboarding', { replace: true });
+          }
           return;
         }
       }
@@ -69,21 +76,27 @@ export const LoginPage: React.FC = () => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const fbUser = userCredential.user;
         const profile = await getPostgresProfile(fbUser.uid);
-        setUser(profile || {
+        const initialUser: UserProfile = profile || {
           uid: fbUser.uid,
           email: fbUser.email || email,
           displayName: fbUser.displayName || email.split('@')[0],
           targetTrack: 'NINJA',
           preferredLanguage: 'python',
           availablePreparationDays: 21,
-          dailyAvailableMinutes: 90,
+          dailyAvailableMinutes: 60,
           proficiency: 'INTERMEDIATE',
           weakTopics: [],
           role: 'student',
+          onboardingCompleted: false,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-        });
-        navigate(from, { replace: true });
+        };
+        setUser(initialUser);
+        if (initialUser.onboardingCompleted) {
+          navigate(from, { replace: true });
+        } else {
+          navigate('/onboarding', { replace: true });
+        }
         return;
       }
 

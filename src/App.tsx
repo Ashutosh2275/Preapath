@@ -123,11 +123,7 @@ export const App: React.FC = () => {
         />
         <Route
           path="profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
+          element={<Navigate to="/settings?section=profile" replace />}
         />
         <Route
           path="settings"

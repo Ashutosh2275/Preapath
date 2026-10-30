@@ -17,7 +17,10 @@ import {
   StudyPlanRevisionRecord,
   MCQAttempt,
   DailyStudySession,
-  DailyStudySessionItem
+  DailyStudySessionItem,
+  NotificationDevice,
+  ScheduledNotification,
+  PrepIntensity
 } from '../types';
 
 /**
@@ -32,7 +35,7 @@ export async function getPostgresProfile(userId: string): Promise<UserProfile | 
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, email, display_name, target_track, preferred_language, available_days, daily_minutes, exam_date, proficiency, weak_topics, role, timezone, created_at, updated_at')
+      .select('id, email, display_name, target_track, preferred_language, available_days, daily_minutes, exam_date, proficiency, weak_topics, role, timezone, onboarding_completed, onboarding_version, days_available_per_week, preferred_study_hours, preparation_start_date, prep_intensity, version, created_at, updated_at')
       .eq('id', userId)
       .maybeSingle();
 
@@ -51,6 +54,13 @@ export async function getPostgresProfile(userId: string): Promise<UserProfile | 
       weakTopics: data.weak_topics || [],
       role: data.role,
       timezone: data.timezone || 'Asia/Kolkata',
+      onboardingCompleted: data.onboarding_completed ?? (Boolean(data.target_track)),
+      onboardingVersion: data.onboarding_version || 1,
+      daysAvailablePerWeek: data.days_available_per_week || 6,
+      preferredStudyHours: data.preferred_study_hours || undefined,
+      preparationStartDate: data.preparation_start_date || undefined,
+      prepIntensity: (data.prep_intensity as PrepIntensity) || 'STANDARD',
+      version: data.version || 1,
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -64,23 +74,32 @@ export async function upsertPostgresProfile(profile: UserProfile): Promise<boole
   if (!isPostgresConfigured() || !supabase) return false;
 
   try {
+    const payload: any = {
+      id: profile.uid,
+      email: profile.email,
+      display_name: profile.displayName,
+      target_track: profile.targetTrack,
+      preferred_language: profile.preferredLanguage,
+      available_days: profile.availablePreparationDays,
+      daily_minutes: profile.dailyAvailableMinutes,
+      exam_date: profile.examDate || null,
+      proficiency: profile.proficiency,
+      weak_topics: profile.weakTopics,
+      role: profile.role,
+      timezone: profile.timezone || 'Asia/Kolkata',
+      onboarding_completed: profile.onboardingCompleted ?? true,
+      onboarding_version: profile.onboardingVersion || 1,
+      days_available_per_week: profile.daysAvailablePerWeek || 6,
+      preferred_study_hours: profile.preferredStudyHours || null,
+      preparation_start_date: profile.preparationStartDate || null,
+      prep_intensity: profile.prepIntensity || 'STANDARD',
+      version: (profile.version || 1) + 1,
+      updated_at: new Date().toISOString(),
+    };
+
     const { error } = await supabase
       .from('profiles')
-      .upsert({
-        id: profile.uid,
-        email: profile.email,
-        display_name: profile.displayName,
-        target_track: profile.targetTrack,
-        preferred_language: profile.preferredLanguage,
-        available_days: profile.availablePreparationDays,
-        daily_minutes: profile.dailyAvailableMinutes,
-        exam_date: profile.examDate || null,
-        proficiency: profile.proficiency,
-        weak_topics: profile.weakTopics,
-        role: profile.role,
-        timezone: profile.timezone || 'Asia/Kolkata',
-        updated_at: new Date().toISOString(),
-      });
+      .upsert(payload);
 
     return !error;
   } catch (err) {
@@ -1186,5 +1205,204 @@ export async function fetchPostgresDailySessions(userId: string): Promise<Record
   } catch (err) {
     console.warn('Failed to fetch daily study sessions:', err);
     return {};
+  }
+}
+
+// 19. MULTI-DEVICE NOTIFICATIONS & SUBSCRIPTIONS
+export async function registerPostgresNotificationDevice(
+  device: Omit<NotificationDevice, 'id' | 'createdAt' | 'updatedAt'>
+): Promise<NotificationDevice | null> {
+  if (!isPostgresConfigured() || !supabase) return null;
+
+  try {
+    const now = new Date().toISOString();
+    const { data, error } = await supabase
+      .from('notification_devices')
+      .upsert({
+        user_id: device.userId,
+        device_id: device.deviceId,
+        fcm_token: device.fcmToken || null,
+        device_name: device.deviceName,
+        platform: device.platform || 'web',
+        timezone: device.timezone || 'Asia/Kolkata',
+        is_active: device.isActive,
+        last_active_at: now,
+        updated_at: now,
+      }, { onConflict: 'user_id,device_id' })
+      .select()
+      .single();
+
+    if (error || !data) {
+      console.warn('registerPostgresNotificationDevice note:', error);
+      return null;
+    }
+
+    return {
+      id: data.id,
+      userId: data.user_id,
+      deviceId: data.device_id,
+      fcmToken: data.fcm_token || undefined,
+      deviceName: data.device_name,
+      platform: data.platform || undefined,
+      timezone: data.timezone,
+      isActive: data.is_active,
+      lastActiveAt: data.last_active_at,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
+  } catch (err) {
+    console.warn('Failed to register notification device:', err);
+    return null;
+  }
+}
+
+export async function fetchPostgresNotificationDevices(userId: string): Promise<NotificationDevice[]> {
+  if (!isPostgresConfigured() || !supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('notification_devices')
+      .select('*')
+      .eq('user_id', userId)
+      .order('last_active_at', { ascending: false });
+
+    if (error || !data) return [];
+
+    return data.map((d: any) => ({
+      id: d.id,
+      userId: d.user_id,
+      deviceId: d.device_id,
+      fcmToken: d.fcm_token || undefined,
+      deviceName: d.device_name,
+      platform: d.platform || undefined,
+      timezone: d.timezone,
+      isActive: d.is_active,
+      lastActiveAt: d.last_active_at,
+      createdAt: d.created_at,
+      updatedAt: d.updated_at,
+    }));
+  } catch (err) {
+    console.warn('Failed to fetch notification devices:', err);
+    return [];
+  }
+}
+
+export async function updatePostgresNotificationDeviceStatus(
+  userId: string,
+  deviceId: string,
+  isActive: boolean
+): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('notification_devices')
+      .update({ is_active: isActive, updated_at: new Date().toISOString() })
+      .eq('user_id', userId)
+      .eq('device_id', deviceId);
+
+    return !error;
+  } catch (err) {
+    console.warn('Failed to update device status:', err);
+    return false;
+  }
+}
+
+export async function removePostgresNotificationDevice(
+  userId: string,
+  deviceId: string
+): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('notification_devices')
+      .delete()
+      .eq('user_id', userId)
+      .eq('device_id', deviceId);
+
+    return !error;
+  } catch (err) {
+    console.warn('Failed to remove notification device:', err);
+    return false;
+  }
+}
+
+// 20. SCHEDULED NOTIFICATIONS DURABLE OUTBOX
+export async function queueScheduledNotification(
+  notif: Omit<ScheduledNotification, 'id' | 'createdAt'>
+): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('scheduled_notifications')
+      .upsert({
+        user_id: notif.userId,
+        device_id: notif.deviceId || null,
+        notification_type: notif.notificationType,
+        scheduled_for_utc: notif.scheduledForUtc,
+        title: notif.title,
+        body: notif.body,
+        target_url: notif.targetUrl,
+        status: notif.status,
+        idempotency_key: notif.idempotencyKey,
+      }, { onConflict: 'idempotency_key' });
+
+    return !error;
+  } catch (err) {
+    console.warn('Failed to queue scheduled notification:', err);
+    return false;
+  }
+}
+
+export async function fetchPostgresScheduledNotifications(userId: string): Promise<ScheduledNotification[]> {
+  if (!isPostgresConfigured() || !supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('scheduled_notifications')
+      .select('*')
+      .eq('user_id', userId)
+      .order('scheduled_for_utc', { ascending: false })
+      .limit(50);
+
+    if (error || !data) return [];
+
+    return data.map((n: any) => ({
+      id: n.id,
+      userId: n.user_id,
+      deviceId: n.device_id || undefined,
+      notificationType: n.notification_type,
+      scheduledForUtc: n.scheduled_for_utc,
+      title: n.title,
+      body: n.body,
+      targetUrl: n.target_url,
+      status: n.status,
+      idempotencyKey: n.idempotency_key,
+      dispatchedAt: n.dispatched_at || undefined,
+      createdAt: n.created_at,
+    }));
+  } catch (err) {
+    console.warn('Failed to fetch scheduled notifications:', err);
+    return [];
+  }
+}
+
+// 21. ACCOUNT DATA MANAGEMENT & DELETION
+export async function deletePostgresAccount(userId: string): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    // Cascade constraints on tables will clean up child records
+    const { error } = await supabase
+      .from('profiles')
+      .delete()
+      .eq('id', userId);
+
+    return !error;
+  } catch (err) {
+    console.error('Failed to delete user profile from PostgreSQL:', err);
+    return false;
   }
 }

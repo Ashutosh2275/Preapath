@@ -6,6 +6,10 @@ export type ProficiencyLevel = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
 export type UserRole = 'student' | 'admin';
 
+export type PrepIntensity = 'RELAXED' | 'STANDARD' | 'INTENSIVE';
+
+export type AccountSyncState = 'IDLE' | 'SAVING' | 'SAVED' | 'FAILED' | 'OFFLINE';
+
 export interface UserProfile {
   uid: string;
   email: string;
@@ -19,8 +23,53 @@ export interface UserProfile {
   weakTopics: string[];
   role: UserRole;
   timezone?: string;
+  onboardingCompleted?: boolean;
+  onboardingVersion?: number;
+  daysAvailablePerWeek?: number;
+  preferredStudyHours?: string;
+  preparationStartDate?: string;
+  prepIntensity?: PrepIntensity;
+  version?: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface NotificationDevice {
+  id: string;
+  userId: string;
+  deviceId: string;
+  fcmToken?: string;
+  deviceName: string;
+  platform?: string;
+  timezone: string;
+  isActive: boolean;
+  lastActiveAt: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ScheduledNotificationStatus = 
+  | 'SCHEDULED' 
+  | 'QUEUED' 
+  | 'SENT_TO_PROVIDER' 
+  | 'PROVIDER_REJECTED' 
+  | 'TOKEN_INVALID' 
+  | 'CANCELLED' 
+  | 'DELIVERY_UNAVAILABLE';
+
+export interface ScheduledNotification {
+  id: string;
+  userId: string;
+  deviceId?: string;
+  notificationType: 'DAILY_STUDY_REMINDER' | 'REVIEW_DUE' | 'ASSESSMENT_ALERT' | 'SYSTEM';
+  scheduledForUtc: string;
+  title: string;
+  body: string;
+  targetUrl: string;
+  status: ScheduledNotificationStatus;
+  idempotencyKey: string;
+  dispatchedAt?: string;
+  createdAt: string;
 }
 
 export type TopicMasteryState = 

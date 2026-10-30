@@ -81,11 +81,12 @@ export const SignupPage: React.FC = () => {
             displayName: cleanName,
             targetTrack: selectedTrack,
             preferredLanguage: 'python',
-            availablePreparationDays: 14,
-            dailyAvailableMinutes: 90,
+            availablePreparationDays: 21,
+            dailyAvailableMinutes: 60,
             proficiency: 'BEGINNER',
             weakTopics: [],
             role: 'student', // Roles are never client-assigned
+            onboardingCompleted: false,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           });
@@ -104,11 +105,12 @@ export const SignupPage: React.FC = () => {
           displayName: cleanName,
           targetTrack: selectedTrack,
           preferredLanguage: 'python',
-          availablePreparationDays: 14,
-          dailyAvailableMinutes: 90,
+          availablePreparationDays: 21,
+          dailyAvailableMinutes: 60,
           proficiency: 'BEGINNER',
           weakTopics: [],
           role: 'student', // Roles are never client-assigned
+          onboardingCompleted: false,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
