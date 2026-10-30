@@ -1,2924 +1,1112 @@
 import { Question } from '../../types';
 
+/**
+ * PrepPath Professionally Curated Verbal Ability Question Bank
+ * Total: 25 Genuinely Unique MCQs
+ * Balanced Option Distribution: A: 6, B: 7, C: 6, D: 6
+ */
 export const VERBAL_QUESTIONS: Question[] = [
+  // 1. Contextual Sentence Completion - Answer: B
   {
-    id: 'prep-verb-211',
-    catalogNumber: 211,
-    slug: "verbal-problem-211",
-    title: "Reading Comprehension - Main Idea - Item 1",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-001',
+    catalogNumber: 161,
+    slug: 'contextual-sentence-completion-executive-reticence',
+    title: 'Executive Discretion and Nuanced Lexical Selection in Corporate Filings',
+    problemStatement: 'Despite the aggressive interrogation by financial journalists regarding the unannounced restructuring, the Chief Executive remained characteristically ________, refusing to disclose any proprietary roadmap until the board had ratified the merger.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Context demands an adjective meaning reserved, untalkative, or restrained'],
+    examples: [{ input: 'Option selection', output: 'Option B (reticent)' }],
     difficulty: 'EASY',
-    topics: ["Reading Comprehension", "Verbal Ability"],
+    topics: ['Sentence Completion', 'Vocabulary in Context'],
     sections: ['VERBAL'],
     targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VOCAB_IN_CONTEXT_DISCRETION',
+    templateFamily_id: 'VERB_VOCAB',
+    learningObjective: 'Identify precise contextual synonyms denoting formal verbal restraint.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'CORPORATE_COMMUNICATION',
+    contentFingerprint: 'verb-001-ceo-reticent-financial-journalists',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-verbal',
+    hints: [
+      'The sentence contrasts "aggressive interrogation" with the CEO "refusing to disclose".',
+      'The word must mean silent, restrained, or reluctant to speak.'
+    ],
+    options: [
+      { id: 'A', text: 'loquacious' },
+      { id: 'B', text: 'reticent' },
+      { id: 'C', text: 'garrulous' },
+      { id: 'D', text: 'obsequious' }
+    ],
+    explanation: '"Reticent" means disinclined to speak freely or reserved in speech, perfectly fitting the CEO’s refusal to disclose proprietary details. "Loquacious" and "garrulous" both mean excessively talkative (the exact opposite), while "obsequious" means fawning or subservient.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 2. Subject-Verb Agreement with Intervening Phrase - Answer: C
+  {
+    id: 'verb-002',
+    catalogNumber: 162,
+    slug: 'subject-verb-agreement-intervening-phrase',
+    title: 'Grammar: Subject-Verb Agreement with Complex Intervening Clauses',
+    problemStatement: 'Identify the grammatically correct sentence among the following options:\n\nA. The comprehensive suite of automated testing suites, along with the legacy regression scripts, were deprecated during the migration.\nB. The comprehensive suite of automated testing suites, along with the legacy regression scripts, have been deprecated during the migration.\nC. The comprehensive suite of automated testing suites, along with the legacy regression scripts, was deprecated during the migration.\nD. The comprehensive suite of automated testing suites, along with the legacy regression scripts, are being deprecated during the migration.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Parenthetical phrases introduced by "along with" do not alter the grammatical number of the subject'],
+    examples: [{ input: 'Option selection', output: 'Option C' }],
+    difficulty: 'MEDIUM',
+    topics: ['Subject-Verb Agreement', 'Grammar'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_SUBJECT_VERB_AGREEMENT',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Isolate the singular head noun ("suite") across additive prepositional clauses ("along with").',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'TECHNICAL_DOCUMENTATION',
+    contentFingerprint: 'verb-002-sva-suite-along-with-scripts-was',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'What is the true subject of the sentence? "The comprehensive suite" (singular).',
+      'Phrases like "along with", "as well as", and "in addition to" are parenthetical and do not make the subject plural.'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-211-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '...along with the legacy regression scripts, were deprecated...' },
+      { id: 'B', text: '...along with the legacy regression scripts, have been deprecated...' },
+      { id: 'C', text: '...along with the legacy regression scripts, was deprecated...' },
+      { id: 'D', text: '...along with the legacy regression scripts, are being deprecated...' }
+    ],
+    explanation: 'The grammatical subject of the sentence is the singular noun phrase "The comprehensive suite". Parenthetical adjuncts introduced by "along with", "accompanied by", or "as well as" do not change the singular nature of the subject. Therefore, the singular auxiliary verb "was deprecated" in Option C is required.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 3. Parallelism in Compound Structures - Answer: A
   {
-    id: 'prep-verb-212',
-    catalogNumber: 212,
-    slug: "verbal-problem-212",
-    title: "Reading Comprehension - Tone and Inference - Item 2",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-003',
+    catalogNumber: 163,
+    slug: 'grammatical-parallelism-coordinate-verbs',
+    title: 'Structural Syntactic Parallelism in Coordinated Predicates',
+    problemStatement: 'Select the option that corrects the parallelism error in the underlined portion:\n\n"The cloud optimization initiative aims at reducing server latency, minimizing operational compute costs, and ________."\n\nA. bolstering endpoint data security\nB. to bolster endpoint data security\nC. for the bolstering of endpoint data security\nD. will bolster endpoint data security',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Coordinated series of gerunds: reducing, minimizing, and [gerund]'],
+    examples: [{ input: 'Option selection', output: 'Option A (bolstering endpoint data security)' }],
     difficulty: 'EASY',
-    topics: ["Reading Comprehension", "Verbal Ability"],
+    topics: ['Sentence Correction', 'Parallelism'],
     sections: ['VERBAL'],
     targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_PARALLELISM_GERUND',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Maintain grammatical symmetry across coordinated coordinate elements in lists.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'ENGINEERING_REPORT',
+    contentFingerprint: 'verb-003-parallelism-reducing-minimizing-bolstering',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'The sentence sets up a parallel series of present participles / gerunds: "reducing...", "minimizing...".',
+      'The third coordinate member must match the identical grammatical form: "-ing".'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-212-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'bolstering endpoint data security' },
+      { id: 'B', text: 'to bolster endpoint data security' },
+      { id: 'C', text: 'for the bolstering of endpoint data security' },
+      { id: 'D', text: 'will bolster endpoint data security' }
+    ],
+    explanation: 'Parallel construction requires that items in a coordinated series share the identical grammatical form. The predicate opens with two gerund phrases: "reducing server latency" and "minimizing operational compute costs". Symmetrical balance requires the third coordinate element to be "bolstering endpoint data security" (Option A).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 4. Past Perfect Conditional Subjunctive - Answer: D
   {
-    id: 'prep-verb-213',
-    catalogNumber: 213,
-    slug: "verbal-problem-213",
-    title: "Sentence Correction & Grammar Rules - Item 3",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-004',
+    catalogNumber: 164,
+    slug: 'conditional-syntax-inversion-past-perfect',
+    title: 'Inverted Past Unreal Conditional Syntax in Enterprise Risk Auditing',
+    problemStatement: 'Complete the sentence with the grammatically precise verb tense:\n\n"Had the cybersecurity architect ________ the firewall penetration vulnerabilities during the initial audit, the unauthorized ransomware payload would never have infiltrated the network."',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Inverted third conditional: Had + subject + past participle (V3)'],
+    examples: [{ input: 'Option selection', output: 'Option D (identified)' }],
     difficulty: 'EASY',
-    topics: ["Sentence Correction", "Verbal Ability"],
+    topics: ['Tenses', 'Conditionals'],
     sections: ['VERBAL'],
     targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_INVERTED_THIRD_CONDITIONAL',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Formulate inverted third-conditional counterfactual constructions using past participles.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'CYBERSECURITY_AUDIT',
+    contentFingerprint: 'verb-004-had-architect-identified-firewall',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-testbook-nqt-papers',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Inverted third conditional structure: "Had + [Subject] + [Past Participle V3]... would have + V3".',
+      'The past participle of "identify" is "identified".'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-213-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'identifies' },
+      { id: 'B', text: 'identifying' },
+      { id: 'C', text: 'have identified' },
+      { id: 'D', text: 'identified' }
+    ],
+    explanation: 'The sentence employs an inverted third conditional (equivalent to: "If the cybersecurity architect had identified..."). In this syntactic inversion, the auxiliary "Had" is placed before the subject, requiring the past participle form (V3) "identified".',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 5. Prepositional Collocations - Answer: B
   {
-    id: 'prep-verb-214',
-    catalogNumber: 214,
-    slug: "verbal-problem-214",
-    title: "Sentence Completion & Vocabulary Context - Item 4",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-005',
+    catalogNumber: 165,
+    slug: 'prepositional-collocation-compliance-governance',
+    title: 'Standard Idiomatic Prepositional Collocations in Regulatory Governance',
+    problemStatement: 'Under the recently enacted European digital governance framework, cloud enterprise providers must strictly comply ________ statutory data residency statutes and abstain ________ utilizing personal user telemetry without explicit consent.\n\nChoose the pair of prepositions that appropriately fills the blanks:',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Standard English verb-preposition fixed collocations'],
+    examples: [{ input: 'Option selection', output: 'Option B (with; from)' }],
     difficulty: 'EASY',
-    topics: ["Sentence Completion", "Verbal Ability"],
+    topics: ['Prepositions', 'Vocabulary in Context'],
     sections: ['VERBAL'],
     targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'PREPOSITION_FIXED_COLLOCATIONS',
+    templateFamily_id: 'VERB_PREPOSITIONS',
+    learningObjective: 'Master standard academic and legal collocations ("comply with", "abstain from").',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'REGULATORY_COMPLIANCE',
+    contentFingerprint: 'verb-005-comply-with-abstain-from',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'The verb "comply" consistently takes the preposition "with".',
+      'The verb "abstain" consistently takes the preposition "from".'
+    ],
+    options: [
+      { id: 'A', text: 'to; by' },
+      { id: 'B', text: 'with; from' },
+      { id: 'C', text: 'for; in' },
+      { id: 'D', text: 'by; against' }
+    ],
+    explanation: 'In standard formal English grammar, the fixed idiomatic collocations are: "comply with" (to act in accordance with an order, rule, or statute) and "abstain from" (to voluntarily refrain from an action). Thus, "with; from" in Option B is the only correct selection.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 6. Dangling Modifiers - Answer: C
+  {
+    id: 'verb-006',
+    catalogNumber: 166,
+    slug: 'sentence-correction-dangling-participial-modifier',
+    title: 'Resolution of Ambiguous Dangling Participial Modifiers',
+    problemStatement: 'Which of the following revisions rectifies the dangling modifier in the original sentence?\n\nOriginal: "Having compiled the high-frequency trading code, the server crashed due to an out-of-memory exception."\n\nA. Having compiled the high-frequency trading code, an out-of-memory exception crashed the server.\nB. The server crashed due to an out-of-memory exception, having compiled the high-frequency trading code.\nC. Having compiled the high-frequency trading code, the software engineer observed the server crash due to an out-of-memory exception.\nD. Having compiled the high-frequency trading code, a memory crash was experienced by the server.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Introductory participial phrase must immediately precede the agent performing the action'],
+    examples: [{ input: 'Option selection', output: 'Option C' }],
+    difficulty: 'MEDIUM',
+    topics: ['Sentence Correction', 'Dangling Modifiers'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_DANGLING_MODIFIER',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Position the logical human or institutional agent directly after introductory participial clauses.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'SOFTWARE_DEBUGGING',
+    contentFingerprint: 'verb-006-dangling-having-compiled-code-engineer',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-verbal',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Who compiled the code? The server did not compile the code; a human software engineer did.',
+      'The subject following the comma must be the entity that actually executed the compilation.'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-214-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '...an out-of-memory exception crashed the server.' },
+      { id: 'B', text: 'The server crashed... having compiled the code.' },
+      { id: 'C', text: 'Having compiled the high-frequency trading code, the software engineer observed the server crash...' },
+      { id: 'D', text: '...a memory crash was experienced by the server.' }
+    ],
+    explanation: 'In the original sentence, the introductory participial phrase "Having compiled..." improperly modifies "the server", creating the illogical meaning that the hardware server compiled the code. In Option C, the logical subject "the software engineer" is correctly introduced immediately after the comma as the agent who compiled the code, resolving the dangling modifier.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 7. Contextual Antonyms - Answer: A
   {
-    id: 'prep-verb-215',
-    catalogNumber: 215,
-    slug: "verbal-problem-215",
-    title: "Error Spotting in Complex Sentences - Item 5",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-007',
+    catalogNumber: 167,
+    slug: 'vocabulary-contextual-antonyms-ephemeral',
+    title: 'Contextual Antonym Discernment: Transient vs Permanent Data Stores',
+    problemStatement: 'In distributed cache architectures, session storage tokens are strictly ephemeral, whereas master audit records stored in relational ledgers are intended to be ________.\n\nChoose the word that serves as the most accurate contextual antonym to "ephemeral":',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['"Ephemeral" means lasting for a very short time; fleeting'],
+    examples: [{ input: 'Option selection', output: 'Option A (immutable)' }],
     difficulty: 'EASY',
-    topics: ["Error Spotting", "Verbal Ability"],
+    topics: ['Antonyms', 'Vocabulary in Context'],
     sections: ['VERBAL'],
     targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VOCAB_ANTONYM_PERSISTENCE',
+    templateFamily_id: 'VERB_VOCAB',
+    learningObjective: 'Contrast volatile temporal lifecycles with permanent, persistent ledger records.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'DATABASE_SYSTEMS',
+    contentFingerprint: 'verb-007-antonym-ephemeral-vs-immutable',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Ephemeral means short-lived, transient, or volatile.',
+      'The opposite in a database storage context refers to records that do not change or fade away.'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-215-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-216',
-    catalogNumber: 216,
-    slug: "verbal-problem-216",
-    title: "Para Jumbles & Logical Sentence Order - Item 6",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Para Jumbles", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
     options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      { id: 'A', text: 'immutable' },
+      { id: 'B', text: 'evanescent' },
+      { id: 'C', text: 'fugacious' },
+      { id: 'D', text: 'provisional' }
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-216-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    explanation: '"Ephemeral" denotes transient, fleeting, or short-lived duration. In contrast, database audit records are designed to be "immutable" (unchanging, permanent, and indestructible over time). "Evanescent" and "fugacious" are near-synonyms of ephemeral, while "provisional" means temporary.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 8. Sentence Rearrangement: Clean Architecture - Answer: D
   {
-    id: 'prep-verb-217',
-    catalogNumber: 217,
-    slug: "verbal-problem-217",
-    title: "Synonyms & Antonyms in Context - Item 7",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Vocabulary", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-217-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-218',
-    catalogNumber: 218,
-    slug: "verbal-problem-218",
-    title: "Idioms & Phrasal Verbs - Item 8",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Idioms", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-218-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-219',
-    catalogNumber: 219,
-    slug: "verbal-problem-219",
-    title: "Reading Comprehension - Main Idea - Item 9",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Reading Comprehension", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-219-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-220',
-    catalogNumber: 220,
-    slug: "verbal-problem-220",
-    title: "Reading Comprehension - Tone and Inference - Item 10",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Reading Comprehension", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-220-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-221',
-    catalogNumber: 221,
-    slug: "verbal-problem-221",
-    title: "Sentence Correction & Grammar Rules - Item 11",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Sentence Correction", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-221-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-222',
-    catalogNumber: 222,
-    slug: "verbal-problem-222",
-    title: "Sentence Completion & Vocabulary Context - Item 12",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Sentence Completion", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-222-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-223',
-    catalogNumber: 223,
-    slug: "verbal-problem-223",
-    title: "Error Spotting in Complex Sentences - Item 13",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Error Spotting", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-223-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-224',
-    catalogNumber: 224,
-    slug: "verbal-problem-224",
-    title: "Para Jumbles & Logical Sentence Order - Item 14",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Para Jumbles", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-224-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-225',
-    catalogNumber: 225,
-    slug: "verbal-problem-225",
-    title: "Synonyms & Antonyms in Context - Item 15",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Vocabulary", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-225-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-226',
-    catalogNumber: 226,
-    slug: "verbal-problem-226",
-    title: "Idioms & Phrasal Verbs - Item 16",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Idioms", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-226-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-227',
-    catalogNumber: 227,
-    slug: "verbal-problem-227",
-    title: "Reading Comprehension - Main Idea - Item 17",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Reading Comprehension", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-227-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-228',
-    catalogNumber: 228,
-    slug: "verbal-problem-228",
-    title: "Reading Comprehension - Tone and Inference - Item 18",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Reading Comprehension", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-228-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-229',
-    catalogNumber: 229,
-    slug: "verbal-problem-229",
-    title: "Sentence Correction & Grammar Rules - Item 19",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Sentence Correction", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-229-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-230',
-    catalogNumber: 230,
-    slug: "verbal-problem-230",
-    title: "Sentence Completion & Vocabulary Context - Item 20",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Sentence Completion", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-230-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-231',
-    catalogNumber: 231,
-    slug: "verbal-problem-231",
-    title: "Error Spotting in Complex Sentences - Item 21",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Error Spotting", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-231-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-232',
-    catalogNumber: 232,
-    slug: "verbal-problem-232",
-    title: "Para Jumbles & Logical Sentence Order - Item 22",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Para Jumbles", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-232-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-233',
-    catalogNumber: 233,
-    slug: "verbal-problem-233",
-    title: "Synonyms & Antonyms in Context - Item 23",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Vocabulary", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-233-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-234',
-    catalogNumber: 234,
-    slug: "verbal-problem-234",
-    title: "Idioms & Phrasal Verbs - Item 24",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Idioms", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-234-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-235',
-    catalogNumber: 235,
-    slug: "verbal-problem-235",
-    title: "Reading Comprehension - Main Idea - Item 25",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Reading Comprehension", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-235-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-236',
-    catalogNumber: 236,
-    slug: "verbal-problem-236",
-    title: "Reading Comprehension - Tone and Inference - Item 26",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Reading Comprehension", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-236-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-237',
-    catalogNumber: 237,
-    slug: "verbal-problem-237",
-    title: "Sentence Correction & Grammar Rules - Item 27",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Sentence Correction", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-237-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-238',
-    catalogNumber: 238,
-    slug: "verbal-problem-238",
-    title: "Sentence Completion & Vocabulary Context - Item 28",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Sentence Completion", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-238-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-239',
-    catalogNumber: 239,
-    slug: "verbal-problem-239",
-    title: "Error Spotting in Complex Sentences - Item 29",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Error Spotting", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-239-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-240',
-    catalogNumber: 240,
-    slug: "verbal-problem-240",
-    title: "Para Jumbles & Logical Sentence Order - Item 30",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Para Jumbles", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-240-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-241',
-    catalogNumber: 241,
-    slug: "verbal-problem-241",
-    title: "Synonyms & Antonyms in Context - Item 31",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Vocabulary", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-241-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-242',
-    catalogNumber: 242,
-    slug: "verbal-problem-242",
-    title: "Idioms & Phrasal Verbs - Item 32",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Idioms", "Verbal Ability"],
-    sections: ['VERBAL'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-242-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-verb-243',
-    catalogNumber: 243,
-    slug: "verbal-problem-243",
-    title: "Reading Comprehension - Main Idea - Item 33",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-008',
+    catalogNumber: 168,
+    slug: 'parajumbles-clean-architecture-principles',
+    title: 'Logical Coherence and Paragraph Ordering in Software Engineering',
+    problemStatement: 'Rearrange the following five sentences (P, Q, R, S, T) into a logically coherent and meaningful paragraph:\n\nP: Consequently, domain entities remain isolated from the volatile churn of external web frameworks and third-party database drivers.\nQ: The fundamental tenet of Clean Architecture is the Dependency Inversion Principle.\nR: This boundary ensures that high-level business policies do not depend directly on low-level implementation details.\nS: By structuring dependencies inward towards abstract use cases, software systems attain long-term testability and architectural longevity.\nT: Instead, interfaces define contractual boundaries across architectural layers.\n\nSelect the most coherent sequence:',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Coherent topical progression from foundational axiom to detailed architectural consequence'],
+    examples: [{ input: 'Option selection', output: 'Option D (Q - R - T - P - S)' }],
     difficulty: 'HARD',
-    topics: ["Reading Comprehension", "Verbal Ability"],
+    topics: ['Sentence Rearrangement', 'Paragraph Coherence'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
-    estimatedMinutes: 2,
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'PARAJUMBLE_COHERENT_PARAGRAPH',
+    templateFamily_id: 'VERB_PARAJUMBLES',
+    learningObjective: 'Establish topic sentence dominance, cohesive causal conjunctions ("Consequently"), and transitional ties ("Instead").',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'SOFTWARE_ARCHITECTURE',
+    contentFingerprint: 'verb-008-parajumble-clean-architecture-qrtps',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-unstop-nqt-papers',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Sentence Q introduces the foundational subject ("The fundamental tenet of Clean Architecture..."), making it the ideal topic sentence.',
+      'Sentence R defines what "This boundary" means in relation to the Dependency Inversion Principle in Q.',
+      'Sentence T contrasts ("Instead...") with low-level direct dependencies in R.',
+      'Sentence P details the consequence ("Consequently, domain entities remain isolated...").'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-243-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'P - Q - R - T - S' },
+      { id: 'B', text: 'S - Q - R - T - P' },
+      { id: 'C', text: 'Q - T - R - S - P' },
+      { id: 'D', text: 'Q - R - T - P - S' }
+    ],
+    explanation: 'Sequence analysis: Sentence Q establishes the core topic: Clean Architecture and the Dependency Inversion Principle. Sentence R follows naturally, explaining the functional purpose of this design boundary (business policies not depending on low-level details). Sentence T provides the alternative via contrast ("Instead, interfaces define contractual boundaries..."). Sentence P provides the consequence of T ("Consequently, domain entities remain isolated..."). Sentence S concludes by summarizing the holistic systemic outcome (long-term testability and architectural longevity). The sequence is Q - R - T - P - S.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 9. Reading Comprehension: Automated AI Hiring - Answer: B
   {
-    id: 'prep-verb-244',
-    catalogNumber: 244,
-    slug: "verbal-problem-244",
-    title: "Reading Comprehension - Tone and Inference - Item 34",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Reading Comprehension", "Verbal Ability"],
+    id: 'verb-009',
+    catalogNumber: 169,
+    slug: 'reading-comprehension-ai-recruitment-ethics-central-idea',
+    title: 'Reading Comprehension: Primary Thesis in Algorithmic Talent Screening',
+    problemStatement: 'Passage:\n"The rapid adoption of deep-learning algorithms in corporate resume triage was heralded as a panacea for cognitive human bias, promising an impartial meritocracy based strictly on verifiable technical competencies. However, recent empirical audits demonstrate that neural ranking engines inevitably inherit and amplify the historical prejudices encoded within their training corpora. When an algorithm is trained on past corporate promotions from an era dominated by homogenous demographic cohorts, it learns to penalize linguistic nuances and career paths associated with underrepresented groups. The critical danger lies not in the machine’s malice, but in the uncritical institutional deference to its output as an objective, mathematical truth."\n\nAccording to the passage, what is the author’s primary thesis regarding algorithmic resume screening?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Infer primary central thesis without external extrapolations'],
+    examples: [{ input: 'Option selection', output: 'Option B' }],
+    difficulty: 'MEDIUM',
+    topics: ['Reading Comprehension', 'Inference'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'RC_CENTRAL_THESIS',
+    templateFamily_id: 'VERB_RC',
+    learningObjective: 'Synthesize authorial arguments dissecting technological fallacies and training data bias.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'AI_ETHICS',
+    contentFingerprint: 'verb-009-rc-ai-resume-triage-bias-thesis',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-testbook-nqt-papers',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Focus on the closing lines: "The critical danger lies not in the machine’s malice, but in the uncritical institutional deference to its output as an objective, mathematical truth."',
+      'The author warns against treating historical bias-reflecting models as neutral objective truth.'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-244-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Machine learning algorithms should be immediately banned from corporate human resources departments.' },
+      { id: 'B', text: 'Automated screening engines perpetuate historical prejudices and are dangerously misperceived as completely objective arbiters.' },
+      { id: 'C', text: 'Human recruiters possess fewer cognitive biases than automated neural ranking algorithms.' },
+      { id: 'D', text: 'Training corpora can be easily scrubbed of all demographic disparities using advanced neural loss functions.' }
+    ],
+    explanation: 'The author argues that algorithms trained on historical data inherit and amplify past corporate biases, and explicitly warns that the greatest hazard is treating automated outputs as infallible, objective mathematical truth. Option B captures both essential components of this argument accurately.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 10. Reading Comprehension: Authorial Tone - Answer: C
   {
-    id: 'prep-verb-245',
-    catalogNumber: 245,
-    slug: "verbal-problem-245",
-    title: "Sentence Correction & Grammar Rules - Item 35",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Sentence Correction", "Verbal Ability"],
+    id: 'verb-010',
+    catalogNumber: 170,
+    slug: 'reading-comprehension-authorial-tone-evaluation',
+    title: 'Authorial Tone and Critical Register in Technological Critiques',
+    problemStatement: 'Based on the passage in Question 169 regarding AI resume screening, which adjective best characterizes the author’s tone toward corporate reliance on automated recruiting tools?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Evaluate authorial stance across vocabulary cues: "heralded as a panacea", "critical danger", "uncritical institutional deference"'],
+    examples: [{ input: 'Option selection', output: 'Option C (Critical and cautionary)' }],
+    difficulty: 'EASY',
+    topics: ['Reading Comprehension', 'Tone and Register'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
-    estimatedMinutes: 2,
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'RC_AUTHORIAL_TONE',
+    templateFamily_id: 'VERB_RC',
+    learningObjective: 'Classify rhetorical perspective through lexical signposts denoting skepticism and analytical caution.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'LITERARY_ANALYSIS',
+    contentFingerprint: 'verb-010-rc-tone-ai-resume-critical-cautionary',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-testbook-nqt-papers',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Does the author praise AI hiring? No ("heralded as a panacea").',
+      'Does the author warn of severe pitfalls? Yes ("critical danger", "inevitably inherit prejudices").'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-245-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Eulogistic and enthusiastic' },
+      { id: 'B', text: 'Sardonic and dismissive' },
+      { id: 'C', text: 'Critical and cautionary' },
+      { id: 'D', text: 'Apathetic and indifferent' }
+    ],
+    explanation: 'The author employs analytical and serious vocabulary ("empirical audits demonstrate", "critical danger lies", "uncritical institutional deference") to highlight serious systemic risks while acknowledging the technology’s initial promise. The tone is neither satirical nor enthusiastic, but distinctly critical and cautionary (Option C).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 11. Subjunctive Mood in Executive Directives - Answer: A
   {
-    id: 'prep-verb-246',
-    catalogNumber: 246,
-    slug: "verbal-problem-246",
-    title: "Sentence Completion & Vocabulary Context - Item 36",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
+    id: 'verb-011',
+    catalogNumber: 171,
+    slug: 'grammar-mandative-subjunctive-mood',
+    title: 'Mandative Subjunctive Verb Base Form in Formal Corporate Directives',
+    problemStatement: 'Select the grammatically accurate sentence according to formal mandative subjunctive rules:\n\nA. The audit committee recommended that the lead developer submit the complete cryptographic key management protocol before deployment.\nB. The audit committee recommended that the lead developer submits the complete cryptographic key management protocol before deployment.\nC. The audit committee recommended that the lead developer will submit the complete cryptographic key management protocol before deployment.\nD. The audit committee recommended that the lead developer submitted the complete cryptographic key management protocol before deployment.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Mandative subjunctive rule: verbs of demand/recommendation require base bare infinitive in "that" clauses'],
+    examples: [{ input: 'Option selection', output: 'Option A' }],
     difficulty: 'HARD',
-    topics: ["Sentence Completion", "Verbal Ability"],
+    topics: ['Grammar', 'Subjunctive Mood'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['DIGITAL', 'PRIME'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_MANDATIVE_SUBJUNCTIVE',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Apply the bare infinitive base form in subordinate clauses following verbs of mandate/recommendation.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'SECURITY_AUDITING',
+    contentFingerprint: 'verb-011-subjunctive-recommend-submit-bare',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-verbal',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'In formal English, verbs expressing recommendations, requests, or demands (e.g. recommend, insist, require, propose) take the subjunctive mood in the following "that" clause.',
+      'The subjunctive uses the bare base form of the verb regardless of third-person singular subjects: "that he submit", not "that he submits".'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-246-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '...recommended that the lead developer submit the complete...' },
+      { id: 'B', text: '...recommended that the lead developer submits the complete...' },
+      { id: 'C', text: '...recommended that the lead developer will submit the complete...' },
+      { id: 'D', text: '...recommended that the lead developer submitted the complete...' }
+    ],
+    explanation: 'In formal English, the mandative subjunctive is triggered by verbs of recommendation, demand, or resolution ("recommend that", "insist that", "demand that"). The verb in the subordinate clause must remain in its bare base form (bare infinitive), without the third-person "-s" suffix or auxiliary modals. Hence, "that the lead developer submit" (Option A) is the grammatically correct form.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 12. Direct to Indirect Speech - Answer: D
   {
-    id: 'prep-verb-247',
-    catalogNumber: 247,
-    slug: "verbal-problem-247",
-    title: "Error Spotting in Complex Sentences - Item 37",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Error Spotting", "Verbal Ability"],
+    id: 'verb-012',
+    catalogNumber: 172,
+    slug: 'reported-speech-backshift-corporate-mandate',
+    title: 'Reported Speech: Tense Backshift and Deictic Temporal Inversion',
+    problemStatement: 'Convert the following direct speech into accurate indirect reported speech:\n\nThe Chief Technology Officer stated: "We will release the quantum encryption patch tomorrow morning."\n\nA. The CTO stated that we will release the quantum encryption patch tomorrow morning.\nB. The CTO stated that they would release the quantum encryption patch tomorrow morning.\nC. The CTO stated that they will release the quantum encryption patch the next morning.\nD. The CTO stated that they would release the quantum encryption patch the following morning.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Standard backshift: will -> would, pronoun we -> they, tomorrow morning -> the following morning'],
+    examples: [{ input: 'Option selection', output: 'Option D' }],
+    difficulty: 'MEDIUM',
+    topics: ['Direct and Indirect Speech', 'Grammar'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'REPORTED_SPEECH_BACKSHIFT',
+    templateFamily_id: 'VERB_REPORTED_SPEECH',
+    learningObjective: 'Convert modal auxiliaries and deictic temporal markers under past reporting verbs.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'EXECUTIVE_BRIEFING',
+    contentFingerprint: 'verb-012-speech-cto-will-release-tomorrow',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Reporting verb "stated" is in the past tense.',
+      '"will" backshifts to "would".',
+      '"tomorrow morning" shifts to "the following morning" or "the next day in the morning".'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-247-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '...that we will release the quantum encryption patch tomorrow morning.' },
+      { id: 'B', text: '...that they would release the quantum encryption patch tomorrow morning.' },
+      { id: 'C', text: '...that they will release the quantum encryption patch the next morning.' },
+      { id: 'D', text: '...that they would release the quantum encryption patch the following morning.' }
+    ],
+    explanation: 'Converting direct speech with a past reporting verb ("stated") requires systematic transformations: (1) First-person plural pronoun "We" shifts to "they". (2) Modal verb "will" backshifts to "would". (3) Temporal deictic adverbial "tomorrow morning" converts to "the following morning". Option D applies all required grammatical rules accurately.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 13. Conjunctions: Correlative Conjunctions - Answer: B
   {
-    id: 'prep-verb-248',
-    catalogNumber: 248,
-    slug: "verbal-problem-248",
-    title: "Para Jumbles & Logical Sentence Order - Item 38",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Para Jumbles", "Verbal Ability"],
+    id: 'verb-013',
+    catalogNumber: 173,
+    slug: 'correlative-conjunctions-parallel-inversion',
+    title: 'Correlative Conjunction Structural Balance: Not Only... But Also',
+    problemStatement: 'Identify the sentence that correctly preserves structural parallelism with the correlative conjunction "not only... but also":\n\nA. The senior architect not only refactored the monolith into microservices, but also improved throughput by 40%.\nB. The senior architect not only refactored the monolith into microservices, but he also was improving throughput by 40%.\nC. Not only the senior architect refactored the monolith, but also improved throughput by 40%.\nD. The senior architect refactored not only the monolith into microservices, but also improved throughput by 40%.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['"Not only [Verb Phrase 1], but also [Verb Phrase 2]" ensures parallel grammatical placement'],
+    examples: [{ input: 'Option selection', output: 'Option A' }],
+    difficulty: 'MEDIUM',
+    topics: ['Conjunctions', 'Parallelism'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CONJUNCTIONS_CORRELATIVE_PARALLELISM',
+    templateFamily_id: 'VERB_CONJUNCTIONS',
+    learningObjective: 'Position correlative pairs symmetrically across identical grammatical structures.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ENGINEERING_ACHIEVEMENT',
+    contentFingerprint: 'verb-013-correlative-not-only-refactored-but-also-improved',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'In Option A: "not only [refactored...] but also [improved...]". Both elements are past-tense verb phrases governed by the subject "The senior architect".',
+      'In Option D, "refactored not only [the monolith...] but also [improved...]" pairs a direct object with a verb phrase, violating parallelism.'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-248-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'The senior architect not only refactored the monolith into microservices, but also improved throughput by 40%.' },
+      { id: 'B', text: 'The senior architect not only refactored... but he also was improving...' },
+      { id: 'C', text: 'Not only the senior architect refactored... but also improved...' },
+      { id: 'D', text: 'The senior architect refactored not only the monolith... but also improved...' }
+    ],
+    explanation: 'Parallel construction requires that the grammatical element following "not only" matches the element following "but also". In Option A, "not only" precedes the past-tense transitive verb "refactored", and "but also" precedes the past-tense transitive verb "improved". Option D is flawed because "not only" precedes a noun phrase ("the monolith") while "but also" precedes a verb phrase ("improved"). Option A is the only parallel structure.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 14. Redundancy & Wordiness - Answer: C
   {
-    id: 'prep-verb-249',
-    catalogNumber: 249,
-    slug: "verbal-problem-249",
-    title: "Synonyms & Antonyms in Context - Item 39",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Vocabulary", "Verbal Ability"],
+    id: 'verb-014',
+    catalogNumber: 174,
+    slug: 'stylistics-tautology-redundancy-elimination',
+    title: 'Concise Business Phrasing and Tautological Elimination',
+    problemStatement: 'Which of the following edits eliminates wordiness and redundant tautology while preserving the exact technical meaning?\n\nOriginal Draft: "The engineers gathered together in consensus to revert back the legacy deployment to its prior former state because of the reason that memory exhaustion occurred."\n\nA. The engineers gathered in consensus to revert back the legacy deployment because memory exhaustion occurred.\nB. The engineers gathered together to revert the legacy deployment to its former state due to the reason that memory exhausted.\nC. The engineers agreed to revert the legacy deployment to its prior state because memory exhaustion occurred.\nD. The engineers collaborated in mutual consensus to revert back the deployment since memory exhaustion took place.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Eliminate redundancies: "gathered together", "revert back", "prior former", "because of the reason that"'],
+    examples: [{ input: 'Option selection', output: 'Option C' }],
+    difficulty: 'EASY',
+    topics: ['Sentence Correction', 'Redundancy and Wordiness'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
-    estimatedMinutes: 2,
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'STYLISTICS_REDUNDANCY_TAUTOLOGY',
+    templateFamily_id: 'VERB_STYLISTICS',
+    learningObjective: 'Prune repetitive pleonasms ("revert back", "gathered together") in corporate engineering communications.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'TECHNICAL_EDITING',
+    contentFingerprint: 'verb-014-redundancy-revert-back-prior-former',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-verbal',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      '"Revert" already means to return back; adding "back" is redundant.',
+      '"Prior" and "former" are redundant when used together.',
+      '"Because of the reason that" should be streamlined to "because".'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-249-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '...gathered in consensus to revert back the legacy deployment...' },
+      { id: 'B', text: '...gathered together to revert... to its former state due to the reason that...' },
+      { id: 'C', text: 'The engineers agreed to revert the legacy deployment to its prior state because memory exhaustion occurred.' },
+      { id: 'D', text: '...collaborated in mutual consensus to revert back the deployment...' }
+    ],
+    explanation: 'The original sentence contains four classic tautologies: (1) "gathered together" -> "agreed", (2) "revert back" -> "revert", (3) "prior former state" -> "prior state", and (4) "because of the reason that" -> "because". Option C cleanly eliminates all four redundancies while expressing the technical reality with professional precision.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 15. Idiomatic Expression in Professional Context - Answer: A
   {
-    id: 'prep-verb-250',
-    catalogNumber: 250,
-    slug: "verbal-problem-250",
-    title: "Idioms & Phrasal Verbs - Item 40",
-    problemStatement: "Identify the grammatically correct option to fill in the blank:\n'Neither the supervisor nor the engineers _______ able to identify the root cause of the system failure until the logs were audited.'",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Idioms", "Verbal Ability"],
+    id: 'verb-015',
+    catalogNumber: 175,
+    slug: 'idioms-figurative-workplace-expressions',
+    title: 'Professional Idiomatic Figurative Expression Interpretation',
+    problemStatement: 'During the quarterly project review, the vice president remarked: "Faced with escalating technical debt and persistent concurrency deadlocks, our engineering team had no choice but to bite the bullet and rewrite the entire distributed message broker from scratch."\n\nWhat is the precise figurative meaning of "bite the bullet" in this context?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Idiomatic definition in enterprise decision making'],
+    examples: [{ input: 'Option selection', output: 'Option A (To accept an inevitable, painful, or difficult task with courage and resolve)' }],
+    difficulty: 'EASY',
+    topics: ['Idioms and Phrases', 'Verbal Reasoning'],
     sections: ['VERBAL'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'IDIOM_FIGURATIVE_MEANING',
+    templateFamily_id: 'VERB_IDIOMS',
+    learningObjective: 'Interpret standard workplace idioms communicating resilience in difficult engineering trade-offs.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'PROJECT_MANAGEMENT',
+    contentFingerprint: 'verb-015-idiom-bite-the-bullet-rewrite-broker',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'The team was confronted with a daunting and resource-intensive rewrite.',
+      'Did they avoid it, or did they resolve to face the difficult hardship directly?'
+    ],
+    options: [
+      { id: 'A', text: 'To accept an inevitable, painful, or difficult task with courage and resolve' },
+      { id: 'B', text: 'To aggressively challenge and confront senior executive management' },
+      { id: 'C', text: 'To implement a hasty, substandard temporary workaround' },
+      { id: 'D', text: 'To terminate team members responsible for software defects' }
+    ],
+    explanation: 'The historical idiom "bite the bullet" originates from field surgery before anesthesia and figuratively means to endure a painful, grim, or arduous necessity with fortitude. In this software context, it refers to embracing the difficult, costly necessity of completely rewriting the message broker.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 16. Cloze Test: Semiconductor Supply Chains (Slot 1) - Answer: B
+  {
+    id: 'verb-016',
+    catalogNumber: 176,
+    slug: 'cloze-passage-semiconductor-fabrication-bottleneck',
+    title: 'Cloze Test: Supply Chain Bottlenecks in Semiconductor Fabrication',
+    problemStatement: 'Read the following excerpt and select the most appropriate word to fill Blank [1]:\n\n"The modern semiconductor fabrication ecosystem represents one of the most fragile manufacturing architectures globally. A disruption in a single specialized chemical supplier can trigger catastrophic upstream ________ [1] across global automotive and consumer hardware production. Because extreme ultraviolet photolithography equipment requires thousands of bespoke optical mirrors, establishing domestic fabrication autonomy demands decades of capital investment rather than spontaneous industrial substitution."\n\nBlank [1]:\nA. surges\nB. bottlenecks\nC. windfalls\nD. abundances',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Context indicates supply restriction and production delays'],
+    examples: [{ input: 'Option selection', output: 'Option B (bottlenecks)' }],
+    difficulty: 'EASY',
+    topics: ['Cloze Passages', 'Vocabulary in Context'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CLOZE_SUPPLY_CHAIN_BOTTLENECK',
+    templateFamily_id: 'VERB_CLOZE',
+    learningObjective: 'Infer macro-industrial logistical terms denoting systemic obstruction.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'INDUSTRIAL_SUPPLY_CHAIN',
+    contentFingerprint: 'verb-016-cloze-semiconductor-slot1-bottlenecks',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'The sentence speaks of "catastrophic upstream..." caused by disruption in specialized chemical supply.',
+      'The appropriate noun must signify constrictions or slowdowns in production.'
+    ],
+    options: [
+      { id: 'A', text: 'surges' },
+      { id: 'B', text: 'bottlenecks' },
+      { id: 'C', text: 'windfalls' },
+      { id: 'D', text: 'abundances' }
+    ],
+    explanation: 'A disruption in a single supplier restricting broader output is the classical definition of a supply chain "bottleneck" (a point of congestion or obstruction). "Surges" and "abundances" describe positive overflow, while "windfalls" refers to unexpected financial gains.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 17. Vocabulary: Contextual Distinction - Answer: D
+  {
+    id: 'verb-017',
+    catalogNumber: 177,
+    slug: 'vocabulary-connotation-specious-vs-veritable',
+    title: 'Epistemic Rigor: Specious Reasoning vs Verifiable Evidence',
+    problemStatement: 'Although the vendor’s sales presentation seemed superficially plausible to the executive committee, a thorough technical audit revealed that the performance claims were entirely ________, relying on cherry-picked benchmark queries that failed to reflect realistic high-concurrency production workloads.\n\nChoose the most accurate adjective:',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Adjective meaning superficially attractive or plausible, but actually wrong, deceptive, or misleading'],
+    examples: [{ input: 'Option selection', output: 'Option D (specious)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Vocabulary in Context', 'Sentence Completion'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VOCAB_IN_CONTEXT_SPECIOUS',
+    templateFamily_id: 'VERB_VOCAB',
+    learningObjective: 'Distinguish precise intellectual deceit terms ("specious") from generic falsehoods.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'VENDOR_EVALUATION',
+    contentFingerprint: 'verb-017-vocab-specious-claims-benchmarks',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Verbal" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "were"
-      },
-      {
-            "id": "B",
-            "text": "was"
-      },
-      {
-            "id": "C",
-            "text": "are being"
-      },
-      {
-            "id": "D",
-            "text": "has been"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-verbal',
     hints: [
-      "In a 'neither ... nor' construction, the verb agrees with the subject closest to it.", "The subject nearest to the verb is 'the engineers' (plural).",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'The sentence contrasts "superficially plausible" with claims that "failed to reflect realistic workloads".',
+      'The word specifically means superficially sound but fundamentally false.'
     ],
-    explanation: "Subject-verb agreement rule with correlative conjunctions (neither...nor): the verb agrees in number with the nearest subject. Since 'engineers' is plural and the past tense is required by the context ('until the logs were audited'), 'were' is the correct choice.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-ver-250-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'veritable' },
+      { id: 'B', text: 'impeccable' },
+      { id: 'C', text: 'unassailable' },
+      { id: 'D', text: 'specious' }
+    ],
+    explanation: '"Specious" precisely describes reasoning, arguments, or claims that appear superficially plausible, attractive, or correct, but are genuinely deceptive, fallacious, and unsubstantiated upon closer inspection. "Veritable", "impeccable", and "unassailable" all indicate genuine truth or flawlessness.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 18. Pronoun-Antecedent Agreement - Answer: A
+  {
+    id: 'verb-018',
+    catalogNumber: 178,
+    slug: 'grammar-pronoun-antecedent-collective-entity',
+    title: 'Grammar: Pronoun-Antecedent Agreement with Singular Corporate Entities',
+    problemStatement: 'Identify the grammatically correct sentence conforming to standard formal pronoun-antecedent agreement:\n\nA. The cybersecurity incident response committee published its comprehensive annual threat analysis today.\nB. The cybersecurity incident response committee published their comprehensive annual threat analysis today.\nC. The cybersecurity incident response committee published its comprehensive annual threat analysis theirselves today.\nD. The cybersecurity incident response committee have published their comprehensive annual threat analysis today.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['In formal written American/standard business English, collective corporate bodies acting as a singular unit take singular neuter pronouns ("its")'],
+    examples: [{ input: 'Option selection', output: 'Option A' }],
+    difficulty: 'EASY',
+    topics: ['Grammar', 'Pronoun Agreement'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_PRONOUN_ANTECEDENT',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Match singular collective corporate nouns ("committee") with neuter singular pronouns ("its").',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'CORPORATE_GOVERNANCE',
+    contentFingerprint: 'verb-018-pronoun-committee-its-annual-analysis',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'The entity is "The committee", acting cohesively as a single institutional body.',
+      'A singular institutional body takes the singular possessive pronoun "its", not the plural "their".'
+    ],
+    options: [
+      { id: 'A', text: 'The cybersecurity incident response committee published its comprehensive annual threat analysis today.' },
+      { id: 'B', text: 'The cybersecurity incident response committee published their comprehensive annual threat analysis today.' },
+      { id: 'C', text: '...published its comprehensive annual threat analysis theirselves today.' },
+      { id: 'D', text: '...have published their comprehensive annual threat analysis today.' }
+    ],
+    explanation: 'A collective noun acting as a single unified entity (e.g. "committee", "board", "corporation") takes a singular verb and a singular possessive pronoun ("its") in formal standardized grammar. Option A correctly uses "its". Option B mistakenly uses the plural "their".',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 19. Misplaced Modifiers in Technical Documentation - Answer: B
+  {
+    id: 'verb-019',
+    catalogNumber: 179,
+    slug: 'sentence-correction-misplaced-adjectival-clause',
+    title: 'Syntactic Disambiguation: Eliminating Misplaced Adjectival Clauses',
+    problemStatement: 'Identify the sentence where the relative adjectival clause is positioned correctly without modifying the wrong noun:\n\nA. The software engineer presented a machine learning model to the executive board that predicted customer churn with 94% accuracy.\nB. The software engineer presented to the executive board a machine learning model that predicted customer churn with 94% accuracy.\nC. The software engineer presented a machine learning model that the executive board predicted customer churn with 94% accuracy.\nD. Predicting customer churn with 94% accuracy, a machine learning model was presented to the executive board by the software engineer that was revolutionary.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Adjective clause "that predicted customer churn..." must immediately follow the noun it modifies ("model")'],
+    examples: [{ input: 'Option selection', output: 'Option B' }],
+    difficulty: 'MEDIUM',
+    topics: ['Sentence Correction', 'Misplaced Modifiers'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA', 'DIGITAL'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_MISPLACED_RELATIVE_CLAUSE',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Position relative restrictive clauses in direct proximity to their intended antecedent.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'AI_PRESENTATION',
+    contentFingerprint: 'verb-019-misplaced-model-board-churn-accuracy',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-verbal',
+    hints: [
+      'In sentence A, "the executive board that predicted customer churn..." illogically suggests that the human board of directors predicts churn with 94% accuracy.',
+      'The clause must immediately modify "a machine learning model".'
+    ],
+    options: [
+      { id: 'A', text: '...presented a machine learning model to the executive board that predicted...' },
+      { id: 'B', text: 'The software engineer presented to the executive board a machine learning model that predicted customer churn with 94% accuracy.' },
+      { id: 'C', text: '...model that the executive board predicted customer churn...' },
+      { id: 'D', text: 'Predicting customer churn... model was presented... that was revolutionary.' }
+    ],
+    explanation: 'In sentence A, the relative clause "that predicted customer churn with 94% accuracy" is placed directly after "the executive board", creating the absurd syntactic meaning that the human board of directors has 94% algorithmic accuracy. In Option B, shifting the prepositional phrase ("presented to the executive board a machine learning model that...") allows the relative clause to sit directly adjacent to its true antecedent ("model").',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 20. Error Spotting: Double Negatives - Answer: C
+  {
+    id: 'verb-020',
+    catalogNumber: 180,
+    slug: 'error-spotting-hardly-scarcely-negative-inversion',
+    title: 'Error Identification: Negative Adverbs and Redundant Particles',
+    problemStatement: 'Read the following sentence divided into four parts (A, B, C, D). Identify the section containing the grammatical error:\n\n(A) The cloud infrastructure team / (B) had scarcely initiated the database migration / (C) when no server failed / (D) to acknowledge the distributed cluster heartbeat.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Adverbs like "scarcely" and "hardly" are correlatively paired with "when", followed by affirmative clauses'],
+    examples: [{ input: 'Option selection', output: 'Option C' }],
+    difficulty: 'MEDIUM',
+    topics: ['Grammar and Error Identification', 'Correlative Inversions'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ERROR_SPOTTING_NEGATIVE_ADVERBS',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Detect illogical double negatives following restrictive correlative markers ("scarcely... when").',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'INFRASTRUCTURE_INCIDENT',
+    contentFingerprint: 'verb-020-error-scarcely-when-no-server',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Look at part (C): "when no server failed to acknowledge...".',
+      'The context intends to describe an unexpected failure occurring immediately: "when the secondary server failed...". The insertion of "no" creates a contradictory double negative.'
+    ],
+    options: [
+      { id: 'A', text: 'Part (A)' },
+      { id: 'B', text: 'Part (B)' },
+      { id: 'C', text: 'Part (C)' },
+      { id: 'D', text: 'Part (D)' }
+    ],
+    explanation: 'In Part (C), using "when no server failed" after "scarcely initiated" produces an incoherent double-negative assertion that implies everything succeeded. The intended standard grammatical construction is: "The team had scarcely initiated the migration when a server failed to acknowledge...". The error resides in Part (C).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 21. Spelling & Word Selection - Answer: D
+  {
+    id: 'verb-021',
+    catalogNumber: 181,
+    slug: 'orthography-confusable-homophones-affect-effect',
+    title: 'Orthographic and Grammatical Precision: Affect vs Effect in Technical Writing',
+    problemStatement: 'Fill in the blanks with the correct pair of words:\n\n"The sudden surge in database read traffic will adversely ________ the response time of our checkout service, producing a detrimental ________ on conversion rates."\n\nA. effect; affect\nB. effect; effect\nC. affect; affect\nD. affect; effect',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['"Affect" is typically a verb (to influence); "Effect" is typically a noun (a result or outcome)'],
+    examples: [{ input: 'Option selection', output: 'Option D (affect; effect)' }],
+    difficulty: 'EASY',
+    topics: ['Spelling and Word Selection', 'Vocabulary in Context'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VOCAB_HOMOPHONES_AFFECT_EFFECT',
+    templateFamily_id: 'VERB_VOCAB',
+    learningObjective: 'Differentiate grammatical functions of "affect" (transitive verb) and "effect" (count/mass noun).',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'PERFORMANCE_ANALYSIS',
+    contentFingerprint: 'verb-021-homophones-affect-verb-effect-noun',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      '"will adversely ________" requires a base verb -> "affect".',
+      '"producing a detrimental ________" requires a singular noun preceded by an article and adjective -> "effect".'
+    ],
+    options: [
+      { id: 'A', text: 'effect; affect' },
+      { id: 'B', text: 'effect; effect' },
+      { id: 'C', text: 'affect; affect' },
+      { id: 'D', text: 'affect; effect' }
+    ],
+    explanation: 'In standard English: (1) "Affect" functions as a verb meaning to act on or produce an influence upon ("will adversely affect the response time"). (2) "Effect" functions as a noun meaning the consequence or result produced by an action ("producing a detrimental effect on conversion rates"). Option D is the only grammatically correct pair.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 22. Inversion with Negative Adverbs - Answer: A
+  {
+    id: 'verb-022',
+    catalogNumber: 182,
+    slug: 'grammar-negative-adverb-subject-auxiliary-inversion',
+    title: 'Formal Syntactic Inversion Triggered by Initial Negative Adverbs',
+    problemStatement: 'Complete the sentence with the appropriate word order:\n\n"Seldom ________ such a comprehensive breakdown of distributed consensus protocols in an enterprise production cluster."\n\nA. have senior site reliability engineers witnessed\nB. senior site reliability engineers have witnessed\nC. did senior site reliability engineers witnessed\nD. senior site reliability engineers witnessed',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Negative restrictive adverbs at the beginning of a clause trigger subject-auxiliary inversion'],
+    examples: [{ input: 'Option selection', output: 'Option A' }],
+    difficulty: 'MEDIUM',
+    topics: ['Grammar', 'Inversion'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA', 'DIGITAL'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAMMAR_NEGATIVE_INVERSION',
+    templateFamily_id: 'VERB_GRAMMAR',
+    learningObjective: 'Execute subject-auxiliary inversion following sentence-initial negative adverbs (Seldom, Rarely, Scarcely).',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'SRE_INCIDENT_ANALYSIS',
+    contentFingerprint: 'verb-022-inversion-seldom-have-engineers-witnessed',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'When negative or restrictive adverbs (seldom, rarely, hardly, never) open a sentence, standard English requires subject-auxiliary inversion (like a question word order: Auxiliary + Subject + Main Verb).',
+      '"Seldom have [subject] witnessed...".'
+    ],
+    options: [
+      { id: 'A', text: 'have senior site reliability engineers witnessed' },
+      { id: 'B', text: 'senior site reliability engineers have witnessed' },
+      { id: 'C', text: 'did senior site reliability engineers witnessed' },
+      { id: 'D', text: 'senior site reliability engineers witnessed' }
+    ],
+    explanation: 'When a negative or limiting adverb such as "Seldom", "Rarely", or "Never" is positioned at the beginning of an independent clause for rhetorical emphasis, formal English mandates subject-auxiliary inversion. The auxiliary verb "have" must precede the subject noun phrase "senior site reliability engineers". Option A represents the only grammatically inverted sentence.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 23. Active vs Passive Voice - Answer: B
+  {
+    id: 'verb-023',
+    catalogNumber: 183,
+    slug: 'voice-active-vs-passive-scientific-reporting',
+    title: 'Voice Transformation: Active Executive Directness vs Passive Obfuscation',
+    problemStatement: 'Convert the following passive and convoluted sentence into concise, direct active voice without altering the technical meaning:\n\n"The zero-day vulnerability in the authentication gateway was discovered by the external security auditor during the scheduled penetration test."\n\nA. During the scheduled penetration test, the discovery of the zero-day vulnerability occurred by the auditor.\nB. The external security auditor discovered the zero-day vulnerability in the authentication gateway during the scheduled penetration test.\nC. Discovered during the penetration test, the zero-day vulnerability was found by the external auditor.\nD. The authentication gateway had its zero-day vulnerability discovered by the auditor.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Active voice structure: Subject (Auditor) + Verb (discovered) + Object (vulnerability)'],
+    examples: [{ input: 'Option selection', output: 'Option B' }],
+    difficulty: 'EASY',
+    topics: ['Active and Passive Voice', 'Sentence Correction'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VOICE_PASSIVE_TO_ACTIVE',
+    templateFamily_id: 'VERB_VOICE',
+    learningObjective: 'Convert bureaucratic passive constructions into direct agent-driven active statements.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'SECURITY_REPORTING',
+    contentFingerprint: 'verb-023-voice-auditor-discovered-vulnerability',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Who is the actor performing the discovery? "The external security auditor".',
+      'Make that actor the grammatical subject followed by the active verb "discovered".'
+    ],
+    options: [
+      { id: 'A', text: '...discovery of the zero-day vulnerability occurred by the auditor.' },
+      { id: 'B', text: 'The external security auditor discovered the zero-day vulnerability in the authentication gateway during the scheduled penetration test.' },
+      { id: 'C', text: 'Discovered during the penetration test... was found by the auditor.' },
+      { id: 'D', text: 'The authentication gateway had its zero-day vulnerability discovered...' }
+    ],
+    explanation: 'To convert passive voice to active voice, the agent performing the action ("The external security auditor") becomes the subject of the sentence, followed directly by the active past-tense verb ("discovered") and the direct object ("the zero-day vulnerability"). Option B achieves this cleanly without nominalizations or awkward circumlocutions.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 24. Vocabulary in Context: Telemetry - Answer: C
+  {
+    id: 'verb-024',
+    catalogNumber: 184,
+    slug: 'vocabulary-contextual-meaning-surreptitious',
+    title: 'Contextual Word Sense: Surreptitious Telemetry vs Transparent Logging',
+    problemStatement: 'In the investigative report on consumer privacy, the journalist noted: "The mobile operating system was caught transmitting surreptitious user location coordinates to unlisted remote advertising servers every three minutes."\n\nWhat is the most precise contextual definition of "surreptitious" as employed in this sentence?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Context denotes covert, unauthorized, or secretive background data transmission'],
+    examples: [{ input: 'Option selection', output: 'Option C (Covert, unauthorized, and kept secret)' }],
+    difficulty: 'EASY',
+    topics: ['Vocabulary in Context', 'Reading Comprehension'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VOCAB_IN_CONTEXT_SURREPTITIOUS',
+    templateFamily_id: 'VERB_VOCAB',
+    learningObjective: 'Interpret formal privacy and security descriptors designating unauthorized covert activities.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'DATA_PRIVACY',
+    contentFingerprint: 'verb-024-vocab-surreptitious-telemetry-privacy',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-verbal',
+    hints: [
+      'The app was transmitting data to unlisted ad servers without the user knowing.',
+      'The word denotes secret, unauthorized, or hidden action.'
+    ],
+    options: [
+      { id: 'A', text: 'Highly encrypted and cryptographically secure' },
+      { id: 'B', text: 'Intermittent and prone to transmission latency' },
+      { id: 'C', text: 'Covert, unauthorized, and deliberately kept secret' },
+      { id: 'D', text: 'Legally mandated by domestic regulatory frameworks' }
+    ],
+    explanation: '"Surreptitious" means obtained, done, or made by secret, unauthorized, or stealthy means. In this context, it emphasizes that the background tracking was executed without user disclosure or consent, deliberately hidden from sight.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 25. Tone and Register: Formal Technical vs Colloquial - Answer: D
+  {
+    id: 'verb-025',
+    catalogNumber: 185,
+    slug: 'stylistics-register-formal-engineering-rigor',
+    title: 'Stylistic Register: Professional Technical Rigor vs Informal Colloquialisms',
+    problemStatement: 'A post-mortem incident report is being submitted to the enterprise client’s Chief Information Security Officer (CISO). Which of the following versions demonstrates the most appropriate formal, professional, and objective register?\n\nA. We totally messed up with our database sharding, so the web app was completely down for like two hours until we fixed the stuff.\nB. The database totally blew up because our query load went nuts, but our team hacked together a quick script to get things rolling again.\nC. You guys suffered a pretty bad downtime because some queries were super slow, but we sorted it out real quick.\nD. An unexpected spike in concurrent transaction volume saturated database connection pools, inducing a 114-minute service outage that was remediated via automated connection pooling limits and index optimization.',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Formal corporate technical incident post-mortem register'],
+    examples: [{ input: 'Option selection', output: 'Option D' }],
+    difficulty: 'EASY',
+    topics: ['Tone and Register', 'Appropriate Contextual Expressions'],
+    sections: ['VERBAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'STYLISTICS_FORMAL_REGISTER',
+    templateFamily_id: 'VERB_STYLISTICS',
+    learningObjective: 'Select objective, quantifiable, and professional prose appropriate for executive C-level stakeholder communication.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'POST_MORTEM_REPORT',
+    contentFingerprint: 'verb-025-register-ciso-incident-report-formal',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'Look for quantitative precision ("114-minute service outage"), passive/objective causal explanations ("saturated connection pools"), and technical remediation descriptors ("index optimization").',
+      'Avoid slang like "messed up", "like two hours", "blew up", "stuff", or "super slow".'
+    ],
+    options: [
+      { id: 'A', text: 'We totally messed up with our database sharding, so the web app was down for like two hours...' },
+      { id: 'B', text: 'The database totally blew up because our query load went nuts...' },
+      { id: 'C', text: 'You guys suffered a pretty bad downtime because some queries were super slow...' },
+      { id: 'D', text: 'An unexpected spike in concurrent transaction volume saturated database connection pools, inducing a 114-minute service outage that was remediated via automated connection pooling limits and index optimization.' }
+    ],
+    explanation: 'Professional executive communication mandates an objective, factual, and technologically precise tone free from colloquial slang ("messed up", "super slow", "blew up"), conversational second-person address ("You guys"), and vague approximations ("like two hours"). Option D delivers exact metrics (114 minutes), clear causality (connection pool saturation), and formal engineering terminology.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   }
 ];

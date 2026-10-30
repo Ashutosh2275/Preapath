@@ -21,12 +21,16 @@ import {
   ExternalLink,
   XCircle,
   ArrowRight,
-  Code2
+  Code2,
+  Zap,
+  Lightbulb,
+  Award
 } from 'lucide-react';
 import { useQuestionsStore } from '../../stores/useQuestionsStore';
 import { useUserStore } from '../../stores/useUserStore';
 import { runCodeGateway, submitCodeGateway } from '../../lib/executionGateway';
-import { ProgrammingLanguage, TestCase, Submission, ExecutionVerdict } from '../../types';
+import { ProgrammingLanguage, TestCase, Submission, ExecutionVerdict, MCQGradingResult, ConfidenceLevel, MCQMistakeType } from '../../types';
+import { gradeMcqSubmission, getPedagogicalFeedback } from '../../lib/mcqEngine';
 import { DifficultyBadge, TrackBadge, SourceBadge, VerdictBadge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
@@ -52,7 +56,8 @@ export const ProblemDetailPage: React.FC = () => {
     revealNextHint,
     saveProblemNote,
     submissions,
-    addSubmission
+    addSubmission,
+    recordMcqAttempt
   } = useUserStore();
 
   const question = questions.find(
@@ -115,7 +120,11 @@ export const ProblemDetailPage: React.FC = () => {
   // MCQ interactive state
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [isMcqSubmitted, setIsMcqSubmitted] = useState<boolean>(false);
-  const [mcqFeedback, setMcqFeedback] = useState<{ isCorrect: boolean; message: string } | null>(null);
+  const [mcqGrading, setMcqGrading] = useState<MCQGradingResult | null>(null);
+  const [userConfidence, setUserConfidence] = useState<ConfidenceLevel>('MEDIUM');
+  const [selfMistake, setSelfMistake] = useState<MCQMistakeType | ''>('');
+  const [mcqStartTime, setMcqStartTime] = useState<number>(Date.now());
+  const [isSubmittingMcq, setIsSubmittingMcq] = useState(false);
 
   // Custom Test Case input states
   const [customInput, setCustomInput] = useState('');
@@ -235,42 +244,80 @@ export const ProblemDetailPage: React.FC = () => {
     }
   };
 
+  // Reset question timer & states when navigating between problems
+  useEffect(() => {
+    setSelectedOptionId(null);
+    setIsMcqSubmitted(false);
+    setMcqGrading(null);
+    setSelfMistake('');
+    setMcqStartTime(Date.now());
+  }, [question?.id]);
+
   // Submit MCQ Answer
-  const handleMcqSubmit = () => {
-    if (!selectedOptionId) return;
-    const isCorrect = selectedOptionId.toUpperCase() === (question.correctOptionId || '').toUpperCase();
-    setIsMcqSubmitted(true);
-    setMcqFeedback({
-      isCorrect,
-      message: isCorrect 
-        ? `Correct! Option (${selectedOptionId}) is the exact verified answer.` 
-        : `Incorrect. You chose (${selectedOptionId}), but the correct option is (${question.correctOptionId}).`
-    });
+  const handleMcqSubmit = async () => {
+    if (!selectedOptionId || !question) return;
+    setIsSubmittingMcq(true);
+    const responseTimeMs = Math.max(1000, Date.now() - mcqStartTime);
 
-    const uid = user?.uid || 'guest-user';
-    const subRecord: Submission = {
-      id: `mcq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-      userId: uid,
-      problemId: question.id,
-      language: 'python',
-      sourceCodeSnapshot: `Option Selected: ${selectedOptionId}\nCorrect Option: ${question.correctOptionId}`,
-      verdict: isCorrect ? 'Accepted' : 'Wrong Answer',
-      executionTimeMs: 15,
-      memoryUsedKb: 256,
-      passedTests: isCorrect ? 1 : 0,
-      totalTests: 1,
-      submittedAt: new Date().toISOString(),
-    };
+    try {
+      const result = await gradeMcqSubmission(question.id, selectedOptionId, responseTimeMs, {
+        userId: user?.uid,
+        section: question.sections[0],
+        difficulty: question.difficulty,
+        confidence: userConfidence,
+        userMistake: selfMistake ? (selfMistake as MCQMistakeType) : undefined,
+      });
 
-    addSubmission(subRecord);
-    recordSubmissionResult(question.id, isCorrect ? 'Accepted' : 'Wrong Answer', 'python', 15);
+      setMcqGrading(result);
+      setIsMcqSubmitted(true);
+
+      // Record in store & DB
+      recordMcqAttempt({
+        userId: user?.uid || 'guest-user',
+        questionId: question.id,
+        questionVersion: question.version || 1,
+        selectedOptionId,
+        isCorrect: result.isCorrect,
+        responseTimeMs,
+        difficulty: question.difficulty,
+        topic: question.topics[0] || 'Foundations',
+        questionArchetype: question.questionArchetype,
+        confidence: userConfidence,
+        mistakeType: result.mistakeType,
+        isRevision: progress?.needsRevision || false,
+      });
+
+      const uid = user?.uid || 'guest-user';
+      const subRecord: Submission = {
+        id: `mcq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+        userId: uid,
+        problemId: question.id,
+        language: 'python',
+        sourceCodeSnapshot: `Option Selected: ${selectedOptionId}\nCorrect Option: ${result.correctOptionId}`,
+        verdict: result.isCorrect ? 'Accepted' : 'Wrong Answer',
+        executionTimeMs: Math.round(responseTimeMs / 1000),
+        memoryUsedKb: 256,
+        passedTests: result.isCorrect ? 1 : 0,
+        totalTests: 1,
+        submittedAt: new Date().toISOString(),
+      };
+
+      addSubmission(subRecord);
+      recordSubmissionResult(question.id, result.isCorrect ? 'Accepted' : 'Wrong Answer', 'python', responseTimeMs);
+    } catch (err) {
+      console.error('Failed to grade MCQ submission:', err);
+    } finally {
+      setIsSubmittingMcq(false);
+    }
   };
 
   // Reset MCQ Answer
   const handleMcqReset = () => {
     setSelectedOptionId(null);
     setIsMcqSubmitted(false);
-    setMcqFeedback(null);
+    setMcqGrading(null);
+    setSelfMistake('');
+    setMcqStartTime(Date.now());
   };
 
   // Add custom test case
@@ -836,15 +883,37 @@ export const ProblemDetailPage: React.FC = () => {
 
               {/* Options Selection List */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Select the correct answer:
-                </h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Select the correct answer:
+                  </h4>
+                  {!isMcqSubmitted && (
+                    <div className="flex items-center gap-1.5 text-xs">
+                      <span className="text-[11px] text-slate-400 font-medium mr-1">Confidence:</span>
+                      {(['LOW', 'MEDIUM', 'HIGH'] as ConfidenceLevel[]).map((lvl) => (
+                        <button
+                          key={lvl}
+                          type="button"
+                          onClick={() => setUserConfidence(lvl)}
+                          className={`px-2 py-0.5 rounded text-[11px] font-semibold border transition-all ${
+                            userConfidence === lvl
+                              ? 'bg-primary/10 border-primary text-primary'
+                              : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800'
+                          }`}
+                        >
+                          {lvl === 'LOW' ? 'Guess' : lvl === 'MEDIUM' ? 'Medium' : 'High'}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 <div className="space-y-2.5">
                   {(question.options || []).map((opt) => {
                     const isSelected = selectedOptionId === opt.id;
-                    const isCorrect = isMcqSubmitted && opt.id.toUpperCase() === (question.correctOptionId || '').toUpperCase();
+                    const isCorrect = isMcqSubmitted && opt.id.toUpperCase() === (mcqGrading?.correctOptionId || '').toUpperCase();
                     const isWrongSelection = isMcqSubmitted && isSelected && !isCorrect;
+                    const distractorNote = isMcqSubmitted && mcqGrading?.distractorExplanations?.[opt.id];
 
                     let cardClass = "border-slate-200 bg-white text-slate-800 hover:border-primary/50 hover:bg-slate-50/50";
                     if (isSelected && !isMcqSubmitted) {
@@ -856,53 +925,94 @@ export const ProblemDetailPage: React.FC = () => {
                     }
 
                     return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        disabled={isMcqSubmitted}
-                        onClick={() => setSelectedOptionId(opt.id)}
-                        className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-all ${cardClass}`}
-                      >
-                        <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
-                          isCorrect 
-                            ? 'bg-emerald-500 text-white' 
-                            : isWrongSelection 
-                            ? 'bg-rose-500 text-white' 
-                            : isSelected 
-                            ? 'bg-primary text-white' 
-                            : 'bg-slate-100 text-slate-700'
-                        }`}>
-                          {isCorrect ? '✓' : isWrongSelection ? '✗' : opt.id}
-                        </span>
-                        <div className="flex-1 text-sm pt-0.5 leading-relaxed">
-                          {opt.text}
-                        </div>
-                      </button>
+                      <div key={opt.id} className="space-y-1">
+                        <button
+                          type="button"
+                          disabled={isMcqSubmitted}
+                          onClick={() => setSelectedOptionId(opt.id)}
+                          className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-all ${cardClass}`}
+                        >
+                          <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
+                            isCorrect 
+                              ? 'bg-emerald-500 text-white' 
+                              : isWrongSelection 
+                              ? 'bg-rose-500 text-white' 
+                              : isSelected 
+                              ? 'bg-primary text-white' 
+                              : 'bg-slate-100 text-slate-700'
+                          }`}>
+                            {isCorrect ? '✓' : isWrongSelection ? '✗' : opt.id}
+                          </span>
+                          <div className="flex-1 text-sm pt-0.5 leading-relaxed font-medium">
+                            {opt.text}
+                          </div>
+                        </button>
+                        {distractorNote && (
+                          <div className={`px-3 py-1.5 rounded-lg text-[11px] leading-relaxed border ${
+                            isCorrect 
+                              ? 'bg-emerald-50/60 border-emerald-200 text-emerald-800' 
+                              : isWrongSelection 
+                              ? 'bg-rose-50/60 border-rose-200 text-rose-800' 
+                              : 'bg-slate-50 border-slate-200 text-slate-600'
+                          }`}>
+                            <span className="font-bold">Option {opt.id}: </span>{distractorNote}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Feedback Alert */}
-              {mcqFeedback && (
-                <div className={`p-4 rounded-xl border flex items-start gap-3 animate-in fade-in ${
-                  mcqFeedback.isCorrect 
+              {/* Feedback & Mistake Diagnostic Alert */}
+              {isMcqSubmitted && mcqGrading && (
+                <div className={`p-4 rounded-xl border flex flex-col gap-2.5 animate-in fade-in ${
+                  mcqGrading.isCorrect 
                     ? 'border-emerald-300 bg-emerald-50 text-emerald-800' 
                     : 'border-rose-300 bg-rose-50 text-rose-800'
                 }`}>
-                  {mcqFeedback.isCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                  ) : (
-                    <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                  )}
-                  <div className="space-y-1">
-                    <h5 className="font-bold text-sm">
-                      {mcqFeedback.isCorrect ? 'Correct Answer!' : 'Incorrect Answer'}
-                    </h5>
-                    <p className="text-xs leading-relaxed">
-                      {mcqFeedback.message}
-                    </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {mcqGrading.isCorrect ? (
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                      ) : (
+                        <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                      )}
+                      <h5 className="font-bold text-sm">
+                        {mcqGrading.isCorrect 
+                          ? `Correct! Option (${mcqGrading.correctOptionId}) is verified.` 
+                          : `Incorrect. You chose (${selectedOptionId}), correct answer is (${mcqGrading.correctOptionId}).`
+                        }
+                      </h5>
+                    </div>
+                    {mcqGrading.conceptTested && (
+                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-white/70 border border-current">
+                        {mcqGrading.conceptTested}
+                      </span>
+                    )}
                   </div>
+
+                  {!mcqGrading.isCorrect && (
+                    <div className="pt-2 border-t border-rose-200/60 space-y-1.5">
+                      {(() => {
+                        const feedback = getPedagogicalFeedback(
+                          mcqGrading.mistakeType || 'CONCEPTUAL_GAP',
+                          mcqGrading.conceptTested || 'this question'
+                        );
+                        return (
+                          <div className="text-xs space-y-1 bg-white/80 p-3 rounded-lg border border-rose-200">
+                            <span className="font-bold text-rose-900 flex items-center gap-1.5">
+                              <AlertCircle className="w-4 h-4 text-rose-600" />
+                              Diagnostic: {feedback.title}
+                            </span>
+                            <p className="text-slate-700 leading-relaxed">
+                              {feedback.advice}
+                            </p>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -913,11 +1023,11 @@ export const ProblemDetailPage: React.FC = () => {
                     <Button
                       variant="primary"
                       size="md"
-                      disabled={!selectedOptionId}
+                      disabled={!selectedOptionId || isSubmittingMcq}
                       onClick={handleMcqSubmit}
                       leftIcon={<Send className="w-4 h-4" />}
                     >
-                      Submit Answer
+                      {isSubmittingMcq ? 'Grading...' : 'Submit Answer'}
                     </Button>
                   ) : (
                     <Button
@@ -944,15 +1054,42 @@ export const ProblemDetailPage: React.FC = () => {
                 )}
               </div>
 
-              {/* Detailed Explanation / Derivation (Visible when submitted) */}
-              {isMcqSubmitted && (
-                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-3 animate-in fade-in">
-                  <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-primary" />
-                    Step-by-Step Derivation & Solution
-                  </h4>
-                  <div className="text-xs text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50 p-4 rounded-xl border border-slate-200 font-sans">
-                    {question.explanation}
+              {/* Formula & Speed Shortcut Callouts */}
+              {isMcqSubmitted && mcqGrading && (
+                <div className="space-y-3 pt-2">
+                  {mcqGrading.formulaOrRule && (
+                    <div className="bg-indigo-50/70 border border-indigo-200 rounded-xl p-4 space-y-1">
+                      <h5 className="text-xs font-bold text-indigo-900 flex items-center gap-1.5 uppercase tracking-wider">
+                        <Lightbulb className="w-4 h-4 text-indigo-600" />
+                        Key Formula & Governing Principle
+                      </h5>
+                      <p className="text-xs text-indigo-950 font-medium font-mono leading-relaxed bg-white/60 p-2.5 rounded-lg border border-indigo-100">
+                        {mcqGrading.formulaOrRule}
+                      </p>
+                    </div>
+                  )}
+
+                  {mcqGrading.shortcutTechnique && (
+                    <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4 space-y-1">
+                      <h5 className="text-xs font-bold text-amber-900 flex items-center gap-1.5 uppercase tracking-wider">
+                        <Zap className="w-4 h-4 text-amber-600" />
+                        TCS Speed Technique (Exam Shortcut)
+                      </h5>
+                      <p className="text-xs text-amber-950 font-medium leading-relaxed bg-white/60 p-2.5 rounded-lg border border-amber-100">
+                        {mcqGrading.shortcutTechnique}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Detailed Step-by-Step Walkthrough */}
+                  <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-3 animate-in fade-in">
+                    <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-primary" />
+                      Step-by-Step Derivation & Solution Walkthrough
+                    </h4>
+                    <div className="text-xs text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50 p-4 rounded-xl border border-slate-200 font-sans">
+                      {mcqGrading.explanation || question.explanation}
+                    </div>
                   </div>
                 </div>
               )}

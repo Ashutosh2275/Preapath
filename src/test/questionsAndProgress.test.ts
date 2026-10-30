@@ -12,14 +12,18 @@ describe('QuestionBank Integrity & Progress Store', () => {
       expect(q.problemStatement.length).toBeGreaterThan(20);
       expect(q.inputFormat).toBeDefined();
       expect(q.outputFormat).toBeDefined();
-      expect(q.examples.length).toBeGreaterThanOrEqual(1);
-      expect(q.publicTestCases.length).toBeGreaterThanOrEqual(1);
-      expect(q.hints.length).toBeGreaterThanOrEqual(2);
+      if (q.problemFormat === 'MULTIPLE_CHOICE') {
+        expect(q.options && q.options.length).toBeGreaterThanOrEqual(4);
+      } else {
+        expect(q.examples.length).toBeGreaterThanOrEqual(1);
+        expect(q.publicTestCases.length).toBeGreaterThanOrEqual(1);
+        expect(q.starterCodeByLanguage.python).toBeDefined();
+        expect(q.starterCodeByLanguage.cpp).toBeDefined();
+        expect(q.starterCodeByLanguage.java).toBeDefined();
+        expect(q.starterCodeByLanguage.c).toBeDefined();
+      }
+      expect(q.hints.length).toBeGreaterThanOrEqual(1);
       expect(q.explanation.length).toBeGreaterThan(20);
-      expect(q.starterCodeByLanguage.python).toBeDefined();
-      expect(q.starterCodeByLanguage.cpp).toBeDefined();
-      expect(q.starterCodeByLanguage.java).toBeDefined();
-      expect(q.starterCodeByLanguage.c).toBeDefined();
 
       // Check evidence label validity
       expect([

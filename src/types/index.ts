@@ -89,11 +89,15 @@ export interface StudyPlanRevisionRecord {
 
 export type SectionType = 
   | 'NUMERICAL' 
+  | 'NUMERICAL_ABILITY'
   | 'REASONING' 
+  | 'LOGICAL_REASONING'
   | 'VERBAL' 
+  | 'VERBAL_ABILITY'
   | 'PROGRAMMING' 
   | 'ADVANCED_QUANT' 
-  | 'CODING';
+  | 'CODING'
+  | 'REVISION';
 
 export type DifficultyLevel = 'EASY' | 'MEDIUM' | 'HARD';
 
@@ -134,6 +138,95 @@ export interface QuestionSolution {
   spaceComplexity: string;
 }
 
+export type CognitiveSkill = 
+  | 'REMEMBERING' 
+  | 'UNDERSTANDING' 
+  | 'APPLYING' 
+  | 'ANALYZING' 
+  | 'EVALUATING';
+
+export type MCQMistakeType = 
+  | 'CONCEPTUAL_GAP' 
+  | 'CALCULATION_ERROR' 
+  | 'MISREAD_QUESTION' 
+  | 'LOGICAL_REASONING_ERROR' 
+  | 'TIME_PRESSURE' 
+  | 'GUESS_OR_UNCERTAIN' 
+  | 'CARELESS_ERROR' 
+  | 'KNOWLEDGE_GAP' 
+  | 'UNCLASSIFIED';
+
+export type ConfidenceLevel = 'LOW' | 'MEDIUM' | 'HIGH';
+
+export interface MCQAnswerKey {
+  questionId: string;
+  correctOptionId: string;
+  explanation: string;
+  formulaOrRule?: string;
+  distractorExplanations?: Record<string, string>;
+  misconceptionNotes?: string;
+  shortcutTechnique?: string;
+  conceptTested: string;
+  verifiedBy: string;
+  isVerified: boolean;
+}
+
+export interface MCQGradingResult {
+  isCorrect: boolean;
+  correctOptionId: string;
+  explanation: string;
+  formulaOrRule?: string;
+  distractorExplanations?: Record<string, string>;
+  misconceptionNotes?: string;
+  shortcutTechnique?: string;
+  conceptTested: string;
+  mistakeType?: MCQMistakeType;
+}
+
+export interface MCQAttempt {
+  id: string;
+  userId: string;
+  questionId: string;
+  questionVersion: number;
+  selectedOptionId: string;
+  isCorrect: boolean;
+  responseTimeMs: number;
+  difficulty: DifficultyLevel;
+  topic: string;
+  questionArchetype?: string;
+  confidence?: ConfidenceLevel;
+  mistakeType?: MCQMistakeType;
+  isRevision: boolean;
+  attemptedAt: string;
+}
+
+export interface DailyStudySessionItem {
+  id: string;
+  sessionId: string;
+  orderIndex: number;
+  itemType: 'MCQ' | 'EASY_CODING' | 'MEDIUM_CODING' | 'SPACED_REVIEW' | 'MOCK_ASSESSMENT';
+  section: SectionType;
+  topic: string;
+  questionId: string;
+  difficulty: DifficultyLevel;
+  estimatedMinutes: number;
+  status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'SKIPPED';
+  completedAt?: string;
+}
+
+export interface DailyStudySession {
+  id: string;
+  userId: string;
+  sessionDate: string; // YYYY-MM-DD
+  dayNumber: number;
+  targetTrack: TargetTrack;
+  randomizationSeed: string;
+  timeBudgetMinutes: number;
+  status: 'ACTIVE' | 'COMPLETED' | 'SKIPPED';
+  items: DailyStudySessionItem[];
+  createdAt: string;
+}
+
 export interface QuestionOption {
   id: string; // 'A', 'B', 'C', 'D'
   text: string;
@@ -157,6 +250,14 @@ export interface Question {
   targetTracks: TargetTrack[];
   estimatedMinutes: number;
   problemFormat: 'STANDARD_IO' | 'FUNCTION_SIGNATURE' | 'MULTIPLE_CHOICE';
+  questionArchetype?: string;
+  templateFamilyId?: string;
+  templateFamily_id?: string;
+  learningObjective?: string;
+  cognitiveSkill?: CognitiveSkill;
+  scenarioType?: string;
+  contentFingerprint?: string;
+  sourceId?: string;
   sourceType: SourceEvidenceType;
   sourceReferences?: {
     title: string;
@@ -168,7 +269,7 @@ export interface Question {
   hintStages?: HintStage[];
   solutions?: QuestionSolution[];
   options?: QuestionOption[];
-  correctOptionId?: string;
+  correctOptionId?: string; // Note: In client public payloads, this may be omitted to protect answer keys
   explanation: string;
   timeComplexity?: string;
   spaceComplexity?: string;

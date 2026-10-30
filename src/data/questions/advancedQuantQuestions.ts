@@ -1,3399 +1,910 @@
-import { Question } from "../../types";
+import { Question } from '../../types';
 
+/**
+ * PrepPath Professionally Curated Advanced Quantitative and Reasoning Question Bank
+ * Total: 20 Genuinely Unique MCQs
+ * Balanced Option Distribution: A: 5, B: 5, C: 5, D: 5
+ */
 export const ADVANCED_QUANT_QUESTIONS: Question[] = [
+  // 1. Legendre's Formula - Answer: B
   {
-    "id": "prep-quant-291",
-    "catalogNumber": 291,
-    "slug": "prep-291-modular-arithmetic:-highest-po",
-    "title": "Modular Arithmetic: Highest Power of Prime",
-    "problemStatement": "Find the highest power of 7 that completely divides 100! (100 factorial).",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-001',
+    catalogNumber: 186,
+    slug: 'legendre-formula-highest-composite-power-factorial',
+    title: 'Highest Exponent of a Composite Base Dividing a Large Factorial',
+    problemStatement: 'What is the highest power of 12 that completely divides 50! (50 factorial) without leaving a remainder?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['12 = 2^2 * 3; prime factorization determines the limiting factor'],
+    examples: [{ input: 'Option selection', output: 'Option B (22)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Number Theory', 'Legendre Formula'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_NUMBER_THEORY_LEGENDRE',
+    templateFamily_id: 'ADV_NUM_THEORY',
+    learningObjective: 'Decompose composite divisors into prime powers and calculate floor quotient sums via Legendre’s Theorem.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'ALGORITHMIC_ARITHMETIC',
+    contentFingerprint: 'advq-001-legendre-highest-power-12-in-50-factorial',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-tcs-official-nqt',
+    hints: [
+      'Prime factorize 12 = 2² * 3.',
+      'Find highest power of 2 in 50!: E_2(50!) = floor(50/2) + floor(50/4) + floor(50/8) + floor(50/16) + floor(50/32) = 25 + 12 + 6 + 3 + 1 = 47.',
+      'Since 12 requires 2², available pairs of 2² = floor(47 / 2) = 23.',
+      'Find highest power of 3 in 50!: E_3(50!) = floor(50/3) + floor(50/9) + floor(50/27) = 16 + 5 + 1 = 22.',
+      'The limiting prime power is 3^22.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option B",
-        "explanation": "By Legendre's Formula, the exponent of prime p in n! is E_p(n!) = [n/p] + [n/p^2] + [n/p^3] + ...\nFor p = 7 and n = 100:\n[100/7] = 14\n[100/49] = 2\n[10..."
-      }
+    options: [
+      { id: 'A', text: '21' },
+      { id: 'B', text: '22' },
+      { id: 'C', text: '23' },
+      { id: 'D', text: '24' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Number Theory",
-      "Legendre Formula"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Apply Legendre's formula E_p(n!) = floor(n/p) + floor(n/p^2) + ...",
-      "Calculate floor(100/7) and floor(100/49) and sum them."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "14"
-      },
-      {
-        "id": "B",
-        "text": "16"
-      },
-      {
-        "id": "C",
-        "text": "18"
-      },
-      {
-        "id": "D",
-        "text": "12"
-      }
-    ],
-    "correctOptionId": "B",
-    "explanation": "By Legendre's Formula, the exponent of prime p in n! is E_p(n!) = [n/p] + [n/p^2] + [n/p^3] + ...\nFor p = 7 and n = 100:\n[100/7] = 14\n[100/49] = 2\n[100/343] = 0\nTotal exponent = 14 + 2 = 16.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'B'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"B\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"B\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"B\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-291-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option B"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'Prime factorize 12: 12 = 2² * 3¹. (1) Exponent of prime 2 in 50! by Legendre’s Formula: E₂(50!) = ⌊50/2⌋ + ⌊50/4⌋ + ⌊50/8⌋ + ⌊50/16⌋ + ⌊50/32⌋ = 25 + 12 + 6 + 3 + 1 = 47. Number of 2² available = ⌊47 / 2⌋ = 23. (2) Exponent of prime 3 in 50!: E₃(50!) = ⌊50/3⌋ + ⌊50/9⌋ + ⌊50/27⌋ = 16 + 5 + 1 = 22. (3) The power of 12 is constrained by min(⌊47/2⌋, 22) = min(23, 22) = 22. Hence, 12²² divides 50! completely.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 2. Chinese Remainder Theorem - Answer: C
   {
-    "id": "prep-quant-292",
-    "catalogNumber": 292,
-    "slug": "prep-292-remainder-theorem:-fermat-litt",
-    "title": "Remainder Theorem: Fermat Little Theorem",
-    "problemStatement": "What is the remainder when 3^102 is divided by 101?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-002',
+    catalogNumber: 187,
+    slug: 'chinese-remainder-theorem-least-positive-integer',
+    title: 'Simultaneous Congruence Resolution via Chinese Remainder Theorem',
+    problemStatement: 'Find the smallest positive integer N such that:\n• N ≡ 2 (mod 3)\n• N ≡ 3 (mod 5)\n• N ≡ 2 (mod 7)',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Moduli 3, 5, 7 are pairwise coprime with M = 3 * 5 * 7 = 105'],
+    examples: [{ input: 'Option selection', output: 'Option C (23)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Number Theory', 'Chinese Remainder Theorem'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_CHINESE_REMAINDER',
+    templateFamily_id: 'ADV_MODULAR',
+    learningObjective: 'Solve simultaneous linear modular congruence systems using coprime basis inversions.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'CRYPTOGRAPHIC_ARITHMETIC',
+    contentFingerprint: 'advq-002-crt-mod3-2-mod5-3-mod7-2',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-advanced-reasoning',
+    hints: [
+      'N ≡ 2 (mod 3) and N ≡ 2 (mod 7) implies N - 2 is a multiple of LCM(3, 7) = 21.',
+      'Therefore, N = 21k + 2.',
+      'Substitute into mod 5: (21k + 2) ≡ 3 (mod 5) => (1k + 2) ≡ 3 (mod 5) => k ≡ 1 (mod 5).'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option C",
-        "explanation": "101 is a prime number. By Fermat's Little Theorem, if p is prime and gcd(a, p) = 1, then a^(p-1) = 1 (mod p).\nHere p = 101, so 3^100 = 1 (mod 101).\nTh..."
-      }
+    options: [
+      { id: 'A', text: '18' },
+      { id: 'B', text: '21' },
+      { id: 'C', text: '23' },
+      { id: 'D', text: '38' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Modular Arithmetic",
-      "Fermat Theorem"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Recognize that 101 is prime. What does Fermat's Little Theorem state about 3^100 mod 101?",
-      "3^102 = (3^100) * 3^2. Since 3^100 = 1 mod 101, compute 3^2 mod 101."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "1"
-      },
-      {
-        "id": "B",
-        "text": "3"
-      },
-      {
-        "id": "C",
-        "text": "9"
-      },
-      {
-        "id": "D",
-        "text": "27"
-      }
-    ],
-    "correctOptionId": "C",
-    "explanation": "101 is a prime number. By Fermat's Little Theorem, if p is prime and gcd(a, p) = 1, then a^(p-1) = 1 (mod p).\nHere p = 101, so 3^100 = 1 (mod 101).\nTherefore, 3^102 = 3^100 * 3^2 = 1 * 9 = 9 (mod 101). The remainder is 9.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'C'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"C\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"C\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"C\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-292-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option C"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'Notice that N leaves remainder 2 when divided by both 3 and 7: N ≡ 2 (mod 3) and N ≡ 2 (mod 7). Since gcd(3, 7) = 1, N ≡ 2 (mod 21). This means N can be expressed as N = 21k + 2 for some non-negative integer k. Now apply the remaining condition: N ≡ 3 (mod 5). Substituting N = 21k + 2: 21k + 2 ≡ 3 (mod 5) => (21 mod 5)k + 2 ≡ 3 (mod 5) => 1k + 2 ≡ 3 (mod 5) => k ≡ 1 (mod 5). The smallest non-negative integer is k = 1. Therefore, N = 21(1) + 2 = 23. Verification: 23/3 leaves remainder 2; 23/5 leaves remainder 3; 23/7 leaves remainder 2.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 3. Combinatorics: Derangements (Subfactorial) - Answer: A
   {
-    "id": "prep-quant-293",
-    "catalogNumber": 293,
-    "slug": "prep-293-euler-totient-and-units-digit",
-    "title": "Euler Totient & Units Digit",
-    "problemStatement": "Find the last two digits (tens and units place) of 7^2026.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-003',
+    catalogNumber: 188,
+    slug: 'combinatorics-derangements-subfactorial-formula',
+    title: 'Subfactorial Permutations: Complete Derangement of Five Elements',
+    problemStatement: 'Five distinct letters addressed to five distinct recipients are placed randomly into five pre-addressed envelopes, with exactly one letter per envelope. What is the total number of permutations in which NOT A SINGLE letter is placed into its correct envelope?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Derangement formula: D(n) = n! * sum_{k=0}^n [(-1)^k / k!]', 'n = 5'],
+    examples: [{ input: 'Option selection', output: 'Option A (44)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Combinatorics', 'Derangements'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_COMBINATORICS_DERANGEMENT',
+    templateFamily_id: 'ADV_COMBINATORICS',
+    learningObjective: 'Calculate the subfactorial !n representing complete fixed-point-free permutations.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'DISCRETE_PROBABILITY',
+    contentFingerprint: 'advq-003-derangements-5-letters-envelopes',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-nqt-guide',
+    hints: [
+      'The recurrence relation for derangements is D(n) = (n - 1) * [D(n-1) + D(n-2)].',
+      'D(1) = 0, D(2) = 1, D(3) = 2, D(4) = 9.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option C",
-        "explanation": "Last two digits correspond to 7^2026 mod 100.\nEuler's totient phi(100) = 100 * (1 - 1/2) * (1 - 1/5) = 40.\n2026 mod 40 = 26.\nSo 7^2026 = 7^26 mod 100...."
-      }
+    options: [
+      { id: 'A', text: '44' },
+      { id: 'B', text: '48' },
+      { id: 'C', text: '52' },
+      { id: 'D', text: '60' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Euler Totient",
-      "Units Digit"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Finding the last two digits is finding N mod 100. Check the cyclicity of powers of 7 mod 100.",
-      "7^4 = 2401, which leaves a remainder of 1 when divided by 100. Express 2026 as 4*k + r."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "01"
-      },
-      {
-        "id": "B",
-        "text": "07"
-      },
-      {
-        "id": "C",
-        "text": "49"
-      },
-      {
-        "id": "D",
-        "text": "43"
-      }
-    ],
-    "correctOptionId": "C",
-    "explanation": "Last two digits correspond to 7^2026 mod 100.\nEuler's totient phi(100) = 100 * (1 - 1/2) * (1 - 1/5) = 40.\n2026 mod 40 = 26.\nSo 7^2026 = 7^26 mod 100.\nNote 7^4 = 2401 = 1 (mod 100).\n26 = 4 * 6 + 2.\n7^26 = (7^4)^6 * 7^2 = 1^6 * 49 = 49 (mod 100).",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'C'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"C\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"C\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"C\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-293-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option C"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'The number of complete derangements of n elements is given by D(n) = n! * [1 - 1/1! + 1/2! - 1/3! + 1/4! - 1/5!]. For n = 5: D(5) = 120 * [1 - 1 + 1/2 - 1/6 + 1/24 - 1/120] = 120 * [60/120 - 20/120 + 5/120 - 1/120] = 60 - 20 + 5 - 1 = 44. Using the recurrence D(5) = 4 * [D(4) + D(3)] = 4 * [9 + 2] = 4 * 11 = 44.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 4. Bayes' Theorem Medical Diagnostics - Answer: D
   {
-    "id": "prep-quant-294",
-    "catalogNumber": 294,
-    "slug": "prep-294-derangements:-subfactorial-dis",
-    "title": "Derangements: Subfactorial Distribution",
-    "problemStatement": "Five letters are placed into 5 addressed envelopes at random. What is the number of ways such that none of the letters goes into its correct envelope?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-004',
+    catalogNumber: 189,
+    slug: 'bayes-theorem-conditional-probability-base-rate',
+    title: 'Bayesian Posterior Probability and Base Rate Fallacy in Medical Testing',
+    problemStatement: 'A rare network intrusion anomaly affects 1% of all network nodes. An AI anomaly detection tool has a 95% sensitivity (true positive rate: detects anomaly if present with 95% probability) and a 90% specificity (true negative rate: correctly identifies healthy nodes as normal with 90% probability, giving a 10% false positive rate). If the AI alerts on a randomly selected server, what is the posterior probability that the server actually has the anomaly?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['P(A) = 0.01, P(A_c) = 0.99', 'P(Alert|A) = 0.95, P(Alert|A_c) = 0.10'],
+    examples: [{ input: 'Option selection', output: 'Option D (8.76%)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Bayes Theorem', 'Probability'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_BAYES_THEOREM_INTRUSION',
+    templateFamily_id: 'ADV_PROBABILITY',
+    learningObjective: 'Apply Bayes’ Theorem P(A|B) = [P(B|A)*P(A)] / P(B) to counter the base rate fallacy.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'NETWORK_SECURITY',
+    contentFingerprint: 'advq-004-bayes-1pct-base-95pct-sens-90pct-spec',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-tcs-official-nqt',
+    hints: [
+      'Total probability of alert P(Alert) = P(Alert|Anomaly) * P(Anomaly) + P(Alert|Healthy) * P(Healthy).',
+      'Numerator = 0.95 * 0.01 = 0.0095.',
+      'Denominator = 0.0095 + (0.10 * 0.99) = 0.0095 + 0.099 = 0.1085.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "This is a classic derangement problem of n = 5 objects, denoted as !5 or D_5.\nFormula: D_n = n! * sum_{k=0}^n ((-1)^k / k!)\nFor n = 5:\nD_5 = 5! * (1/0..."
-      }
+    options: [
+      { id: 'A', text: '95.00%' },
+      { id: 'B', text: '48.95%' },
+      { id: 'C', text: '12.50%' },
+      { id: 'D', text: '8.76%' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Combinatorics",
-      "Derangements"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "A permutation where no element appears in its original position is a derangement.",
-      "The derangements for n = 1, 2, 3, 4, 5 are 0, 1, 2, 9, 44 respectively."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "44"
-      },
-      {
-        "id": "B",
-        "text": "45"
-      },
-      {
-        "id": "C",
-        "text": "120"
-      },
-      {
-        "id": "D",
-        "text": "36"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "This is a classic derangement problem of n = 5 objects, denoted as !5 or D_5.\nFormula: D_n = n! * sum_{k=0}^n ((-1)^k / k!)\nFor n = 5:\nD_5 = 5! * (1/0! - 1/1! + 1/2! - 1/3! + 1/4! - 1/5!)\nD_5 = 120 * (1 - 1 + 1/2 - 1/6 + 1/24 - 1/120) = 60 - 20 + 5 - 1 = 44.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-294-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'By Bayes’ Theorem: P(Anomaly|Alert) = [P(Alert|Anomaly) * P(Anomaly)] / P(Alert). Prior P(Anomaly) = 0.01, P(Healthy) = 0.99. P(Alert|Anomaly) = 0.95. P(Alert|Healthy) = 1 - 0.90 = 0.10. Total probability of alert P(Alert) = (0.95 * 0.01) + (0.10 * 0.99) = 0.0095 + 0.0990 = 0.1085. Posterior probability = 0.0095 / 0.1085 = 95 / 1085 ≈ 0.087557 ≈ 8.76%. Despite a 95% sensitive detector, the low 1% base rate means that nearly 91% of alerts are false alarms.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 5. Linear Programming / Coordinate Optimization - Answer: B
   {
-    "id": "prep-quant-295",
-    "catalogNumber": 295,
-    "slug": "prep-295-circular-permutations-with-res",
-    "title": "Circular Permutations with Restrictions",
-    "problemStatement": "In how many ways can 6 men and 6 women sit around a circular round table such that men and women alternate?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-005',
+    catalogNumber: 190,
+    slug: 'linear-programming-feasibility-vertex-optimization',
+    title: 'Objective Function Maximization Over Bounded Feasible Convex Polytopes',
+    problemStatement: 'Maximize the objective function Z = 5x + 3y subject to the linear constraints:\n1. 2x + y <= 20\n2. x + 2y <= 16\n3. x >= 0, y >= 0\nWhat is the maximum value of Z achievable within the feasible region?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Standard simplex corner-point theorem on 2D linear programming'],
+    examples: [{ input: 'Option selection', output: 'Option B (52)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Linear Programming', 'Optimization'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_LINEAR_PROGRAMMING',
+    templateFamily_id: 'ADV_OPTIMIZATION',
+    learningObjective: 'Evaluate convex polygon corner vertices to identify the optimal objective value.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'OPERATIONS_RESEARCH',
+    contentFingerprint: 'advq-005-lp-z-5x-3y-2x-y-20-x-2y-16',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-advanced-reasoning',
+    hints: [
+      'Find corner points of feasible region formed by axes and boundary lines:',
+      '(0, 0), (10, 0) from 2x + y = 20, (0, 8) from x + 2y = 16.',
+      'Intersection of 2x + y = 20 and x + 2y = 16: Multiply 1st by 2: 4x + 2y = 40. Subtract 2nd: 3x = 24 -> x = 8, y = 4.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "First, seat the 6 men around the circle to fix the rotational symmetry. Number of ways = (6 - 1)! = 5!.\nBetween the 6 seated men, there are 6 distinct..."
-      }
+    options: [
+      { id: 'A', text: '48' },
+      { id: 'B', text: '52' },
+      { id: 'C', text: '56' },
+      { id: 'D', text: '60' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Permutations",
-      "Circular Permutations"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Fix the positions of one group first to eliminate rotational symmetry.",
-      "Seating 6 men in a circle takes (6-1)! = 5! ways. The 6 spaces for women are now distinct, taking 6! ways."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "5! * 6!"
-      },
-      {
-        "id": "B",
-        "text": "6! * 6!"
-      },
-      {
-        "id": "C",
-        "text": "11!"
-      },
-      {
-        "id": "D",
-        "text": "5! * 5!"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "First, seat the 6 men around the circle to fix the rotational symmetry. Number of ways = (6 - 1)! = 5!.\nBetween the 6 seated men, there are 6 distinct vacant positions.\nSeat the 6 women in these 6 positions in 6! ways.\nTotal ways = 5! * 6! = 120 * 720 = 86,400.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-295-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'By the Fundamental Theorem of Linear Programming, the maximum value of Z occurs at one of the extreme vertices of the convex feasible region. Find the vertices: (1) Origin: (0, 0) -> Z = 0. (2) X-intercept of 2x + y = 20: (10, 0) -> Z = 5(10) + 3(0) = 50. (3) Y-intercept of x + 2y = 16: (0, 8) -> Z = 5(0) + 3(8) = 24. (4) Intersection of 2x + y = 20 and x + 2y = 16: 2(20 - 2x) + x = 16 => 40 - 4x + x = 16 => 3x = 24 => x = 8, y = 4. Test vertex (8, 4): Z = 5(8) + 3(4) = 40 + 12 = 52. Comparing all vertex values {0, 50, 24, 52}, the maximum value is 52.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 6. Data Sufficiency: 3 Statements Prime Determination - Answer: C
   {
-    "id": "prep-quant-296",
-    "catalogNumber": 296,
-    "slug": "prep-296-bayes-theorem:-diagnostic-test",
-    "title": "Bayes Theorem: Diagnostic Test Reliability",
-    "problemStatement": "A rare disease affects 0.1% of the population. A test correctly identifies a diseased person 99% of the time, and gives a false positive 2% of the time. If a randomly selected person tests positive, what is the probability they actually have the disease?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-006',
+    catalogNumber: 191,
+    slug: 'data-sufficiency-three-statements-prime-number',
+    title: 'Advanced Data Sufficiency: Conclusive Prime Number Identification',
+    problemStatement: 'Is positive integer P a prime number?\n\nStatement (1): P leaves remainder 1 when divided by 6.\nStatement (2): P is greater than 20 and less than 35.\nStatement (3): P is not divisible by 5.\n\nWhich combination of statements is sufficient to conclusively determine whether P is prime?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['3-statement advanced data sufficiency'],
+    examples: [{ input: 'Option selection', output: 'Option C (Statements 1, 2, and 3 TOGETHER are sufficient)' }],
+    difficulty: 'HARD',
+    topics: ['Data Sufficiency', 'Prime Numbers', 'Number Theory'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_DATA_SUFFICIENCY_3_STATEMENTS',
+    templateFamily_id: 'ADV_DS',
+    learningObjective: 'Synthesize multiple restrictive modular and interval conditions to isolate unique integer candidates.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'ANALYTICAL_NUMBER_THEORY',
+    contentFingerprint: 'advq-006-ds3-prime-p-mod6-interval-not-div-5',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'Statement 2 limits P to: {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34}.',
+      'Statement 1 requires P = 6k + 1. In this range: 6(4)+1 = 25, 6(5)+1 = 31.',
+      'So P can be 25 (composite) or 31 (prime). Still inconclusive!',
+      'Add Statement 3: P is not divisible by 5. That eliminates 25!'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Let D = diseased, T+ = positive test.\nP(D) = 0.001, P(~D) = 0.999.\nP(T+|D) = 0.99, P(T+|~D) = 0.02.\nBy Bayes' theorem: P(D|T+) = [P(T+|D)*P(D)] / [P(T..."
-      }
+    options: [
+      { id: 'A', text: 'Statements (1) and (2) TOGETHER are sufficient' },
+      { id: 'B', text: 'Statements (2) and (3) TOGETHER are sufficient' },
+      { id: 'C', text: 'Statements (1), (2), and (3) TOGETHER are sufficient' },
+      { id: 'D', text: 'Even all three statements together are NOT sufficient' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Probability",
-      "Bayes Theorem"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Apply Bayes' Theorem. Even with high sensitivity, a low base rate means most positives are false positives.",
-      "Compare true positives (0.001 * 0.99) against total positives (0.001 * 0.99 + 0.999 * 0.02)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "4.7%"
-      },
-      {
-        "id": "B",
-        "text": "99%"
-      },
-      {
-        "id": "C",
-        "text": "49.5%"
-      },
-      {
-        "id": "D",
-        "text": "12.5%"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Let D = diseased, T+ = positive test.\nP(D) = 0.001, P(~D) = 0.999.\nP(T+|D) = 0.99, P(T+|~D) = 0.02.\nBy Bayes' theorem: P(D|T+) = [P(T+|D)*P(D)] / [P(T+|D)*P(D) + P(T+|~D)*P(~D)]\nNumerator = 0.99 * 0.001 = 0.00099.\nDenominator = 0.00099 + (0.02 * 0.999) = 0.00099 + 0.01998 = 0.02097.\nP(D|T+) = 0.00099 / 0.02097 approx 0.0472 (4.72%).",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-296-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'From Statement (2): P ∈ (20, 35). Integers are 21 through 34. Combine with Statement (1): P = 6k + 1. The only integers in this range congruent to 1 mod 6 are 25 and 31. Here, 25 is composite (5 * 5) and 31 is prime. Thus Statements (1) and (2) together leave two possibilities: one composite and one prime (inconclusive). Adding Statement (3): P is not divisible by 5. This eliminates 25, leaving P = 31 as the unique value. Since 31 is prime, we reach a definitive "YES". All three statements together are necessary and sufficient.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 7. Multi-Condition 4-Attribute Matrix Logic Grid - Answer: A
   {
-    "id": "prep-quant-297",
-    "catalogNumber": 297,
-    "slug": "prep-297-coordinate-geometry:-area-of-p",
-    "title": "Coordinate Geometry: Area of Polygon",
-    "problemStatement": "What is the area of a quadrilateral whose vertices taken in order are A(1, 2), B(4, 5), C(7, 3), and D(3, 0)?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-007',
+    catalogNumber: 192,
+    slug: 'complex-matrix-puzzle-four-attribute-matching',
+    title: 'Multi-Condition Constraint Satisfaction: 4-Attribute System Matching',
+    problemStatement: 'Four senior software architects—Arun, Bala, Chitra, and David—specialize in four distinct cloud platforms (AWS, Azure, GCP, OCI) and four programming languages (Go, Rust, Python, Scala), and are deployed in four different innovation hubs (Bengaluru, Hyderabad, Pune, Gurugram).\n1. The architect specializing in Rust is deployed in Pune.\n2. Arun specializes in GCP but is neither deployed in Bengaluru nor codes in Python.\n3. The architect deployed in Bengaluru specializes in Azure and codes in Go.\n4. Chitra codes in Scala and is deployed in Gurugram.\n5. David does not specialize in AWS.\nWhich cloud platform does Bala specialize in, and what language does he code in?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Bijections across Architects, Clouds, Languages, and Cities'],
+    examples: [{ input: 'Option selection', output: 'Option A (Azure; Go)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Reasoning', 'Matrix Puzzles', 'Constraint Satisfaction'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_LOGIC_GRID_4_ATTRIBUTES',
+    templateFamily_id: 'ADV_PUZZLES',
+    learningObjective: 'Resolve multi-variable constraint grids by crossing off mutually exclusive attributes.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ENTERPRISE_DEPLOYMENT',
+    contentFingerprint: 'advq-007-matrix-4attr-arun-bala-chitra-david',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-advanced-reasoning',
+    hints: [
+      'Chitra: Scala, Gurugram. (Clue 4)',
+      'Bengaluru: Azure, Go. (Clue 3)',
+      'Pune: Rust. (Clue 1)',
+      'Since Arun is in GCP and not Bengaluru, Arun is in Hyderabad. And Arun does not code in Python, so Arun must code in what remaining language?'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option B",
-        "explanation": "Apply the Shoelace Formula:\nArea = 1/2 * |(x1 y2 + x2 y3 + x3 y4 + x4 y1) - (y1 x2 + y2 x3 + y3 x4 + y4 x1)|\nDownwards = (1*5 + 4*3 + 7*0 + 3*2) = 5 +..."
-      }
+    options: [
+      { id: 'A', text: 'Azure; Go' },
+      { id: 'B', text: 'AWS; Python' },
+      { id: 'C', text: 'OCI; Rust' },
+      { id: 'D', text: 'GCP; Scala' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Coordinate Geometry",
-      "Shoelace Formula"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Split the quadrilateral into two triangles or apply the shoelace matrix formula.",
-      "Area of parallelogram = base * height."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "16 sq units"
-      },
-      {
-        "id": "B",
-        "text": "18 sq units"
-      },
-      {
-        "id": "C",
-        "text": "20 sq units"
-      },
-      {
-        "id": "D",
-        "text": "14 sq units"
-      }
-    ],
-    "correctOptionId": "B",
-    "explanation": "Apply the Shoelace Formula:\nArea = 1/2 * |(x1 y2 + x2 y3 + x3 y4 + x4 y1) - (y1 x2 + y2 x3 + y3 x4 + y4 x1)|\nDownwards = (1*5 + 4*3 + 7*0 + 3*2) = 5 + 12 + 0 + 6 = 23.\nUpwards = (2*4 + 5*7 + 3*3 + 0*1) = 8 + 35 + 9 + 0 = 52.\nArea = 1/2 * |23 - 52| = 1/2 * 29... wait, let's recalculate accurately:\nPoints: (1,2), (4,5), (7,3), (3,0)\nSum 1: 1*5 + 4*3 + 7*0 + 3*2 = 5 + 12 + 0 + 6 = 23\nSum 2: 2*4 + 5*7 + 3*3 + 0*1 = 8 + 35 + 9 + 0 = 52\nWait, (52-23)/2 = 14.5? Let's check vertices: A(1,1), B(5,1), C(5,5), D(1,5) would be 16.\nLet vertices be (1, 1), (6, 2), (5, 6), (2, 5):\nSum1: 1*2 + 6*6 + 5*5 + 2*1 = 2 + 36 + 25 + 2 = 65\nSum2: 1*6 + 2*5 + 6*2 + 5*1 = 6 + 10 + 12 + 5 = 33\nArea = (65-33)/2 = 16. Let's use vertices (0,0), (6,0), (6,6), (0,6) = 36.\nFor (1,2), (5,2), (6,6), (2,6): Parallelogram with base 4, height 4 = 16.\nLet's verify Option B = 18 for vertices (1, 1), (7, 1), (8, 4), (2, 4) -> Base 6, height 3 = 18 sq units.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'B'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"B\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"B\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"B\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-297-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option B"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'From Clue 4: Chitra = Gurugram, Scala. From Clue 3: Bengaluru architect = Azure, Go. From Clue 1: Pune architect = Rust. Since Gurugram, Bengaluru, and Pune are taken, the fourth city (Hyderabad) has the fourth language (Python). Now match architects: Arun specializes in GCP and is not in Bengaluru (Clue 2). Arun cannot be in Pune (codes in Rust, but Arun does not code in Python? Wait: if Hyderabad has Python, and Arun does not code in Python, Arun cannot be in Hyderabad either? Let us check: Cities are {Bengaluru, Pune, Gurugram, Hyderabad}. Languages are {Go, Rust, Scala, Python}. Since Bengaluru = Go, Pune = Rust, Gurugram = Scala, the remaining city Hyderabad must correspond to Python! But Clue 2 says Arun does not code in Python and is not in Bengaluru. That means Arun must be in Pune or Gurugram. But Chitra is in Gurugram! So Arun must be in Pune! Since Pune architect codes in Rust, Arun codes in Rust and specializes in GCP! Therefore, David is in Hyderabad (Python) or Bengaluru (Go). Since David does not specialize in AWS (Clue 5), David is in OCI/Azure. With Chitra = AWS (Gurugram, Scala), David = OCI (Hyderabad, Python), Bala is the Bengaluru architect who specializes in Azure and codes in Go! Bala = Azure, Go.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 8. Ptolemy's Theorem in Cyclic Quadrilaterals - Answer: D
   {
-    "id": "prep-quant-298",
-    "catalogNumber": 298,
-    "slug": "prep-298-arithmetico-geometric-progress",
-    "title": "Arithmetico-Geometric Progression (AGP)",
-    "problemStatement": "Find the sum to infinity of the series: S = 1 + 2/3 + 3/3^2 + 4/3^3 + ...",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-008',
+    catalogNumber: 193,
+    slug: 'advanced-geometry-ptolemy-theorem-cyclic-diagonal',
+    title: 'Metric Invariants in Cyclic Quadrilaterals via Ptolemy’s Theorem',
+    problemStatement: 'In a cyclic quadrilateral PQRS, the consecutive side lengths are PQ = 4, QR = 6, RS = 5, and SP = 3. If the length of the diagonal PR is exactly 7, what is the length of the other diagonal QS?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Ptolemy’s Theorem: PR * QS = (PQ * RS) + (QR * SP)'],
+    examples: [{ input: 'Option selection', output: 'Option D (38 / 7)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Geometry', 'Ptolemy Theorem'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_GEOMETRY_PTOLEMY',
+    templateFamily_id: 'ADV_GEOMETRY',
+    learningObjective: 'Compute diagonal products of inscribed quadrilaterals using Ptolemy’s identity.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'GEOMETRIC_ANALYSIS',
+    contentFingerprint: 'advq-008-ptolemy-cyclic-4-6-5-3-diag-7',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Ptolemy’s Theorem states that for any cyclic quadrilateral inscribed in a circle:',
+      'PR * QS = (PQ * RS) + (QR * SP).',
+      'Substitute PQ = 4, RS = 5, QR = 6, SP = 3, and PR = 7.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "This is an infinite AGP with a = 1, d = 1, r = 1/3.\nS = 1 + 2/3 + 3/9 + 4/27 + ...\n(1/3)S = 1/3 + 2/9 + 3/27 + ...\nSubtracting the two equations:\n(2/3..."
-      }
+    options: [
+      { id: 'A', text: '32 / 7' },
+      { id: 'B', text: '35 / 7' },
+      { id: 'C', text: '36 / 7' },
+      { id: 'D', text: '38 / 7' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Progressions",
-      "AGP"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Multiply the entire equation by the common ratio (1/3) and subtract it from the original equation.",
-      "(1 - r)S reduces to a simple infinite geometric progression with sum a/(1-r)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "9/4"
-      },
-      {
-        "id": "B",
-        "text": "3/2"
-      },
-      {
-        "id": "C",
-        "text": "4/3"
-      },
-      {
-        "id": "D",
-        "text": "2"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "This is an infinite AGP with a = 1, d = 1, r = 1/3.\nS = 1 + 2/3 + 3/9 + 4/27 + ...\n(1/3)S = 1/3 + 2/9 + 3/27 + ...\nSubtracting the two equations:\n(2/3)S = 1 + 1/3 + 1/9 + 1/27 + ...\nThe RHS is an infinite GP with first term a = 1, ratio r = 1/3:\nRHS = 1 / (1 - 1/3) = 1 / (2/3) = 3/2.\nSo (2/3)S = 3/2 => S = (3/2) * (3/2) = 9/4.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-298-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'By Ptolemy’s Theorem, for any cyclic quadrilateral with vertices in order P-Q-R-S: Product of diagonals = Sum of products of opposite sides. PR * QS = (PQ * RS) + (QR * SP). Substitute the given side lengths: 7 * QS = (4 * 5) + (6 * 3) = 20 + 18 = 38. Therefore, QS = 38 / 7 ≈ 5.43.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 9. Telescoping Series Summation - Answer: B
   {
-    "id": "prep-quant-299",
-    "catalogNumber": 299,
-    "slug": "prep-299-logarithmic-inequalities-and-d",
-    "title": "Logarithmic Inequalities & Domain",
-    "problemStatement": "Solve for x: log_2(x^2 - 4) <= log_2(3x).",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-009',
+    catalogNumber: 194,
+    slug: 'calculus-telescoping-partial-fraction-sum',
+    title: 'Telescoping Series Summation via Partial Fraction Decomposition',
+    problemStatement: 'Evaluate the infinite sum:\nS = sum_{n=1}^{inf} [ 1 / (n * (n + 1) * (n + 2)) ]',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Telescoping decomposition: 1 / [n(n+1)(n+2)] = 1/2 * [1/(n(n+1)) - 1/((n+1)(n+2))]'],
+    examples: [{ input: 'Option selection', output: 'Option B (1/4)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Calculus', 'Infinite Series'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_SERIES_TELESCOPING',
+    templateFamily_id: 'ADV_SERIES',
+    learningObjective: 'Decompose higher-order reciprocal factorials into cancellation cascades.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ANALYTIC_NUMBER_THEORY',
+    contentFingerprint: 'advq-009-telescoping-sum-1-over-n-n1-n2',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-nqt-guide',
+    hints: [
+      'Write the general term as: 1/[n(n+1)(n+2)] = (1/2) * [ ( (n+2) - n ) / (n(n+1)(n+2)) ]',
+      '= (1/2) * [ 1/(n(n+1)) - 1/((n+1)(n+2)) ].',
+      'All intermediate terms cancel out as n -> infinity!'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "1. Domain restrictions:\nx^2 - 4 > 0 => x > 2 or x < -2.\n3x > 0 => x > 0.\nCombining these gives x > 2.\n2. Since base is 2 (> 1), inequality direction i..."
-      }
+    options: [
+      { id: 'A', text: '1 / 6' },
+      { id: 'B', text: '1 / 4' },
+      { id: 'C', text: '1 / 3' },
+      { id: 'D', text: '1 / 2' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Algebra",
-      "Logarithms"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Always establish domain constraints first: both arguments of log_2 must be strictly positive.",
-      "Since base 2 > 1, solve x^2 - 4 <= 3x and intersect the result with x > 2."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "2 < x <= 4"
-      },
-      {
-        "id": "B",
-        "text": "-1 <= x <= 4"
-      },
-      {
-        "id": "C",
-        "text": "x >= 4"
-      },
-      {
-        "id": "D",
-        "text": "0 < x < 2"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "1. Domain restrictions:\nx^2 - 4 > 0 => x > 2 or x < -2.\n3x > 0 => x > 0.\nCombining these gives x > 2.\n2. Since base is 2 (> 1), inequality direction is preserved:\nx^2 - 4 <= 3x => x^2 - 3x - 4 <= 0 => (x - 4)(x + 1) <= 0 => -1 <= x <= 4.\n3. Intersecting with domain x > 2:\n2 < x <= 4.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-299-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'Decompose the general term: a_n = 1 / [n(n+1)(n+2)] = (1/2) * [ 1/(n(n+1)) - 1/((n+1)(n+2)) ]. Let V_n = 1 / [n(n+1)]. Then a_n = (1/2) * [V_n - V_{n+1}]. The sum telescopes: S_N = (1/2) * [(V_1 - V_2) + (V_2 - V_3) + ... + (V_N - V_{N+1})] = (1/2) * [V_1 - V_{N+1}]. As N -> ∞, V_{N+1} -> 0. Therefore: S = (1/2) * V_1 = (1/2) * [1 / (1 * 2)] = (1/2) * (1/2) = 1/4.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 10. Wilson's Theorem Modular Remainder - Answer: C
   {
-    "id": "prep-quant-300",
-    "catalogNumber": 300,
-    "slug": "prep-300-advanced-data-sufficiency:-pro",
-    "title": "Advanced Data Sufficiency: Profit Ratio",
-    "problemStatement": "Question: What is the ratio of cost price to selling price of an article?\nStatement I: The marked price is 40% above the cost price.\nStatement II: A discount of 15% is offered on the marked price.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-010',
+    catalogNumber: 195,
+    slug: 'wilson-theorem-factorial-prime-modulus',
+    title: 'Factorial Residues and Modular Inverses via Wilson’s Theorem',
+    problemStatement: 'What is the remainder when 99! is divided by 101?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['101 is a prime number', 'Wilson’s Theorem: (p - 1)! ≡ -1 ≡ (p - 1) (mod p)'],
+    examples: [{ input: 'Option selection', output: 'Option C (1)' }],
+    difficulty: 'HARD',
+    topics: ['Advanced Quantitative', 'Number Theory', 'Wilson Theorem'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_NUMBER_THEORY_WILSON',
+    templateFamily_id: 'ADV_MODULAR',
+    learningObjective: 'Invert modular congruence terms backward from (p-1)! using Wilson’s Theorem.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'CRYPTOGRAPHIC_ALGEBRA',
+    contentFingerprint: 'advq-010-wilson-99-factorial-mod-101',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-tcs-official-nqt',
+    hints: [
+      'Since 101 is prime, Wilson’s Theorem states: 100! ≡ -1 ≡ 100 (mod 101).',
+      '100! = 100 * 99! ≡ 100 (mod 101).',
+      'Divide both sides by 100 (since gcd(100, 101) = 1).'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "From Statement I: MP = 1.40 * CP. (Not sufficient alone as selling price is unknown).\nFrom Statement II: SP = 0.85 * MP. (Not sufficient alone as cost..."
-      }
+    options: [
+      { id: 'A', text: '100' },
+      { id: 'B', text: '50' },
+      { id: 'C', text: '1' },
+      { id: 'D', text: '0' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Data Sufficiency",
-      "Commercial Math"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Check if either statement alone connects Cost Price directly to Selling Price.",
-      "Statement I links MP to CP; Statement II links SP to MP. Combining them links SP to CP."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Statements I and II together are sufficient, but neither alone is sufficient."
-      },
-      {
-        "id": "B",
-        "text": "Statement I alone is sufficient."
-      },
-      {
-        "id": "C",
-        "text": "Statement II alone is sufficient."
-      },
-      {
-        "id": "D",
-        "text": "Statements I and II together are not sufficient."
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "From Statement I: MP = 1.40 * CP. (Not sufficient alone as selling price is unknown).\nFrom Statement II: SP = 0.85 * MP. (Not sufficient alone as cost price is unknown).\nCombining I & II: SP = 0.85 * (1.40 * CP) = 1.19 * CP.\nTherefore, CP / SP = 1 / 1.19 = 100/119.\nBoth statements together are necessary and sufficient to determine the exact ratio.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-300-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'By Wilson’s Theorem, for any prime p, (p - 1)! ≡ -1 (mod p). Here p = 101, which is prime, so 100! ≡ -1 ≡ 100 (mod 101). Expanding 100!: 100 * 99! ≡ 100 (mod 101). Since gcd(100, 101) = 1, we can divide both sides by 100 (or multiply by the modular inverse of 100, which is 100): 99! ≡ 1 (mod 101). The remainder is 1.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 11. Circular Permutations: Keys on a Ring - Answer: A
   {
-    "id": "prep-quant-301",
-    "catalogNumber": 301,
-    "slug": "prep-301-mensuration:-cone-melted-into-",
-    "title": "Mensuration: Cone Melted into Spheres",
-    "problemStatement": "A solid metallic right circular cone of height 24 cm and base radius 6 cm is melted and recast into small spheres of radius 2 cm each. Find the number of spheres formed.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-011',
+    catalogNumber: 196,
+    slug: 'combinatorics-circular-permutation-symmetry-ring',
+    title: 'Rotational and Reflective Symmetries in Keychain Circular Permutations',
+    problemStatement: 'In how many distinct ways can 8 distinct security keys be arranged on a circular key ring?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Key ring can be flipped over (clockwise and counter-clockwise arrangements are identical)', 'Formula: (n - 1)! / 2'],
+    examples: [{ input: 'Option selection', output: 'Option A (2,520)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Combinatorics', 'Circular Permutations'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_COMBINATORICS_KEYRING',
+    templateFamily_id: 'ADV_COMBINATORICS',
+    learningObjective: 'Differentiate simple circular permutations (n-1)! from reflective symmetric rings (n-1)!/2.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'DISCRETE_ALGEBRA',
+    contentFingerprint: 'advq-011-circular-8-keys-on-ring-flip',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'In a circle without reflection: (n - 1)!.',
+      'Because a key ring can be flipped upside down, clockwise and anti-clockwise orientations are physically indistinguishable: divide by 2.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option C",
-        "explanation": "Volume of cone = (1/3) * pi * r^2 * h = (1/3) * pi * 36 * 24 = 288 * pi cm^3.\nVolume of one sphere = (4/3) * pi * R^3 = (4/3) * pi * 8 = (32/3) * pi c..."
-      }
+    options: [
+      { id: 'A', text: '2,520' },
+      { id: 'B', text: '5,040' },
+      { id: 'C', text: '20,160' },
+      { id: 'D', text: '40,320' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Geometry",
-      "Mensuration"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Equate the total volume of the cone to N times the volume of a single sphere.",
-      "V_cone = (1/3)*pi*r^2*h; V_sphere = (4/3)*pi*R^3."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "18"
-      },
-      {
-        "id": "B",
-        "text": "24"
-      },
-      {
-        "id": "C",
-        "text": "27"
-      },
-      {
-        "id": "D",
-        "text": "36"
-      }
-    ],
-    "correctOptionId": "C",
-    "explanation": "Volume of cone = (1/3) * pi * r^2 * h = (1/3) * pi * 36 * 24 = 288 * pi cm^3.\nVolume of one sphere = (4/3) * pi * R^3 = (4/3) * pi * 8 = (32/3) * pi cm^3.\nNumber of spheres = Volume_cone / Volume_sphere = (288 * pi) / ((32/3) * pi) = 288 * 3 / 32 = 9 * 3 = 27.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'C'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"C\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"C\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"C\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-301-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option C"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'For a circular arrangement where the two faces can be flipped (such as a key ring or necklace of beads), clockwise and counter-clockwise arrangements are identical. Formula: Number of ways = (n - 1)! / 2. For n = 8: (8 - 1)! / 2 = 7! / 2 = 5,040 / 2 = 2,520 distinct arrangements.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 12. Nim-Sum / Combinatorial Game Theory - Answer: D
   {
-    "id": "prep-quant-302",
-    "catalogNumber": 302,
-    "slug": "prep-302-advanced-syllogisms:-only-a-fe",
-    "title": "Advanced Syllogisms: Only a Few Condition",
-    "problemStatement": "Statements:\n1. Only a few routers are switches.\n2. All switches are modems.\nConclusions:\nI. Some routers are not switches.\nII. All modems being routers is a possibility.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-012',
+    catalogNumber: 197,
+    slug: 'combinatorial-game-theory-nim-sum-xor',
+    title: 'Impartial Game Theory: Winning Move via Bitwise Nim-Sum (XOR)',
+    problemStatement: 'In a game of multi-pile Nim, three piles contain 3, 5, and 7 tokens respectively. Two players take turns removing any positive number of tokens from any single pile. The player who takes the last token wins (normal play convention). What is the bitwise Nim-sum (XOR sum) of the initial state, and does the first player have a guaranteed winning strategy?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Bouton’s Theorem: A Nim position is winning for the first player if and only if XOR sum != 0'],
+    examples: [{ input: 'Option selection', output: 'Option D (Nim-sum = 1; Yes, first player can force a win)' }],
+    difficulty: 'HARD',
+    topics: ['Game Theory', 'Bitwise Operations', 'Nim Sum'],
+    sections: ['ADVANCED_QUANT', 'PROGRAMMING'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_GAME_THEORY_NIM_XOR',
+    templateFamily_id: 'ADV_GAMES',
+    learningObjective: 'Compute bitwise XOR sums to evaluate Sprague-Grundy theorem winning/losing states.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ALGORITHMIC_GAMES',
+    contentFingerprint: 'advq-012-nim-sum-3-5-7-xor',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-coding',
+    hints: [
+      'Represent in binary: 3 = 011_2, 5 = 101_2, 7 = 111_2.',
+      'Compute XOR: 3 ^ 5 = 6 (110_2). Then 6 ^ 7 = 1 (001_2).'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "'Only a few A are B' means two things simultaneously: Some A are B AND Some A are not B.\nConclusion I: 'Some routers are not switches' directly follow..."
-      }
+    options: [
+      { id: 'A', text: 'Nim-sum = 0; No, second player forces a win' },
+      { id: 'B', text: 'Nim-sum = 0; Yes, first player forces a win' },
+      { id: 'C', text: 'Nim-sum = 1; No, game is balanced' },
+      { id: 'D', text: 'Nim-sum = 1; Yes, first player can force a win' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Logical Reasoning",
-      "Syllogisms"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Recall that 'Only a few A are B' entails both 'Some A are B' and 'Some A are not B'.",
-      "Test whether drawing a larger Router circle around Modems and Switches violates any statement."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Both conclusion I and conclusion II follow"
-      },
-      {
-        "id": "B",
-        "text": "Only conclusion I follows"
-      },
-      {
-        "id": "C",
-        "text": "Only conclusion II follows"
-      },
-      {
-        "id": "D",
-        "text": "Neither follows"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "'Only a few A are B' means two things simultaneously: Some A are B AND Some A are not B.\nConclusion I: 'Some routers are not switches' directly follows from 'Only a few routers are switches'.\nConclusion II: Can all modems be inside routers? Yes, routers can encompass all switches and modems without violating 'Some routers are not switches'. Thus, both I and II follow.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-302-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'By Bouton’s Theorem for the game of Nim, a position is a winning position (P-position vs N-position) if and only if the bitwise XOR sum (Nim-sum) of the pile sizes is non-zero. Initial state: 3 ⊕ 5 ⊕ 7: 3 = 011₂, 5 = 101₂, 7 = 111₂. 3 ⊕ 5 = 6 (110₂). 6 ⊕ 7 = 1 (001₂). Since the Nim-sum is 1 (non-zero), the first player has a guaranteed winning strategy by reducing any pile to make the total XOR sum equal to 0 (for example, by removing 1 token from the pile of 3 or 5 or 7).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 13. Vieta's Formulas Cubic in GP - Answer: B
   {
-    "id": "prep-quant-303",
-    "catalogNumber": 303,
-    "slug": "prep-303-cryptarithmetic-addition",
-    "title": "Cryptarithmetic Addition",
-    "problemStatement": "In the cryptarithmetic addition problem SEND + MORE = MONEY, where each letter represents a distinct digit from 0 to 9, what digit does 'M' represent?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-013',
+    catalogNumber: 198,
+    slug: 'polynomial-vieta-cubic-roots-geometric-progression',
+    title: 'Cubic Polynomial Root Invariants Under Geometric Progression Constraint',
+    problemStatement: 'The three roots of the cubic equation x³ - 14x² + kx - 64 = 0 form a geometric progression (GP). What is the value of the real coefficient k?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Roots are a/r, a, ar with product a^3 = 64'],
+    examples: [{ input: 'Option selection', output: 'Option B (56)' }],
+    difficulty: 'HARD',
+    topics: ['Algebra', 'Polynomials', 'Vieta Formulas'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_ALGEBRA_VIETA_CUBIC',
+    templateFamily_id: 'ADV_POLYNOMIALS',
+    learningObjective: 'Utilize symmetric Vieta relations correlating roots in geometric progression.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ALGEBRAIC_THEORY',
+    contentFingerprint: 'advq-013-cubic-roots-gp-x3-14x2-kx-64',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-advanced-reasoning',
+    hints: [
+      'Let roots be a/r, a, ar.',
+      'By Vieta’s formulas: Product of roots = (a/r) * a * (ar) = a³ = 64 => a = 4.',
+      'Sum of roots = a/r + a + ar = 14 => 4/r + 4 + 4r = 14 => 4(r + 1/r) = 10 => r + 1/r = 5/2.',
+      'k is the sum of pairwise products: k = (a/r)*a + a*(ar) + (a/r)*(ar) = a²(1/r + r + 1).'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "The sum of two 4-digit numbers (SEND + MORE) yields a 5-digit number (MONEY).\nThe maximum carryover from the thousands column is 1 (even 9999 + 9999 =..."
-      }
+    options: [
+      { id: 'A', text: '48' },
+      { id: 'B', text: '56' },
+      { id: 'C', text: '62' },
+      { id: 'D', text: '70' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Cryptarithmetic",
-      "Problem Solving"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "What is the maximum sum of two single-digit numbers plus a carryover?",
-      "Two 4-digit numbers can sum to at most 9999 + 9999 = 19998, so the fifth digit M must be 1."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "1"
-      },
-      {
-        "id": "B",
-        "text": "2"
-      },
-      {
-        "id": "C",
-        "text": "9"
-      },
-      {
-        "id": "D",
-        "text": "0"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "The sum of two 4-digit numbers (SEND + MORE) yields a 5-digit number (MONEY).\nThe maximum carryover from the thousands column is 1 (even 9999 + 9999 = 19998).\nTherefore, the leftmost digit of the sum, M, must be 1.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-303-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'Let the roots in GP be a/r, a, and ar. (1) Product of roots: (a/r) * a * (ar) = a³ = -(-64) = 64 => a = 4. (2) Sum of roots: a/r + a + ar = 14 => 4(1/r + 1 + r) = 14 => 1/r + r = (14/4) - 1 = 7/2 - 1 = 5/2. (Solving gives r = 2 or r = 1/2; the roots are 2, 4, 8). (3) The coefficient k is the sum of pairwise products of the roots: k = (2 * 4) + (4 * 8) + (2 * 8) = 8 + 32 + 16 = 56.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 14. Birthday Paradox Collision Probability - Answer: C
   {
-    "id": "prep-quant-304",
-    "catalogNumber": 304,
-    "slug": "prep-304-combinatorics:-distribution-of",
-    "title": "Combinatorics: Distribution of Identical Items",
-    "problemStatement": "In how many ways can 10 identical chocolates be distributed among 3 children such that each child receives at least 1 chocolate?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-014',
+    catalogNumber: 199,
+    slug: 'cryptographic-hash-collision-birthday-bound',
+    title: 'Cryptographic Hash Collision Estimation via Birthday Paradox Approximation',
+    problemStatement: 'In an insecure truncated 16-bit cryptographic hash function, the total space of distinct hash outputs is M = 2¹⁶ = 65,536. Approximately how many randomly generated messages must an attacker hash to achieve a >= 50% probability of finding at least one hash collision (two distinct messages yielding identical hashes)?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Birthday paradox approximation formula: n ≈ sqrt(2 * M * ln(2)) ≈ 1.1774 * sqrt(M)'],
+    examples: [{ input: 'Option selection', output: 'Option C (301 messages)' }],
+    difficulty: 'HARD',
+    topics: ['Probability', 'Cryptography', 'Birthday Paradox'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_PROBABILITY_BIRTHDAY_COLLISION',
+    templateFamily_id: 'ADV_PROBABILITY',
+    learningObjective: 'Apply the square-root birthday bound to estimate cryptographic collision risks.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'CYBERSECURITY_CRYPTOGRAPHY',
+    contentFingerprint: 'advq-014-birthday-paradox-16bit-hash-65536',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-tcs-official-nqt',
+    hints: [
+      'The number of trials n to reach 50% collision probability is approximated by n ≈ 1.177 * sqrt(M).',
+      'sqrt(65,536) = 256.',
+      'Multiply 1.1774 * 256 ≈ 301.4.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Using the Stars and Bars theorem for positive integers (each child >= 1):\nFormula: C(n - 1, k - 1), where n = 10 items, k = 3 children.\nWays = C(10 - ..."
-      }
+    options: [
+      { id: 'A', text: '128 messages' },
+      { id: 'B', text: '256 messages' },
+      { id: 'C', text: '301 messages' },
+      { id: 'D', text: '512 messages' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Combinatorics",
-      "Stars and Bars"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Give 1 chocolate to each child first, then distribute the remaining 7 among 3 children.",
-      "Alternatively, use the positive integer formula C(n-1, k-1)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "36"
-      },
-      {
-        "id": "B",
-        "text": "45"
-      },
-      {
-        "id": "C",
-        "text": "66"
-      },
-      {
-        "id": "D",
-        "text": "28"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Using the Stars and Bars theorem for positive integers (each child >= 1):\nFormula: C(n - 1, k - 1), where n = 10 items, k = 3 children.\nWays = C(10 - 1, 3 - 1) = C(9, 2) = (9 * 8) / (2 * 1) = 36.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-304-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'From the Birthday Paradox mathematical formulation, the number of samples n needed to obtain collision probability p in an output space of size M is: n ≈ √(2 * M * ln(1 / (1 - p))). For p = 0.5: n ≈ √(2 * ln(2) * M) ≈ √(1.3863 * 65536) = √(90852.8) ≈ 301.4 messages. An attacker needs approximately 301 messages—substantially fewer than the 32,768 messages intuition might suggest.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 15. Probability: Random Walk Absorption - Answer: A
   {
-    "id": "prep-quant-305",
-    "catalogNumber": 305,
-    "slug": "prep-305-relative-speed:-circular-track",
-    "title": "Relative Speed: Circular Track Meeting Points",
-    "problemStatement": "Two runners A and B run along a circular track of circumference 600 m starting simultaneously from the same point in opposite directions at speeds of 15 m/s and 25 m/s respectively. How many distinct meeting points are there on the track?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-015',
+    catalogNumber: 200,
+    slug: 'stochastic-processes-gamblers-ruin-absorption',
+    title: 'Markov Chains: Absorption Probability in One-Dimensional Random Walks',
+    problemStatement: 'An algorithmic trading bot starts with a capital of ₹30,000. In each trade cycle, the bot either gains ₹10,000 with probability p = 0.5 or loses ₹10,000 with probability q = 0.5. The bot stops trading if its capital reaches ₹50,000 (target profit) or ₹0 (bankruptcy). What is the probability that the bot reaches its target of ₹50,000 before going bankrupt?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Symmetric Gambler’s Ruin: P_i = i / N', 'Initial capital i = 3 units, Target N = 5 units'],
+    examples: [{ input: 'Option selection', output: 'Option A (3/5 = 60%)' }],
+    difficulty: 'HARD',
+    topics: ['Probability', 'Markov Chains', 'Gambler Ruin'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_PROBABILITY_GAMBLERS_RUIN',
+    templateFamily_id: 'ADV_PROBABILITY',
+    learningObjective: 'Calculate absorption probabilities for fair (p=0.5) discrete random walk state transitions.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'QUANT_TRADING',
+    contentFingerprint: 'advq-015-gamblers-ruin-30k-to-50k-or-0',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-coding',
+    hints: [
+      'In a fair (symmetric) Gambler’s Ruin random walk where step size = 10,000:',
+      'Starting units i = 3, Target units N = 5.',
+      'Absorption probability P_i = i / N.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Ratio of speeds: S_A : S_B = 15 : 25 = 3 : 5 (in simplest integer form a : b with gcd(a, b) = 1).\nWhen two bodies move in opposite directions on a cir..."
-      }
+    options: [
+      { id: 'A', text: '3 / 5 (60.0%)' },
+      { id: 'B', text: '1 / 2 (50.0%)' },
+      { id: 'C', text: '2 / 5 (40.0%)' },
+      { id: 'D', text: '4 / 5 (80.0%)' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Speed Time Distance",
-      "Circular Track"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Reduce the speed ratio to its lowest coprime integer form a : b.",
-      "For opposite directions, the number of distinct meeting points on a circle is a + b."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "8"
-      },
-      {
-        "id": "B",
-        "text": "4"
-      },
-      {
-        "id": "C",
-        "text": "5"
-      },
-      {
-        "id": "D",
-        "text": "3"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Ratio of speeds: S_A : S_B = 15 : 25 = 3 : 5 (in simplest integer form a : b with gcd(a, b) = 1).\nWhen two bodies move in opposite directions on a circular track, the number of distinct meeting points is (a + b).\nHere a = 3, b = 5, so distinct meeting points = 3 + 5 = 8 points.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-305-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'This problem maps directly to the classical Gambler’s Ruin problem. With steps of ₹10,000: Initial state i = 3, Target boundary N = 5, Ruin boundary = 0. Since the game is fair (probability of win p = probability of loss q = 0.5), the probability of reaching N before 0 is given by the linear relation: P_i = i / N = 3 / 5 = 0.60 (60%).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 16. Determinant of 3x3 Trigonometric Matrix - Answer: D
   {
-    "id": "prep-quant-306",
-    "catalogNumber": 306,
-    "slug": "prep-306-remainder-of-large-power:-wils",
-    "title": "Remainder of Large Power: Wilson Theorem Variant",
-    "problemStatement": "Find the remainder when 98! is divided by 101.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-016',
+    catalogNumber: 201,
+    slug: 'linear-algebra-matrix-determinant-trigonometric',
+    title: 'Linear Algebra: Invariant Determinant of a 3x3 Orthogonal-Style Matrix',
+    problemStatement: 'Evaluate the determinant of the 3x3 matrix:\n\n| cos(θ)   -sin(θ)   0 |\n| sin(θ)    cos(θ)   0 |\n|   0         0      1 |',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Standard 3D rotation matrix around the Z-axis'],
+    examples: [{ input: 'Option selection', output: 'Option D (1 for all real values of θ)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Linear Algebra', 'Matrices and Determinants'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_LINEAR_ALGEBRA_DETERMINANT',
+    templateFamily_id: 'ADV_MATRICES',
+    learningObjective: 'Expand 3x3 determinants along sparse rows and apply Pythagorean trigonometric identities.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'COMPUTER_GRAPHICS',
+    contentFingerprint: 'advq-016-determinant-rotation-matrix-cos-sin',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Expand the determinant along the third row (0, 0, 1):',
+      'det(A) = 1 * [ cos(theta)*cos(theta) - (-sin(theta)*sin(theta)) ].',
+      'cos²(theta) + sin²(theta) = 1.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "101 is prime. By Wilson's Theorem, (p - 1)! = -1 = 100 (mod p).\n100! = 100 (mod 101).\nAlso 100! = 100 * 99 * 98! = (-1) * (-2) * 98! = 2 * 98! (mod 10..."
-      }
+    options: [
+      { id: 'A', text: '0' },
+      { id: 'B', text: 'cos(2θ)' },
+      { id: 'C', text: 'sin(2θ)' },
+      { id: 'D', text: '1 for all real values of θ' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Number Theory",
-      "Remainders"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Use Wilson's Theorem: (p-1)! = -1 mod p for prime p.",
-      "Express 100! as 100 * 99 * 98! and substitute -1 and -2 modulo 101."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "50"
-      },
-      {
-        "id": "B",
-        "text": "51"
-      },
-      {
-        "id": "C",
-        "text": "1"
-      },
-      {
-        "id": "D",
-        "text": "100"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "101 is prime. By Wilson's Theorem, (p - 1)! = -1 = 100 (mod p).\n100! = 100 (mod 101).\nAlso 100! = 100 * 99 * 98! = (-1) * (-2) * 98! = 2 * 98! (mod 101).\nSo 2 * 98! = -1 = 100 (mod 101).\nDividing both sides by 2 (since gcd(2, 101) = 1): 98! = 50 (mod 101). The remainder is 50.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-306-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'Expanding along the 3rd row: det(A) = 0 - 0 + 1 * [cos(θ) * cos(θ) - (-sin(θ) * sin(θ))] = 1 * [cos²(θ) + sin²(θ)] = 1. This matrix represents an orthogonal 3D spatial rotation around the Z-axis, whose determinant is always identically 1.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 17. Combinatorics: Principle of Inclusion-Exclusion (3 Sets) - Answer: B
   {
-    "id": "prep-quant-307",
-    "catalogNumber": 307,
-    "slug": "prep-307-probability-of-dice-sum-with-r",
-    "title": "Probability of Dice Sum with Restrictions",
-    "problemStatement": "Three fair six-sided dice are rolled simultaneously. What is the probability that the sum of the numbers shown is exactly 10?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-017',
+    catalogNumber: 202,
+    slug: 'set-theory-principle-inclusion-exclusion-surveys',
+    title: 'Cardinality of Union Over Three Sets with Dual Disjoint Constraints',
+    problemStatement: 'In an engineering cohort of 150 candidates:\n• 70 know Python, 60 know Java, 50 know C++.\n• 25 know both Python and Java, 20 know both Python and C++, 15 know both Java and C++.\n• 10 know all three languages.\nHow many candidates in the cohort know AT LEAST ONE of these three programming languages?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Inclusion-Exclusion Principle: |A ∪ B ∪ C| = Σ|A| - Σ|A ∩ B| + |A ∩ B ∩ C|'],
+    examples: [{ input: 'Option selection', output: 'Option B (130)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Set Theory', 'Inclusion Exclusion Principle'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_SET_THEORY_PIE',
+    templateFamily_id: 'ADV_SETS',
+    learningObjective: 'Apply the three-set principle of inclusion-exclusion to compute union cardinality.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'SKILLS_ASSESSMENT',
+    contentFingerprint: 'advq-017-pie-150candidates-70-60-50',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      '|P ∪ J ∪ C| = (|P| + |J| + |C|) - (|P ∩ J| + |P ∩ C| + |J ∩ C|) + |P ∩ J ∩ C|.',
+      'Sum singles = 70 + 60 + 50 = 180.',
+      'Sum pairs = 25 + 20 + 15 = 60.',
+      'Triple = 10.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Total outcomes = 6^3 = 216.\nNumber of ways to get sum 10 with 3 dice (1 <= d_i <= 6):\nCoefficient of x^10 in (x + x^2 + ... + x^6)^3.\nPartitions of 10..."
-      }
+    options: [
+      { id: 'A', text: '120' },
+      { id: 'B', text: '130' },
+      { id: 'C', text: '140' },
+      { id: 'D', text: '150' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Probability",
-      "Generating Functions"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "List the unique partitions of 10 into 3 integers from 1 to 6 and count permutations for each.",
-      "The partitions are {6,3,1}, {6,2,2}, {5,4,1}, {5,3,2}, {4,4,2}, {4,3,3}."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "27/216"
-      },
-      {
-        "id": "B",
-        "text": "25/216"
-      },
-      {
-        "id": "C",
-        "text": "1/8"
-      },
-      {
-        "id": "D",
-        "text": "21/216"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Total outcomes = 6^3 = 216.\nNumber of ways to get sum 10 with 3 dice (1 <= d_i <= 6):\nCoefficient of x^10 in (x + x^2 + ... + x^6)^3.\nPartitions of 10 into 3 parts between 1 and 6:\n(6,3,1): 3! = 6\n(6,2,2): 3!/2! = 3\n(5,4,1): 3! = 6\n(5,3,2): 3! = 6\n(4,4,2): 3!/2! = 3\n(4,3,3): 3!/2! = 3\nTotal favorable outcomes = 6 + 3 + 6 + 6 + 3 + 3 = 27.\nProbability = 27 / 216 = 1/8.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-307-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'By the Principle of Inclusion-Exclusion for three sets: |P ∪ J ∪ C| = (|P| + |J| + |C|) - (|P ∩ J| + |P ∩ C| + |J ∩ C|) + |P ∩ J ∩ C| = (70 + 60 + 50) - (25 + 20 + 15) + 10 = 180 - 60 + 10 = 130 candidates know at least one programming language.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 18. Triangle Centers: Coordinate Geometry - Answer: C
   {
-    "id": "prep-quant-308",
-    "catalogNumber": 308,
-    "slug": "prep-308-multi-variable-seating-arrange",
-    "title": "Multi-variable Seating Arrangement Logic",
-    "problemStatement": "Eight persons A, B, C, D, E, F, G, and H sit around a square table, two on each side. A sits second to the left of B. B sits on a corner. C sits opposite to A. If D is an immediate neighbor of both B and C, which side does D sit on?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-018',
+    catalogNumber: 203,
+    slug: 'coordinate-geometry-orthocenter-right-triangle',
+    title: 'Orthocenter Coordinate Invariants in Cartesian Planar Triangles',
+    problemStatement: 'In the Cartesian plane, a triangle has vertices at O(0, 0), A(8, 0), and B(0, 6). What are the exact coordinates of the orthocenter (point of intersection of altitudes) of this triangle?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Right-angled triangle at the origin (0, 0)'],
+    examples: [{ input: 'Option selection', output: 'Option C ((0, 0))' }],
+    difficulty: 'EASY',
+    topics: ['Coordinate Geometry', 'Triangle Centers'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_COORDINATE_ORTHOCENTER',
+    templateFamily_id: 'ADV_GEOMETRY',
+    learningObjective: 'Recognize that the orthocenter of any right-angled triangle coincides exactly with the vertex containing the right angle.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'ANALYTIC_GEOMETRY',
+    contentFingerprint: 'advq-018-orthocenter-right-triangle-00-80-06',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Vertex O is at (0, 0), A is at (8, 0) on the x-axis, B is at (0, 6) on the y-axis.',
+      'The x-axis and y-axis are perpendicular, forming a 90° right angle at O(0, 0).',
+      'Where does the orthocenter of a right-angled triangle lie?'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Since D is an immediate neighbor of both B and C, D must be positioned strictly between B and C along the perimeter."
-      }
+    options: [
+      { id: 'A', text: '(4, 3)' },
+      { id: 'B', text: '(8/3, 2)' },
+      { id: 'C', text: '(0, 0)' },
+      { id: 'D', text: '(2, 2)' }
     ],
-    "difficulty": "HARD",
-    "topics": [
-      "Logical Reasoning",
-      "Seating Arrangement"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Focus on the adjacency condition: an element adjacent to two others must sit between them.",
-      "D is directly flanked by B on one side and C on the other."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Between B and C"
-      },
-      {
-        "id": "B",
-        "text": "Opposite to B"
-      },
-      {
-        "id": "C",
-        "text": "Same side as A"
-      },
-      {
-        "id": "D",
-        "text": "Cannot be determined"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Since D is an immediate neighbor of both B and C, D must be positioned strictly between B and C along the perimeter.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-308-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'The legs of the triangle lie directly along the x-axis (OA) and the y-axis (OB). Since the coordinate axes meet at 90° at the origin (0, 0), triangle OAB is a right-angled triangle with the right angle at vertex O. In any right-angled triangle, the altitude from A to OB is the segment AO, and the altitude from B to OA is the segment BO. These two altitudes intersect at the vertex containing the right angle, which is the origin (0, 0). Thus, the orthocenter is (0, 0).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 19. Formal Truth-Table Tautology - Answer: A
   {
-    "id": "prep-quant-309",
-    "catalogNumber": 309,
-    "slug": "prep-309-work-rate:-efficiency-multipli",
-    "title": "Work Rate: Efficiency Multipliers & Leaves",
-    "problemStatement": "A is 50% more efficient than B, and C is half as efficient as A. A and B together can complete a project in 12 days. How long will A, B, and C working together take to complete the project?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
+    id: 'advq-019',
+    catalogNumber: 204,
+    slug: 'mathematical-logic-propositional-tautology',
+    title: 'Propositional Logic: Tautology and Material Implication Equivalence',
+    problemStatement: 'Which of the following compound propositions is a TAUTOLOGY (true under all truth-value assignments of its component propositions p and q)?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Truth table verification of propositional logic'],
+    examples: [{ input: 'Option selection', output: 'Option A ((p ∧ (p → q)) → q)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Mathematical Logic', 'Propositional Calculus'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_LOGIC_TAUTOLOGY',
+    templateFamily_id: 'ADV_LOGIC',
+    learningObjective: 'Validate foundational deductive inference rules (Modus Ponens) through truth-table invariance.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'DISCRETE_MATHEMATICS',
+    contentFingerprint: 'advq-019-tautology-modus-ponens-p-and-p-implies-q',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-nqt-guide',
+    hints: [
+      'Recall Modus Ponens: If p is true, and p implies q, then q must be true.',
+      'Examine: [p ∧ (p → q)] → q.'
     ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Let B's efficiency = 2 units/day.\nA's efficiency = 1.5 * 2 = 3 units/day.\nC's efficiency = 3 / 2 = 1.5 units/day.\nCombined rate of (A + B) = 3 + 2 = 5..."
-      }
+    options: [
+      { id: 'A', text: '(p ∧ (p → q)) → q' },
+      { id: 'B', text: '(p ∨ q) → (p ∧ q)' },
+      { id: 'C', text: 'p ∧ (p ∨ q)' },
+      { id: 'D', text: '(p → q) ∧ (q → p)' }
     ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Time and Work",
-      "Efficiency"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Assign concrete integer units to efficiency rates to avoid fraction errors.",
-      "Total work = (Efficiency of A + B) * 12."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "9.6 days"
-      },
-      {
-        "id": "B",
-        "text": "8 days"
-      },
-      {
-        "id": "C",
-        "text": "10 days"
-      },
-      {
-        "id": "D",
-        "text": "7.5 days"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Let B's efficiency = 2 units/day.\nA's efficiency = 1.5 * 2 = 3 units/day.\nC's efficiency = 3 / 2 = 1.5 units/day.\nCombined rate of (A + B) = 3 + 2 = 5 units/day.\nTotal work = rate * time = 5 * 12 = 60 units.\nCombined rate of (A + B + C) = 3 + 2 + 1.5 = 6.5 units/day.\nTime taken = 60 / 6.5 = 120 / 13 approx 9.23 days... wait:\nIf B = 4 units/day, A = 6 units/day, C = 3 units/day:\nA + B = 10 units/day -> Total work = 10 * 12 = 120 units.\nA + B + C = 6 + 4 + 3 = 13 units/day -> 120 / 13 = 9.23 days.\nWait, let B's efficiency be 2, A = 3. C is 50% as efficient as B => C = 1.\nThen A + B + C = 6 units/day. Total work = 5 * 12 = 60 units -> 60 / 6 = 10 days.\nIf C is half as efficient as (A + B): C = 2.5 -> rate = 7.5 -> 60 / 7.5 = 8 days.\nLet C's efficiency be 1.25 -> 60 / 6.25 = 9.6 days.\nLet C work at 1.25 units/day: Total = 6.25, 60 / 6.25 = 9.6 days.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-309-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
+    explanation: 'Option A represents the classical formal inference rule Modus Ponens expressed as a conditional proposition: [p ∧ (p → q)] → q. Testing truth values: (1) If p = T, q = T: [T ∧ T] → T is T. (2) If p = T, q = F: [T ∧ F] → F = F → F is T. (3) If p = F, q = T: [F ∧ T] → T = F → T is T. (4) If p = F, q = F: [F ∧ T] → F = F → F is T. Since it evaluates to True across all four truth assignments, it is an unconditional tautology.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 20. Mensuration: Sphere Inscribed in Cube Ratio - Answer: D
   {
-    "id": "prep-quant-310",
-    "catalogNumber": 310,
-    "slug": "prep-310-calendar:-day-of-the-week-in-h",
-    "title": "Calendar: Day of the Week in Historical Century",
-    "problemStatement": "What was the day of the week on 15th August 1947?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "1. Period up to 1600 years: 0 odd days.\n2. Period 1601 to 1900 (300 years): 1 odd day.\n3. Period 1901 to 1946 (46 years): 46 / 4 = 11 leap years, 35 o..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Calendar",
-      "Odd Days"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Count odd days in centuries (1600 = 0, 300 years = 1 odd day), completed years (46), and months of 1947.",
-      "5 odd days corresponds to Friday."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Friday"
-      },
-      {
-        "id": "B",
-        "text": "Thursday"
-      },
-      {
-        "id": "C",
-        "text": "Saturday"
-      },
-      {
-        "id": "D",
-        "text": "Wednesday"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "1. Period up to 1600 years: 0 odd days.\n2. Period 1601 to 1900 (300 years): 1 odd day.\n3. Period 1901 to 1946 (46 years): 46 / 4 = 11 leap years, 35 ordinary years.\nOdd days = 11 * 2 + 35 * 1 = 22 + 35 = 57 = 1 odd day (57 mod 7 = 1).\n4. Year 1947 (up to Aug 15):\nJan (31) = 3\nFeb (28) = 0\nMar (31) = 3\nApr (30) = 2\nMay (31) = 3\nJun (30) = 2\nJul (31) = 3\nAug 15 = 15 = 1\nSum = 3 + 0 + 3 + 2 + 3 + 2 + 3 + 1 = 17 = 3 odd days (17 mod 7 = 3).\nTotal odd days = 1 (from 1900) + 1 (from 46 years) + 3 (from 1947) = 5 odd days.\nDay corresponding to 5 odd days is Friday (0=Sun, 1=Mon, ..., 5=Fri).",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-310-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-311",
-    "catalogNumber": 311,
-    "slug": "prep-311-clocks:-angle-between-hands-at",
-    "title": "Clocks: Angle Between Hands at Non-Standard Time",
-    "problemStatement": "Find the acute angle between the hour hand and minute hand of a clock at 3:40.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Formula: Angle = |30*H - (11/2)*M|\nAt 3:40: H = 3, M = 40.\nAngle = |30*3 - (11/2)*40| = |90 - 220| = |-130| = 130 degrees."
-      }
-    ],
-    "difficulty": "EASY",
-    "topics": [
-      "Clocks",
-      "Speed of Hands"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 1,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Use the angle formula |30*H - 5.5*M|.",
-      "Substitute H = 3 and M = 40 into the formula."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "130\u00b0"
-      },
-      {
-        "id": "B",
-        "text": "140\u00b0"
-      },
-      {
-        "id": "C",
-        "text": "125\u00b0"
-      },
-      {
-        "id": "D",
-        "text": "135\u00b0"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Formula: Angle = |30*H - (11/2)*M|\nAt 3:40: H = 3, M = 40.\nAngle = |30*3 - (11/2)*40| = |90 - 220| = |-130| = 130 degrees.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-311-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-312",
-    "catalogNumber": 312,
-    "slug": "prep-312-probability:-non-transitive-di",
-    "title": "Probability: Non-transitive Dice and Win Expectation",
-    "problemStatement": "A bag contains 4 red balls and 6 black balls. Three balls are drawn at random without replacement. What is the probability that at least two balls are black?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Total ways to choose 3 balls from 10: C(10, 3) = (10*9*8)/(3*2*1) = 120.\nCase 1: Exactly 2 black, 1 red = C(6, 2) * C(4, 1) = 15 * 4 = 60.\nCase 2: All..."
-      }
-    ],
-    "difficulty": "HARD",
-    "topics": [
-      "Probability",
-      "Games"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Count the ways for exactly 2 black balls and exactly 3 black balls.",
-      "Sum C(6,2)*C(4,1) + C(6,3) and divide by C(10,3)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "2/3"
-      },
-      {
-        "id": "B",
-        "text": "11/15"
-      },
-      {
-        "id": "C",
-        "text": "1/2"
-      },
-      {
-        "id": "D",
-        "text": "17/30"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Total ways to choose 3 balls from 10: C(10, 3) = (10*9*8)/(3*2*1) = 120.\nCase 1: Exactly 2 black, 1 red = C(6, 2) * C(4, 1) = 15 * 4 = 60.\nCase 2: All 3 black = C(6, 3) = 20.\nFavorable outcomes = 60 + 20 = 80.\nProbability = 80 / 120 = 2/3.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-312-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-313",
-    "catalogNumber": 313,
-    "slug": "prep-313-coordinate-geometry:-perpendic",
-    "title": "Coordinate Geometry: Perpendicular Distance Between Lines",
-    "problemStatement": "Find the perpendicular distance between the parallel lines 3x + 4y - 9 = 0 and 6x + 8y + 12 = 0.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Multiply the first line by 2 to equate coefficients: 6x + 8y - 18 = 0.\nSecond line: 6x + 8y + 12 = 0.\nDistance d = |c1 - c2| / sqrt(a^2 + b^2)\nd = |-1..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Geometry",
-      "Lines"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Standardize the coefficients of x and y so they are identical in both equations.",
-      "Distance formula between parallel lines ax+by+c1=0 and ax+by+c2=0 is |c1-c2|/sqrt(a^2+b^2)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "3 units"
-      },
-      {
-        "id": "B",
-        "text": "2.5 units"
-      },
-      {
-        "id": "C",
-        "text": "1.5 units"
-      },
-      {
-        "id": "D",
-        "text": "2 units"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Multiply the first line by 2 to equate coefficients: 6x + 8y - 18 = 0.\nSecond line: 6x + 8y + 12 = 0.\nDistance d = |c1 - c2| / sqrt(a^2 + b^2)\nd = |-18 - 12| / sqrt(6^2 + 8^2) = |-30| / sqrt(36 + 64) = 30 / 10 = 3 units.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-313-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-314",
-    "catalogNumber": 314,
-    "slug": "prep-314-mixtures:-successive-replaceme",
-    "title": "Mixtures: Successive Replacement and Residual Purity",
-    "problemStatement": "A vessel contains 80 litres of pure milk. 8 litres are drawn out and replaced with water. This process is repeated 2 more times (total 3 operations). How much pure milk remains in the vessel?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Formula for residual liquid after n operations:\nRemaining Pure Liquid = Initial * (1 - x / V)^n\nHere Initial = 80, x = 8, V = 80, n = 3.\nRemaining = 8..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Alligations",
-      "Mixtures"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Apply the residual concentration formula V_final = V_initial * (1 - x/V)^n.",
-      "Each step leaves 9/10th of the previous pure liquid. Calculate 80 * (0.9)^3."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "58.32 litres"
-      },
-      {
-        "id": "B",
-        "text": "56.40 litres"
-      },
-      {
-        "id": "C",
-        "text": "64.80 litres"
-      },
-      {
-        "id": "D",
-        "text": "60.00 litres"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Formula for residual liquid after n operations:\nRemaining Pure Liquid = Initial * (1 - x / V)^n\nHere Initial = 80, x = 8, V = 80, n = 3.\nRemaining = 80 * (1 - 8/80)^3 = 80 * (1 - 1/10)^3 = 80 * (0.9)^3 = 80 * 0.729 = 58.32 litres.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-314-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-315",
-    "catalogNumber": 315,
-    "slug": "prep-315-arithmetic-progression:-sum-of",
-    "title": "Arithmetic Progression: Sum of Odd Terms",
-    "problemStatement": "An AP has 21 terms. The sum of the three middle terms is 129, and the sum of the last three terms is 237. Find the first term.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "In an AP with 21 terms, the middle term is the 11th term (T_11).\nThe three middle terms are T_10, T_11, T_12.\nTheir sum = 3 * T_11 = 129 => T_11 = a +..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Progressions",
-      "AP"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "The sum of 3 consecutive symmetric terms in an AP is 3 times the central term.",
-      "Find T_11 = 43 and T_20 = 79, then solve for common difference d and first term a."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "3"
-      },
-      {
-        "id": "B",
-        "text": "7"
-      },
-      {
-        "id": "C",
-        "text": "5"
-      },
-      {
-        "id": "D",
-        "text": "11"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "In an AP with 21 terms, the middle term is the 11th term (T_11).\nThe three middle terms are T_10, T_11, T_12.\nTheir sum = 3 * T_11 = 129 => T_11 = a + 10d = 43.\nThe last three terms are T_19, T_20, T_21.\nTheir sum = 3 * T_20 = 237 => T_20 = a + 19d = 79.\nSubtracting equations: (a + 19d) - (a + 10d) = 79 - 43 => 9d = 36 => d = 4.\nFrom a + 10d = 43: a + 40 = 43 => a = 3.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-315-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-316",
-    "catalogNumber": 316,
-    "slug": "prep-316-speed-and-streams:-upstream-an",
-    "title": "Speed & Streams: Upstream and Downstream Equivalence",
-    "problemStatement": "A motorboat can travel 30 km upstream and 28 km downstream in 7 hours. It can also travel 21 km upstream and 21 km downstream in 5 hours. What is the speed of the stream?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Let upstream speed = u, downstream speed = v.\n30/u + 28/v = 7  --- (1)\n21/u + 21/v = 5  => 1/u + 1/v = 5/21 --- (2)\nMultiply (2) by 28: 28/u + 28/v = ..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Boats and Streams"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Set up two linear equations with 1/u and 1/v as variables.",
-      "Stream speed = (Downstream speed - Upstream speed) / 2."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "4 km/h"
-      },
-      {
-        "id": "B",
-        "text": "10 km/h"
-      },
-      {
-        "id": "C",
-        "text": "6 km/h"
-      },
-      {
-        "id": "D",
-        "text": "2 km/h"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Let upstream speed = u, downstream speed = v.\n30/u + 28/v = 7  --- (1)\n21/u + 21/v = 5  => 1/u + 1/v = 5/21 --- (2)\nMultiply (2) by 28: 28/u + 28/v = 140/21 = 20/3.\nSubtract from (1): 30/u - 28/u = 7 - 20/3 = 1/3 => 2/u = 1/3 => u = 6 km/h.\nFrom (2): 1/6 + 1/v = 5/21 => 1/v = 5/21 - 1/6 = (10 - 7)/42 = 3/42 = 1/14 => v = 14 km/h.\nSpeed of stream = (v - u) / 2 = (14 - 6) / 2 = 8 / 2 = 4 km/h.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-316-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-317",
-    "catalogNumber": 317,
-    "slug": "prep-317-critical-reasoning:-statement-",
-    "title": "Critical Reasoning: Statement and Assumptions",
-    "problemStatement": "Statement: 'The company decided to recruit only candidates with certified cloud computing credentials for its senior engineering roles.'\nAssumptions:\nI. Candidates with cloud certifications are better equipped to handle senior architectural projects.\nII. Other companies in the sector are also imposing identical eligibility requirements.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Assumption I is implicit because when a company sets a mandatory credential prerequisite, it assumes that credential correlates directly with capabili..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Critical Reasoning",
-      "Assumptions"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "An assumption is an unstated premise necessary for the statement to hold.",
-      "Does the company's decision depend on what competitors are doing? No."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Only assumption I is implicit"
-      },
-      {
-        "id": "B",
-        "text": "Only assumption II is implicit"
-      },
-      {
-        "id": "C",
-        "text": "Both assumptions are implicit"
-      },
-      {
-        "id": "D",
-        "text": "Neither is implicit"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Assumption I is implicit because when a company sets a mandatory credential prerequisite, it assumes that credential correlates directly with capability to perform the role.\nAssumption II is not implicit because the statement reflects the company's internal policy decision, not an assumption regarding competitors' practices.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-317-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-318",
-    "catalogNumber": 318,
-    "slug": "prep-318-number-of-trailing-zeros-in-po",
-    "title": "Number of Trailing Zeros in Power of Product",
-    "problemStatement": "Find the number of trailing zeros in (125!)^5.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Trailing zeros in N are determined by the exponent of 5 in N.\nFor 125!:\n[125/5] = 25\n[125/25] = 5\n[125/125] = 1\nTotal exponent of 5 in 125! = 25 + 5 +..."
-      }
-    ],
-    "difficulty": "HARD",
-    "topics": [
-      "Number Theory",
-      "Trailing Zeros"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Count the factor of 5 in 125! using Legendre's formula.",
-      "Multiply the count by the outer power 5."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "155"
-      },
-      {
-        "id": "B",
-        "text": "31"
-      },
-      {
-        "id": "C",
-        "text": "150"
-      },
-      {
-        "id": "D",
-        "text": "125"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Trailing zeros in N are determined by the exponent of 5 in N.\nFor 125!:\n[125/5] = 25\n[125/25] = 5\n[125/125] = 1\nTotal exponent of 5 in 125! = 25 + 5 + 1 = 31.\nSince the expression is (125!)^5, the exponent of 5 multiplies by 5:\nTotal trailing zeros = 31 * 5 = 155 zeros.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-318-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-319",
-    "catalogNumber": 319,
-    "slug": "prep-319-data-sufficiency:-two-digit-nu",
-    "title": "Data Sufficiency: Two-Digit Number Reversal",
-    "problemStatement": "Question: What is the two-digit positive number N?\nStatement I: The sum of the digits of N is 11.\nStatement II: When the digits are reversed, the new number is 27 greater than N.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Let N = 10x + y.\nFrom Statement I: x + y = 11. (Possibilities: 29, 38, 47, 56, 65, 74, 83, 92 - not sufficient alone).\nFrom Statement II: (10y + x) - ..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Data Sufficiency",
-      "Number Properties"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Statement I gives x + y = 11; Statement II gives 9(y - x) = 27.",
-      "Two independent linear equations with two variables uniquely identify the number."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Statements I and II together are sufficient"
-      },
-      {
-        "id": "B",
-        "text": "Statement I alone is sufficient"
-      },
-      {
-        "id": "C",
-        "text": "Statement II alone is sufficient"
-      },
-      {
-        "id": "D",
-        "text": "Neither is sufficient"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Let N = 10x + y.\nFrom Statement I: x + y = 11. (Possibilities: 29, 38, 47, 56, 65, 74, 83, 92 - not sufficient alone).\nFrom Statement II: (10y + x) - (10x + y) = 27 => 9(y - x) = 27 => y - x = 3. (Possibilities: 14, 25, 36, 47, 58, 69 - not sufficient alone).\nCombining I & II: x + y = 11 and y - x = 3.\nAdding gives 2y = 14 => y = 7, x = 4.\nN = 47. Both statements together are sufficient.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-319-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-320",
-    "catalogNumber": 320,
-    "slug": "prep-320-geometric-probability:-point-i",
-    "title": "Geometric Probability: Point in Circle vs Inscribed Square",
-    "problemStatement": "A point is chosen uniformly at random inside a circle. What is the probability that the point lies outside the square inscribed in that circle?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Let circle radius = R. Area of circle = pi * R^2.\nIn an inscribed square, the diagonal is the diameter = 2R.\nSide of square s = 2R / sqrt(2) = R * sqr..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Probability",
-      "Geometry"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Diagonal of the inscribed square equals diameter 2R.",
-      "P = (Area of circle - Area of square) / Area of circle."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "1 - 2/pi"
-      },
-      {
-        "id": "B",
-        "text": "2/pi"
-      },
-      {
-        "id": "C",
-        "text": "1 - 1/pi"
-      },
-      {
-        "id": "D",
-        "text": "pi/4"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Let circle radius = R. Area of circle = pi * R^2.\nIn an inscribed square, the diagonal is the diameter = 2R.\nSide of square s = 2R / sqrt(2) = R * sqrt(2).\nArea of inscribed square = s^2 = (R * sqrt(2))^2 = 2 * R^2.\nArea outside the square = Area of circle - Area of square = pi * R^2 - 2 * R^2 = R^2 * (pi - 2).\nProbability = (R^2 * (pi - 2)) / (pi * R^2) = (pi - 2) / pi = 1 - 2/pi.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-320-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-321",
-    "catalogNumber": 321,
-    "slug": "prep-321-advanced-coding-decoding:-matr",
-    "title": "Advanced Coding-Decoding: Matrix Step Shift",
-    "problemStatement": "In a certain code, 'TCS' is coded as 'WGV' and 'PRIME' is coded as 'SUKPH'. How is 'NINJA' coded under the same rule?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Analyze character shifts:\nT(+3)=W, C(+4)=G, S(+3)=V.\nP(+3)=S, R(+3)=U, I(+2)=K, M(+3)=P, E(+3)=H.\nWait, let's observe the alphabetical distance:\nT(20)..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Coding Decoding",
-      "Logical"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Identify positional shifts between corresponding characters in the given pairs.",
-      "Check standard alphabet index shifts."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "QLPMD"
-      },
-      {
-        "id": "B",
-        "text": "QKOMD"
-      },
-      {
-        "id": "C",
-        "text": "RLPNE"
-      },
-      {
-        "id": "D",
-        "text": "PKMND"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Analyze character shifts:\nT(+3)=W, C(+4)=G, S(+3)=V.\nP(+3)=S, R(+3)=U, I(+2)=K, M(+3)=P, E(+3)=H.\nWait, let's observe the alphabetical distance:\nT(20) -> W(23): +3\nC(3) -> G(7): +4\nS(19) -> V(22): +3\nLet standard rule be +3 shift for all letters:\nT(+3)=W, C(+3)=F? No, let shift be +3 for consonants and +2 for vowels:\nN(14)+3=Q(17)\nI(9)+2=K(11) or N(14)+3=Q, I(9)+3=L(12), N(14)+2=P? Let rule be alternating +3, +3, +2, +3, +3.\nFor standard shift +3 to all letters: N(+3)=Q, I(+3)=L, N(+3)=Q, J(+3)=M, A(+3)=D => QLQMD.\nOption A has QLPMD where N->Q(+3), I->L(+3), N->P(+2), J->M(+3), A->D(+3).",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-321-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-322",
-    "catalogNumber": 322,
-    "slug": "prep-322-inequalities:-am-gm-inequality",
-    "title": "Inequalities: AM-GM Inequality Minimum Value",
-    "problemStatement": "If x and y are positive real numbers such that 2x + 3y = 12, what is the maximum value of x^2 * y^3?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "To maximize x^2 * y^3 subject to 2x + 3y = 12, divide the terms proportionally to their exponents:\n2x has exponent 2 -> split into 2 terms of x.\n3y ha..."
-      }
-    ],
-    "difficulty": "HARD",
-    "topics": [
-      "Algebra",
-      "AM-GM"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Apply the Arithmetic Mean - Geometric Mean (AM-GM) inequality.",
-      "Split 2x into 2 equal parts and 3y into 3 equal parts so their product forms x^2 * y^3."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "34.56"
-      },
-      {
-        "id": "B",
-        "text": "48.24"
-      },
-      {
-        "id": "C",
-        "text": "64.00"
-      },
-      {
-        "id": "D",
-        "text": "27.50"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "To maximize x^2 * y^3 subject to 2x + 3y = 12, divide the terms proportionally to their exponents:\n2x has exponent 2 -> split into 2 terms of x.\n3y has exponent 3 -> split into 3 terms of y.\nTotal sum: x + x + y + y + y = 12 (5 terms).\nBy AM-GM inequality, equality holds when all 5 terms are equal:\nx = y.\nThen 2x + 3x = 12 => 5x = 12 => x = 2.4, y = 2.4.\nMaximum product = x^2 * y^3 = (2.4)^2 * (2.4)^3 = (2.4)^5 = 79.62? Let's check:\nSum = (x) + (x) + (y) + (y) + (y) = 2x + 3y = 12.\nAll terms equal: each term = 12 / 5 = 2.4.\nx = 2.4, y = 2.4.\nProduct = (2.4)^5 = 79.62624.\nIf we use terms (x) + (x) + (y) + (y) + (y):\nLet's check Option A = 34.56 for 2x/2 + 2x/2 + 3y/3 + 3y/3 + 3y/3 = 12.\nIndeed, AM >= GM yields a unique maximum when terms are balanced.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-322-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-323",
-    "catalogNumber": 323,
-    "slug": "prep-323-venn-diagram:-3-sets-with-disj",
-    "title": "Venn Diagram: 3 Sets with Disjoint Subset Constraints",
-    "problemStatement": "In a cohort of 100 students, 60 study Python, 50 study Java, and 40 study C++. 25 study both Python and Java, 20 study both Java and C++, and 15 study both Python and C++. If 5 students study none of the languages, how many students study all three?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Total students studying at least one language = 100 - 5 = 95.\nBy Principle of Inclusion-Exclusion:\n|A u B u C| = |A| + |B| + |C| - (|A n B| + |B n C| ..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Venn Diagrams",
-      "Set Theory"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Total who study at least one = 100 - 5 = 95.",
-      "Use |A u B u C| = sum(|A|) - sum(|A n B|) + |A n B n C|."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "5"
-      },
-      {
-        "id": "B",
-        "text": "10"
-      },
-      {
-        "id": "C",
-        "text": "15"
-      },
-      {
-        "id": "D",
-        "text": "0"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Total students studying at least one language = 100 - 5 = 95.\nBy Principle of Inclusion-Exclusion:\n|A u B u C| = |A| + |B| + |C| - (|A n B| + |B n C| + |C n A|) + |A n B n C|\n95 = 60 + 50 + 40 - (25 + 20 + 15) + x\n95 = 150 - 60 + x\n95 = 90 + x => x = 5 students.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-323-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-324",
-    "catalogNumber": 324,
-    "slug": "prep-324-direction-sense:-3d-movement-a",
-    "title": "Direction Sense: 3D Movement and Displacement",
-    "problemStatement": "An autonomous delivery drone flies 12 m North, then turns East and flies 16 m, then ascends vertically upwards by 15 m. What is the straight-line displacement from its origin?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Displacement vector d = sqrt(x^2 + y^2 + z^2)\nHorizontal displacement = sqrt(12^2 + 16^2) = sqrt(144 + 256) = sqrt(400) = 20 m.\nTotal 3D displacement ..."
-      }
-    ],
-    "difficulty": "EASY",
-    "topics": [
-      "Reasoning",
-      "Direction Sense"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Calculate horizontal displacement first using Pythagoras theorem.",
-      "Combine the horizontal result with the vertical elevation using sqrt(d_h^2 + z^2)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "25 m"
-      },
-      {
-        "id": "B",
-        "text": "20 m"
-      },
-      {
-        "id": "C",
-        "text": "28 m"
-      },
-      {
-        "id": "D",
-        "text": "30 m"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Displacement vector d = sqrt(x^2 + y^2 + z^2)\nHorizontal displacement = sqrt(12^2 + 16^2) = sqrt(144 + 256) = sqrt(400) = 20 m.\nTotal 3D displacement = sqrt(20^2 + 15^2) = sqrt(400 + 225) = sqrt(625) = 25 m.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-324-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-325",
-    "catalogNumber": 325,
-    "slug": "prep-325-binomial-expansion:-independen",
-    "title": "Binomial Expansion: Independent Term of x",
-    "problemStatement": "Find the term independent of x in the expansion of (x^2 + 1/x)^9.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "General term T_(r+1) = C(9, r) * (x^2)^(9 - r) * (1/x)^r = C(9, r) * x^(18 - 2r - r) = C(9, r) * x^(18 - 3r).\nFor term independent of x: 18 - 3r = 0 =..."
-      }
-    ],
-    "difficulty": "HARD",
-    "topics": [
-      "Algebra",
-      "Binomial Theorem"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Write the general term T_(r+1) and group the powers of x.",
-      "Set the exponent 18 - 3r to 0 to find r = 6, then calculate C(9, 6)."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "84"
-      },
-      {
-        "id": "B",
-        "text": "36"
-      },
-      {
-        "id": "C",
-        "text": "126"
-      },
-      {
-        "id": "D",
-        "text": "9"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "General term T_(r+1) = C(9, r) * (x^2)^(9 - r) * (1/x)^r = C(9, r) * x^(18 - 2r - r) = C(9, r) * x^(18 - 3r).\nFor term independent of x: 18 - 3r = 0 => 3r = 18 => r = 6.\nCoefficient = C(9, 6) = C(9, 3) = (9 * 8 * 7) / (3 * 2 * 1) = 3 * 4 * 7 = 84.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-325-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-326",
-    "catalogNumber": 326,
-    "slug": "prep-326-number-theory:-coprime-pairs-i",
-    "title": "Number Theory: Coprime Pairs in Fixed Product",
-    "problemStatement": "How many pairs of positive integers (a, b) satisfy gcd(a, b) = 1 and a * b = 1800?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Prime factorization of 1800 = 18 * 100 = 2 * 3^2 * 2^2 * 5^2 = 2^3 * 3^2 * 5^2.\nThere are 3 distinct prime factors: 2, 3, and 5.\nFor gcd(a, b) = 1, ea..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Number Theory",
-      "Factors"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Prime factorize 1800 into p1^a * p2^b * p3^c.",
-      "Since gcd(a, b) = 1, each prime factor block must belong entirely to a or b. Total pairs = 2^k."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "8"
-      },
-      {
-        "id": "B",
-        "text": "4"
-      },
-      {
-        "id": "C",
-        "text": "16"
-      },
-      {
-        "id": "D",
-        "text": "6"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Prime factorization of 1800 = 18 * 100 = 2 * 3^2 * 2^2 * 5^2 = 2^3 * 3^2 * 5^2.\nThere are 3 distinct prime factors: 2, 3, and 5.\nFor gcd(a, b) = 1, each prime power (2^3, 3^2, 5^2) must go entirely to either 'a' or 'b'.\nNumber of ordered pairs = 2^k where k = number of distinct prime factors = 2^3 = 8 pairs.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-326-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-327",
-    "catalogNumber": 327,
-    "slug": "prep-327-statement-and-course-of-action",
-    "title": "Statement & Course of Action",
-    "problemStatement": "Problem Statement: 'Severe water-logging was reported across major IT corridors during sudden monsoon showers, halting public transport.'\nCourses of Action:\nI. The municipal corporation should immediately deploy high-capacity dewatering pumps in low-lying intersections.\nII. The city administration should permanently ban all private vehicles during monsoon months.",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Course of Action I is a practical, immediate corrective measure that addresses the problem directly.\nCourse of Action II is disproportionate, extreme,..."
-      }
-    ],
-    "difficulty": "EASY",
-    "topics": [
-      "Logical Reasoning",
-      "Course of Action"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 1,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "An effective course of action must be proportional, realistic, and directly target the root problem.",
-      "Deploying dewatering pumps is practical; banning private transport permanently is extreme."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "Only Course of Action I is appropriate"
-      },
-      {
-        "id": "B",
-        "text": "Only Course of Action II is appropriate"
-      },
-      {
-        "id": "C",
-        "text": "Both are appropriate"
-      },
-      {
-        "id": "D",
-        "text": "Neither is appropriate"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Course of Action I is a practical, immediate corrective measure that addresses the problem directly.\nCourse of Action II is disproportionate, extreme, and unfeasible, failing standard policy proportionality tests.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-327-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-328",
-    "catalogNumber": 328,
-    "slug": "prep-328-probability:-birthday-problem-",
-    "title": "Probability: Birthday Problem Probability Complement",
-    "problemStatement": "In a small tutorial group of 4 students, what is the probability that at least two students share the same birth month (assuming each month is equally likely)?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Total ways to assign birth months to 4 students = 12^4 = 20,736.\nWays in which all 4 students have distinct birth months = 12 * 11 * 10 * 9 = 11,880.\n..."
-      }
-    ],
-    "difficulty": "HARD",
-    "topics": [
-      "Probability",
-      "Combinatorics"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "DIGITAL",
-      "PRIME"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Use complementary probability: P(at least 2 share) = 1 - P(all distinct).",
-      "P(all distinct) = (12 * 11 * 10 * 9) / 12^4."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "41/96"
-      },
-      {
-        "id": "B",
-        "text": "55/96"
-      },
-      {
-        "id": "C",
-        "text": "1/2"
-      },
-      {
-        "id": "D",
-        "text": "35/72"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Total ways to assign birth months to 4 students = 12^4 = 20,736.\nWays in which all 4 students have distinct birth months = 12 * 11 * 10 * 9 = 11,880.\nP(all distinct) = 11,880 / 20,736 = (11 * 10 * 9) / (12^3) = 990 / 1728 = 55 / 96.\nP(at least two share month) = 1 - P(all distinct) = 1 - 55/96 = 41/96.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-328-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-329",
-    "catalogNumber": 329,
-    "slug": "prep-329-linear-equations:-infinite-sol",
-    "title": "Linear Equations: Infinite Solutions Condition",
-    "problemStatement": "For what value of k will the system of equations have infinitely many solutions?\n2x + ky = 4\n(k + 1)x + 6y = 8",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "For infinite solutions (coincident lines):\na1 / a2 = b1 / b2 = c1 / c2\nHere: 2 / (k + 1) = k / 6 = 4 / 8.\nFrom c1 / c2 = 4 / 8 = 1/2:\nk / 6 = 1/2 => 2..."
-      }
-    ],
-    "difficulty": "MEDIUM",
-    "topics": [
-      "Algebra",
-      "Matrices"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "NINJA",
-      "DIGITAL"
-    ],
-    "estimatedMinutes": 2,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Condition for infinite solutions: a1/a2 = b1/b2 = c1/c2.",
-      "Equate k/6 = 4/8 = 1/2 to solve for k."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "3"
-      },
-      {
-        "id": "B",
-        "text": "2"
-      },
-      {
-        "id": "C",
-        "text": "-4"
-      },
-      {
-        "id": "D",
-        "text": "4"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "For infinite solutions (coincident lines):\na1 / a2 = b1 / b2 = c1 / c2\nHere: 2 / (k + 1) = k / 6 = 4 / 8.\nFrom c1 / c2 = 4 / 8 = 1/2:\nk / 6 = 1/2 => 2k = 6 => k = 3.\nCheck: 2 / (3 + 1) = 2 / 4 = 1/2. Equality holds consistently. Thus k = 3.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-329-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
-  {
-    "id": "prep-quant-330",
-    "catalogNumber": 330,
-    "slug": "prep-330-time,-speed-and-escalators:-st",
-    "title": "Time, Speed & Escalators: Step Counting",
-    "problemStatement": "A person walks up a moving-up escalator and takes 30 steps to reach the top. If the same person walks down the same moving-up escalator at the same walking speed, they take 90 steps to reach the bottom. How many steps would be visible if the escalator were stationary?",
-    "inputFormat": "Multiple Choice Question (Single Correct Answer)",
-    "outputFormat": "Selected Option (A, B, C, or D)",
-    "constraints": [
-      "Time constraint: 60-120 seconds",
-      "Single correct answer"
-    ],
-    "examples": [
-      {
-        "input": "Select the correct option (A, B, C, or D)",
-        "output": "Option A",
-        "explanation": "Let escalator speed = e steps/sec, person speed = p steps/sec.\nTotal visible steps N.\nWalking up (with escalator): Time taken t1 = 30 / p.\nEscalator a..."
-      }
-    ],
-    "difficulty": "HARD",
-    "topics": [
-      "Speed Time Distance",
-      "Escalator"
-    ],
-    "sections": [
-      "ADVANCED_QUANT"
-    ],
-    "targetTracks": [
-      "PRIME"
-    ],
-    "estimatedMinutes": 3,
-    "problemFormat": "MULTIPLE_CHOICE",
-    "sourceType": "RECURRING_PATTERN",
-    "sourceReferences": {
-      "title": "TCS NQT Question Pattern Analysis",
-      "url": "https://www.tcs.com/careers/india/tcs-all-india-nqt-hiring",
-      "hiringCycle": "2024\u20132026 Batch NQT",
-      "notes": "Recurring TCS NQT question pattern."
-    },
-    "hints": [
-      "Let N be the total visible steps. When moving with the escalator, N = steps_person + steps_escalator.",
-      "When walking against, N = steps_person - steps_escalator. Equate both expressions for N."
-    ],
-    "options": [
-      {
-        "id": "A",
-        "text": "45 steps"
-      },
-      {
-        "id": "B",
-        "text": "60 steps"
-      },
-      {
-        "id": "C",
-        "text": "50 steps"
-      },
-      {
-        "id": "D",
-        "text": "40 steps"
-      }
-    ],
-    "correctOptionId": "A",
-    "explanation": "Let escalator speed = e steps/sec, person speed = p steps/sec.\nTotal visible steps N.\nWalking up (with escalator): Time taken t1 = 30 / p.\nEscalator adds e * t1 = 30e / p steps.\nN = 30 + 30(e/p) = 30(1 + e/p)  --- (1)\nWalking down (against escalator): Time taken t2 = 90 / p.\nEscalator opposes e * t2 = 90e / p steps.\nN = 90 - 90(e/p) = 90(1 - e/p)  --- (2)\nEquating (1) and (2):\n30(1 + e/p) = 90(1 - e/p) => 1 + e/p = 3 - 3(e/p) => 4(e/p) = 2 => e/p = 1/2.\nSubstituting e/p = 1/2 into (1):\nN = 30(1 + 1/2) = 30 * 1.5 = 45 steps.",
-    "timeComplexity": "O(1)",
-    "spaceComplexity": "O(1)",
-    "starterCodeByLanguage": {
-      "python": "# Multiple Choice Question\n# Choose one: A, B, C, or D\ndef solve():\n    return 'A'\n",
-      "cpp": "// Multiple Choice Question\n#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"A\" << endl;\n    return 0;\n}\n",
-      "java": "// Multiple Choice Question\npublic class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"A\");\n    }\n}\n",
-      "c": "// Multiple Choice Question\n#include <stdio.h>\nint main() {\n    printf(\"A\\n\");\n    return 0;\n}\n"
-    },
-    "publicTestCases": [
-      {
-        "id": "tc-prep-quant-330-1",
-        "name": "Correct Option Validation",
-        "input": "Multiple Choice Problem",
-        "expectedOutput": "Option A"
-      }
-    ],
-    "publicationStatus": "PUBLISHED",
-    "createdAt": "2026-10-29T00:00:00.000Z",
-    "updatedAt": "2026-10-29T00:00:00.000Z",
-    "version": 1
-  },
+    id: 'advq-020',
+    catalogNumber: 205,
+    slug: 'solid-geometry-inscribed-sphere-cube-ratio',
+    title: 'Volumetric Ratio Between an Inscribed Sphere and Its Bounding Cube',
+    problemStatement: 'A sphere is inscribed perfectly inside a solid cube such that it touches all six faces of the cube. What is the ratio of the volume of the cube to the volume of the inscribed sphere?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Cube edge a; Sphere radius r = a/2'],
+    examples: [{ input: 'Option selection', output: 'Option D (6 : π)' }],
+    difficulty: 'EASY',
+    topics: ['Mensuration', 'Geometry'],
+    sections: ['ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'ADV_MENSURATION_SPHERE_IN_CUBE',
+    templateFamily_id: 'ADV_MENSURATION',
+    learningObjective: 'Derive geometric constant ratios between bounding regular polyhedra and inscribed solids.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'SPATIAL_GEOMETRY',
+    contentFingerprint: 'advq-020-ratio-cube-volume-to-inscribed-sphere',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Let edge of the cube = a. Volume of cube = a³.',
+      'The diameter of the inscribed sphere equals the edge a, so radius r = a / 2.',
+      'Volume of sphere = (4/3) * pi * (a/2)³.'
+    ],
+    options: [
+      { id: 'A', text: '4 : π' },
+      { id: 'B', text: 'π : 6' },
+      { id: 'C', text: '3 : 2π' },
+      { id: 'D', text: '6 : π' }
+    ],
+    explanation: 'Let edge length of the cube = a. Volume of the cube = V_cube = a³. The sphere touches all six faces, so its diameter is a, and its radius is r = a / 2. Volume of the sphere = V_sphere = (4/3) * π * r³ = (4/3) * π * (a/2)³ = (4/3) * π * (a³ / 8) = (π * a³) / 6. The ratio of the volume of the cube to the volume of the sphere is: V_cube / V_sphere = a³ / ((π * a³) / 6) = 6 / π = 6 : π.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  }
 ];

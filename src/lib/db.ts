@@ -14,7 +14,10 @@ import {
   NotificationPreferences,
   InAppNotification,
   TopicMasteryRecord,
-  StudyPlanRevisionRecord
+  StudyPlanRevisionRecord,
+  MCQAttempt,
+  DailyStudySession,
+  DailyStudySessionItem
 } from '../types';
 
 /**
@@ -993,5 +996,191 @@ export async function fetchPostgresPlanRevisions(userId: string): Promise<StudyP
   } catch (err) {
     console.warn('Failed to fetch plan revisions:', err);
     return [];
+  }
+}
+
+// 12. MCQ ATTEMPTS
+export async function recordPostgresMcqAttempt(attempt: MCQAttempt): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('mcq_attempts')
+      .insert({
+        id: attempt.id,
+        user_id: attempt.userId,
+        question_id: attempt.questionId,
+        question_version: attempt.questionVersion || 1,
+        selected_option: attempt.selectedOptionId,
+        is_correct: attempt.isCorrect,
+        response_time_ms: attempt.responseTimeMs,
+        difficulty: attempt.difficulty,
+        topic: attempt.topic,
+        question_archetype: attempt.questionArchetype || null,
+        confidence: attempt.confidence || null,
+        mistake_type: attempt.mistakeType || null,
+        is_revision: attempt.isRevision || false,
+        attempted_at: attempt.attemptedAt,
+      });
+
+    return !error;
+  } catch (err) {
+    console.error('Failed to record MCQ attempt:', err);
+    return false;
+  }
+}
+
+export async function fetchPostgresMcqAttempts(userId: string): Promise<MCQAttempt[]> {
+  if (!isPostgresConfigured() || !supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('mcq_attempts')
+      .select('*')
+      .eq('user_id', userId)
+      .order('attempted_at', { ascending: false });
+
+    if (error || !data) return [];
+
+    return data.map((row: any) => ({
+      id: row.id,
+      userId: row.user_id,
+      questionId: row.question_id,
+      questionVersion: row.question_version,
+      selectedOptionId: row.selected_option,
+      isCorrect: row.is_correct,
+      responseTimeMs: row.response_time_ms,
+      difficulty: row.difficulty,
+      topic: row.topic,
+      questionArchetype: row.question_archetype || undefined,
+      confidence: row.confidence || undefined,
+      mistakeType: row.mistake_type || undefined,
+      isRevision: row.is_revision,
+      attemptedAt: row.attempted_at,
+    }));
+  } catch (err) {
+    console.warn('Failed to fetch MCQ attempts:', err);
+    return [];
+  }
+}
+
+// 13. DAILY STUDY SESSIONS & ITEMS
+export async function savePostgresDailySession(session: DailyStudySession): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    // 1. Upsert session parent record
+    const { error: sessionError } = await supabase
+      .from('daily_study_sessions')
+      .upsert({
+        id: session.id,
+        user_id: session.userId,
+        session_date: session.sessionDate,
+        day_number: session.dayNumber,
+        target_track: session.targetTrack,
+        randomization_seed: session.randomizationSeed,
+        time_budget_minutes: session.timeBudgetMinutes,
+        status: session.status,
+        created_at: session.createdAt,
+      });
+
+    if (sessionError) {
+      console.warn('Failed to upsert daily_study_sessions:', sessionError);
+      return false;
+    }
+
+    // 2. Upsert items
+    if (session.items && session.items.length > 0) {
+      const dbItems = session.items.map((it) => ({
+        id: it.id,
+        session_id: session.id,
+        order_index: it.orderIndex,
+        item_type: it.itemType,
+        section: it.section,
+        topic: it.topic,
+        question_id: it.questionId,
+        difficulty: it.difficulty,
+        estimated_minutes: it.estimatedMinutes,
+        status: it.status,
+        completed_at: it.completedAt || null,
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('daily_study_session_items')
+        .upsert(dbItems);
+
+      if (itemsError) {
+        console.warn('Failed to upsert daily_study_session_items:', itemsError);
+      }
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Failed to save daily study session:', err);
+    return false;
+  }
+}
+
+export async function fetchPostgresDailySessions(userId: string): Promise<Record<string, DailyStudySession>> {
+  if (!isPostgresConfigured() || !supabase) return {};
+
+  try {
+    const { data: sessionData, error: sessionError } = await supabase
+      .from('daily_study_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .order('session_date', { ascending: false });
+
+    if (sessionError || !sessionData || sessionData.length === 0) return {};
+
+    const sessionIds = sessionData.map((s: any) => s.id);
+    const { data: itemData, error: itemError } = await supabase
+      .from('daily_study_session_items')
+      .select('*')
+      .in('session_id', sessionIds)
+      .order('order_index', { ascending: true });
+
+    const itemsBySession: Record<string, DailyStudySessionItem[]> = {};
+    if (!itemError && itemData) {
+      itemData.forEach((row: any) => {
+        if (!itemsBySession[row.session_id]) {
+          itemsBySession[row.session_id] = [];
+        }
+        itemsBySession[row.session_id].push({
+          id: row.id,
+          sessionId: row.session_id,
+          orderIndex: row.order_index,
+          itemType: row.item_type,
+          section: row.section,
+          topic: row.topic,
+          questionId: row.question_id,
+          difficulty: row.difficulty,
+          estimatedMinutes: row.estimated_minutes,
+          status: row.status,
+          completedAt: row.completed_at || undefined,
+        });
+      });
+    }
+
+    const sessionsMap: Record<string, DailyStudySession> = {};
+    sessionData.forEach((s: any) => {
+      sessionsMap[s.session_date] = {
+        id: s.id,
+        userId: s.user_id,
+        sessionDate: s.session_date,
+        dayNumber: s.day_number,
+        targetTrack: s.target_track,
+        randomizationSeed: s.randomization_seed,
+        timeBudgetMinutes: s.time_budget_minutes,
+        status: s.status,
+        items: itemsBySession[s.id] || [],
+        createdAt: s.created_at,
+      };
+    });
+
+    return sessionsMap;
+  } catch (err) {
+    console.warn('Failed to fetch daily study sessions:', err);
+    return {};
   }
 }

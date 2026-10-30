@@ -11,7 +11,11 @@ import {
   Settings,
   HelpCircle,
   Brain,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
+  Clock,
+  Target,
+  Check
 } from 'lucide-react';
 import { useUserStore } from '../../stores/useUserStore';
 import { useQuestionsStore } from '../../stores/useQuestionsStore';
@@ -33,12 +37,15 @@ export const DashboardPage: React.FC = () => {
     problemProgress, 
     submissions, 
     spacedReviewItems,
-    topicMastery 
+    topicMastery,
+    getOrCreateTodaySession,
+    mcqAttempts
   } = useUserStore();
   const { questions } = useQuestionsStore();
 
   const userTimezone = user?.timezone || DEFAULT_TIMEZONE;
   const todayStr = getLocalDateString(new Date(), userTimezone);
+  const todaySession = getOrCreateTodaySession();
 
   // Default selected date to today, or the first day of the plan
   const [selectedDateStr, setSelectedDateStr] = useState<string>(() => {
@@ -227,6 +234,123 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
       </div>
+
+      {/* 2.5. Today's Adaptive Sequence (TCS NQT Preparation Engine) */}
+      {todaySession && todaySession.items.length > 0 && (
+        <div className="bg-white rounded-2xl border border-indigo-100 p-6 shadow-sm space-y-5 bg-gradient-to-br from-white via-indigo-50/20 to-white">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-indigo-100">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-primary/10 text-primary">
+                  <Sparkles className="w-4 h-4" />
+                </span>
+                <h2 className="text-lg font-bold text-slate-900">
+                  Today's Adaptive Sequence
+                </h2>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">
+                  {user?.targetTrack ? `${user.targetTrack.charAt(0) + user.targetTrack.slice(1).toLowerCase()} Track` : 'Ninja Track'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 mt-1">
+                Dynamically curated {todaySession.timeBudgetMinutes}-minute session: targeted MCQs, verified coding, and spaced retrieval.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 text-xs text-slate-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
+                <Clock className="w-3.5 h-3.5 text-slate-400" />
+                <span>{todaySession.timeBudgetMinutes}m budget</span>
+              </div>
+              <div className="text-xs font-bold text-primary bg-primary/5 px-3 py-1.5 rounded-lg border border-primary/20">
+                {todaySession.items.filter((it: any) => {
+                  const prog = problemProgress[it.questionId];
+                  return it.status === 'COMPLETED' || (prog && prog.currentStatus !== 'NOT_ATTEMPTED');
+                }).length} / {todaySession.items.length} Completed
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            {todaySession.items.map((item: any) => {
+              const q = questions.find(question => question.id === item.questionId);
+              const prog = problemProgress[item.questionId];
+              const isCompleted = item.status === 'COMPLETED' || (prog && prog.currentStatus !== 'NOT_ATTEMPTED');
+              const isSolved = prog?.currentStatus === 'SOLVED';
+
+              let typeBadgeClass = 'bg-slate-100 text-slate-700';
+              let typeLabel = 'MCQ';
+              if (item.itemType === 'EASY_CODING') {
+                typeBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                typeLabel = 'Easy Coding';
+              } else if (item.itemType === 'MEDIUM_CODING') {
+                typeBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+                typeLabel = 'Medium Coding';
+              } else if (item.itemType === 'SPACED_REVIEW') {
+                typeBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
+                typeLabel = 'Spaced Review';
+              }
+
+              return (
+                <div
+                  key={item.id}
+                  className={`p-4 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
+                    isCompleted
+                      ? 'border-emerald-200 bg-emerald-50/20'
+                      : 'border-slate-200 hover:border-primary/40 bg-white shadow-2xs'
+                  }`}
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-5 h-5 rounded-md bg-slate-100 text-[11px] font-bold text-slate-600 flex items-center justify-center">
+                          {item.orderIndex}
+                        </span>
+                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${typeBadgeClass}`}>
+                          {typeLabel}
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400">
+                        {item.estimatedMinutes}m
+                      </span>
+                    </div>
+
+                    <h4 className="text-xs font-bold text-slate-900 line-clamp-2 leading-snug">
+                      {q?.title || item.topic}
+                    </h4>
+
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                      <span className="truncate max-w-[120px] font-medium">{item.topic}</span>
+                      <span>•</span>
+                      <DifficultyBadge difficulty={item.difficulty} />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                    {isCompleted ? (
+                      <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                        {isSolved ? 'Solved' : 'Attempted'}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-slate-400">Pending</span>
+                    )}
+
+                    <Link to={`/problems/${q?.catalogNumber || q?.slug || item.questionId}`}>
+                      <Button
+                        variant={isCompleted ? 'outline' : 'primary'}
+                        size="sm"
+                        className="text-xs py-1 px-2.5 h-auto"
+                      >
+                        {isCompleted ? 'Review' : 'Solve →'}
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* 3. Weekly Overview & Inline Daily Activities */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">

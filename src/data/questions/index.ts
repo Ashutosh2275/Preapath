@@ -8,7 +8,7 @@ import { REASONING_QUESTIONS } from './reasoningQuestions';
 import { VERBAL_QUESTIONS } from './verbalQuestions';
 import { PROGRAMMING_QUESTIONS } from './programmingQuestions';
 import { ADVANCED_QUANT_QUESTIONS } from './advancedQuantQuestions';
-import { ADDITIONAL_MCQ_QUESTIONS } from './additionalMcqQuestions';
+import { MCQ_ANSWER_KEYS } from './mcqAnswerKeys';
 
 export const ALL_QUESTIONS: Question[] = [
   ...CODING_QUESTIONS_PART1,
@@ -20,7 +20,6 @@ export const ALL_QUESTIONS: Question[] = [
   ...VERBAL_QUESTIONS,
   ...PROGRAMMING_QUESTIONS,
   ...ADVANCED_QUANT_QUESTIONS,
-  ...ADDITIONAL_MCQ_QUESTIONS,
 ];
 
 // Helper functions for question discovery
@@ -60,5 +59,5 @@ export {
   VERBAL_QUESTIONS,
   PROGRAMMING_QUESTIONS,
   ADVANCED_QUANT_QUESTIONS,
-  ADDITIONAL_MCQ_QUESTIONS,
+  MCQ_ANSWER_KEYS,
 };

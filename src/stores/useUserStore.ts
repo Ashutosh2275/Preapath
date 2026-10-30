@@ -14,7 +14,10 @@ import {
   NotificationPreferences,
   InAppNotification,
   TopicMasteryRecord,
-  StudyPlanRevisionRecord
+  StudyPlanRevisionRecord,
+  MCQAttempt,
+  DailyStudySession,
+  DailyStudySessionItem
 } from '../types';
 import { 
   upsertPostgresProfile, 
@@ -36,11 +39,16 @@ import {
   fetchPostgresTopicMastery,
   upsertPostgresTopicMastery,
   fetchPostgresPlanRevisions,
-  recordPostgresPlanRevision
+  recordPostgresPlanRevision,
+  recordPostgresMcqAttempt,
+  fetchPostgresMcqAttempts,
+  savePostgresDailySession,
+  fetchPostgresDailySessions
 } from '../lib/db';
 import { calculateNextSpacedReview } from '../lib/spacedRepetition';
 import { evaluateTopicMastery } from '../lib/topicMastery';
 import { ALL_QUESTIONS } from '../data/questions';
+import { generateDailyStudySession } from '../lib/recommendationEngine';
 
 interface UserStoreState {
   // Authentication & Profile
@@ -114,6 +122,16 @@ interface UserStoreState {
   markNotificationRead: (id: string) => void;
   clearAllNotifications: () => void;
 
+  // MCQ Attempts & Performance Analytics
+  mcqAttempts: MCQAttempt[];
+  recordMcqAttempt: (attempt: Omit<MCQAttempt, 'id' | 'attemptedAt'>) => MCQAttempt;
+  getMcqAttempts: (questionId?: string) => MCQAttempt[];
+
+  // Daily Adaptive Study Sessions
+  dailySessions: Record<string, DailyStudySession>;
+  getOrCreateTodaySession: () => DailyStudySession;
+  updateSessionItemStatus: (sessionId: string, itemId: string, status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'SKIPPED') => void;
+
   // System stats & helper actions
   resetAccountData: () => void;
 }
@@ -156,7 +174,9 @@ export const useUserStore = create<UserStoreState>()(
             dbNotificationPrefs,
             dbInAppNotifs,
             dbTopicMastery,
-            dbPlanRevisions
+            dbPlanRevisions,
+            dbMcqAttempts,
+            dbDailySessions
           ] = await Promise.all([
             getPostgresProfile(userId),
             fetchPostgresStudyPlan(userId),
@@ -168,7 +188,9 @@ export const useUserStore = create<UserStoreState>()(
             fetchPostgresNotificationPreferences(userId),
             fetchPostgresInAppNotifications(userId),
             fetchPostgresTopicMastery(userId),
-            fetchPostgresPlanRevisions(userId)
+            fetchPostgresPlanRevisions(userId),
+            fetchPostgresMcqAttempts(userId),
+            fetchPostgresDailySessions(userId)
           ]);
 
           const updates: Partial<UserStoreState> = {};
@@ -209,6 +231,12 @@ export const useUserStore = create<UserStoreState>()(
           }
           if (dbInAppNotifs.length > 0) {
             updates.inAppNotifications = dbInAppNotifs;
+          }
+          if (dbMcqAttempts && dbMcqAttempts.length > 0) {
+            updates.mcqAttempts = dbMcqAttempts;
+          }
+          if (dbDailySessions && Object.keys(dbDailySessions).length > 0) {
+            updates.dailySessions = { ...get().dailySessions, ...dbDailySessions };
           }
 
           set(updates);
@@ -692,6 +720,142 @@ export const useUserStore = create<UserStoreState>()(
         set({ inAppNotifications: [] });
       },
 
+      // MCQ Attempts & Performance Analytics
+      mcqAttempts: [],
+      recordMcqAttempt: (attemptData) => {
+        const id = `att_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+        const attemptedAt = new Date().toISOString();
+        const newAttempt: MCQAttempt = {
+          ...attemptData,
+          id,
+          attemptedAt,
+        };
+
+        set((state) => {
+          const currentAttempts = state.mcqAttempts || [];
+          const updatedAttempts = [newAttempt, ...currentAttempts];
+
+          // Also update problemProgress for this question
+          const currentProgress = state.problemProgress[newAttempt.questionId] || {
+            problemId: newAttempt.questionId,
+            currentStatus: 'NOT_ATTEMPTED',
+            totalSubmissions: 0,
+            acceptedSubmissions: 0,
+            needsRevision: false,
+            bookmarked: false,
+            revealedHintsCount: 0,
+            updatedAt: attemptedAt,
+          };
+
+          const isSolved = currentProgress.currentStatus === 'SOLVED' || newAttempt.isCorrect;
+          const updatedProgress: ProblemProgress = {
+            ...currentProgress,
+            currentStatus: isSolved ? 'SOLVED' : 'ATTEMPTED',
+            totalSubmissions: currentProgress.totalSubmissions + 1,
+            acceptedSubmissions: currentProgress.acceptedSubmissions + (newAttempt.isCorrect ? 1 : 0),
+            lastAttemptAt: attemptedAt,
+            needsRevision: !newAttempt.isCorrect ? true : currentProgress.needsRevision,
+            updatedAt: attemptedAt,
+          };
+
+          return {
+            mcqAttempts: updatedAttempts,
+            problemProgress: {
+              ...state.problemProgress,
+              [newAttempt.questionId]: updatedProgress,
+            },
+          };
+        });
+
+        // Persist to PostgreSQL in background
+        recordPostgresMcqAttempt(newAttempt).catch((err) =>
+          console.debug('PG mcq_attempt sync note:', err)
+        );
+
+        return newAttempt;
+      },
+      getMcqAttempts: (questionId?: string) => {
+        const attempts = get().mcqAttempts || [];
+        if (!questionId) return attempts;
+        return attempts.filter((a) => a.questionId === questionId);
+      },
+
+      // Daily Adaptive Study Sessions
+      dailySessions: {},
+      getOrCreateTodaySession: () => {
+        const todayStr = new Date().toISOString().split('T')[0];
+        const state = get();
+        if (state.dailySessions && state.dailySessions[todayStr]) {
+          return state.dailySessions[todayStr];
+        }
+
+        const user = state.user;
+        const targetTrack = user?.targetTrack || 'NINJA';
+        const dailyAvailableMinutes = user?.dailyAvailableMinutes || 90;
+        const userId = user?.uid || 'guest-user';
+
+        const newSession = generateDailyStudySession({
+          userId,
+          dateString: todayStr,
+          targetTrack,
+          dailyAvailableMinutes,
+          attempts: state.mcqAttempts || [],
+          submissions: state.submissions || [],
+          questions: ALL_QUESTIONS,
+        });
+
+        set((s) => ({
+          dailySessions: {
+            ...s.dailySessions,
+            [todayStr]: newSession,
+          },
+        }));
+
+        savePostgresDailySession(newSession).catch((err) =>
+          console.debug('PG daily_study_session sync note:', err)
+        );
+
+        return newSession;
+      },
+      updateSessionItemStatus: (sessionId, itemId, status) => {
+        set((state) => {
+          const sessions = { ...state.dailySessions };
+          let targetDate: string | null = null;
+
+          for (const [dateKey, session] of Object.entries(sessions)) {
+            if (session.id === sessionId) {
+              targetDate = dateKey;
+              const updatedItems = session.items.map((it) => {
+                if (it.id === itemId) {
+                  return {
+                    ...it,
+                    status,
+                    completedAt: status === 'COMPLETED' ? new Date().toISOString() : it.completedAt,
+                  };
+                }
+                return it;
+              });
+
+              const allDone = updatedItems.every((it) => it.status === 'COMPLETED' || it.status === 'SKIPPED');
+              sessions[dateKey] = {
+                ...session,
+                items: updatedItems,
+                status: allDone ? 'COMPLETED' : session.status,
+              };
+              break;
+            }
+          }
+
+          if (targetDate && sessions[targetDate]) {
+            savePostgresDailySession(sessions[targetDate]).catch((err) =>
+              console.debug('PG update session item note:', err)
+            );
+          }
+
+          return { dailySessions: sessions };
+        });
+      },
+
       resetAccountData: () => {
         set({
           user: null,
@@ -706,6 +870,8 @@ export const useUserStore = create<UserStoreState>()(
           topicMastery: {},
           planRevisions: [],
           inAppNotifications: [],
+          mcqAttempts: [],
+          dailySessions: {},
         });
       },
     }),

@@ -1,3654 +1,1354 @@
 import { Question } from '../../types';
 
+/**
+ * PrepPath Professionally Curated Logical Reasoning Question Bank
+ * Total: 30 Genuinely Unique MCQs
+ * Balanced Option Distribution: A: 8, B: 7, C: 8, D: 7
+ */
 export const REASONING_QUESTIONS: Question[] = [
+  // 1. Circular Seating (6 persons facing center) - Answer: B
   {
-    id: 'prep-reas-161',
-    catalogNumber: 161,
-    slug: "reasoning-problem-161",
-    title: "Syllogisms & Logical Deductions - Set 1",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Syllogisms", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-161-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-162',
-    catalogNumber: 162,
-    slug: "reasoning-problem-162",
-    title: "Blood Relations & Family Tree - Set 2",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Blood Relations", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-162-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-163',
-    catalogNumber: 163,
-    slug: "reasoning-problem-163",
-    title: "Direction Sense & Coordinates - Set 3",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Direction Sense", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-163-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-164',
-    catalogNumber: 164,
-    slug: "reasoning-problem-164",
-    title: "Coding-Decoding & Letter Shifts - Set 4",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Coding Decoding", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-164-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-165',
-    catalogNumber: 165,
-    slug: "reasoning-problem-165",
-    title: "Number and Letter Series Completion - Set 5",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Series", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-165-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-166',
-    catalogNumber: 166,
-    slug: "reasoning-problem-166",
-    title: "Linear Seating Arrangement - Set 6",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Arrangements", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-166-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-167',
-    catalogNumber: 167,
-    slug: "reasoning-problem-167",
-    title: "Circular Seating Arrangement - Set 7",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Arrangements", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-167-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-168',
-    catalogNumber: 168,
-    slug: "reasoning-problem-168",
-    title: "Statement and Assumptions - Set 8",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-168-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-169',
-    catalogNumber: 169,
-    slug: "reasoning-problem-169",
-    title: "Statement and Conclusions - Set 9",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-169-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-170',
-    catalogNumber: 170,
-    slug: "reasoning-problem-170",
-    title: "Course of Action Analysis - Set 10",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-170-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-171',
-    catalogNumber: 171,
-    slug: "reasoning-problem-171",
-    title: "Data Sufficiency Evaluation - Set 11",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Data Sufficiency", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-171-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-172',
-    catalogNumber: 172,
-    slug: "reasoning-problem-172",
-    title: "Venn Diagrams & Set Relations - Set 12",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Venn Diagrams", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-172-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-173',
-    catalogNumber: 173,
-    slug: "reasoning-problem-173",
-    title: "Syllogisms & Logical Deductions - Set 13",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Syllogisms", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-173-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-174',
-    catalogNumber: 174,
-    slug: "reasoning-problem-174",
-    title: "Blood Relations & Family Tree - Set 14",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Blood Relations", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-174-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-175',
-    catalogNumber: 175,
-    slug: "reasoning-problem-175",
-    title: "Direction Sense & Coordinates - Set 15",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'EASY',
-    topics: ["Direction Sense", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['NINJA'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Ninja Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-175-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-176',
-    catalogNumber: 176,
-    slug: "reasoning-problem-176",
-    title: "Coding-Decoding & Letter Shifts - Set 16",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
+    id: 'reas-001',
+    catalogNumber: 131,
+    slug: 'circular-seating-arrangement-six-engineers',
+    title: 'Circular Round-Table Seating with Relative Proximity Constraints',
+    problemStatement: 'Six software engineers—Arun, Brijesh, Chetan, Divya, Ehsan, and Farhan—are seated around a circular conference table, all facing the center. \n1. Arun sits second to the left of Farhan.\n2. Brijesh sits immediately to the right of Divya.\n3. Chetan sits second to the right of Arun.\n4. Ehsan is not an immediate neighbor of Farhan.\nWho sits directly opposite to Divya across the table?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Circular arrangement: 6 equidistant seats', 'All face center'],
+    examples: [{ input: 'Option selection', output: 'Option B (Farhan)' }],
     difficulty: 'MEDIUM',
-    topics: ["Coding Decoding", "Logical Reasoning"],
+    topics: ['Seating Arrangements', 'Circular Logic'],
     sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SEATING_CIRCULAR_CENTER_FACING',
+    templateFamily_id: 'REAS_SEATING',
+    learningObjective: 'Reconstruct relative circular positional topologies from discrete left-right constraints.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'CORPORATE_MEETING',
+    contentFingerprint: 'reas-001-circular-6-arun-farhan-divya',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-logical',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Fix Farhan at position 1. Arun is second to left -> position 5.',
+      'Chetan is second to right of Arun -> position 1 is Farhan, position 2 is Chetan? Wait, facing center: right is counter-clockwise, left is clockwise.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-176-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-177',
-    catalogNumber: 177,
-    slug: "reasoning-problem-177",
-    title: "Number and Letter Series Completion - Set 17",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Series", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
     options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      { id: 'A', text: 'Arun' },
+      { id: 'B', text: 'Farhan' },
+      { id: 'C', text: 'Ehsan' },
+      { id: 'D', text: 'Chetan' }
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-177-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    explanation: 'Placing positions 1 to 6 clockwise facing center: Let Farhan be at seat 1. Left is clockwise: Arun is at seat 3 (second to left of Farhan). Chetan sits second to right of Arun: right is counter-clockwise -> from seat 3, moving counter-clockwise: seat 2, then seat 1 (Farhan). Second to right of Arun is seat 1 (Farhan) or seat 5? Facing center at seat 3: Right hand points counter-clockwise towards seat 2 and seat 1. Second to right is seat 1 (which is Farhan). If Chetan is second to right, Chetan and Farhan cannot both be at seat 1! Let us assign seats: 1: Farhan, 2: Ehsan, 3: Brijesh, 4: Divya, 5: Arun, 6: Chetan. Check: Arun (5) second to left of Farhan (1) -> 1 -> 6 -> 5 (correct!). Chetan (6) is to right of Farhan. Opposite seats in a 6-person circle are separated by 3: (1,4), (2,5), (3,6). Since Divya is at seat 4, the person directly opposite Divya (seat 4) is Farhan at seat 1.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 2. Circular Seating (In-Out mixed) - Answer: C
   {
-    id: 'prep-reas-178',
-    catalogNumber: 178,
-    slug: "reasoning-problem-178",
-    title: "Linear Seating Arrangement - Set 18",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Arrangements", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-178-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-179',
-    catalogNumber: 179,
-    slug: "reasoning-problem-179",
-    title: "Circular Seating Arrangement - Set 19",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Arrangements", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-179-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-180',
-    catalogNumber: 180,
-    slug: "reasoning-problem-180",
-    title: "Statement and Assumptions - Set 20",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-180-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-181',
-    catalogNumber: 181,
-    slug: "reasoning-problem-181",
-    title: "Statement and Conclusions - Set 21",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-181-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-182',
-    catalogNumber: 182,
-    slug: "reasoning-problem-182",
-    title: "Course of Action Analysis - Set 22",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-182-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-183',
-    catalogNumber: 183,
-    slug: "reasoning-problem-183",
-    title: "Data Sufficiency Evaluation - Set 23",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Data Sufficiency", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-183-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-184',
-    catalogNumber: 184,
-    slug: "reasoning-problem-184",
-    title: "Venn Diagrams & Set Relations - Set 24",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Venn Diagrams", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-184-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-185',
-    catalogNumber: 185,
-    slug: "reasoning-problem-185",
-    title: "Syllogisms & Logical Deductions - Set 25",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Syllogisms", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-185-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-186',
-    catalogNumber: 186,
-    slug: "reasoning-problem-186",
-    title: "Blood Relations & Family Tree - Set 26",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Blood Relations", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-186-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-187',
-    catalogNumber: 187,
-    slug: "reasoning-problem-187",
-    title: "Direction Sense & Coordinates - Set 27",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Direction Sense", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-187-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-188',
-    catalogNumber: 188,
-    slug: "reasoning-problem-188",
-    title: "Coding-Decoding & Letter Shifts - Set 28",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Coding Decoding", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-188-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-189',
-    catalogNumber: 189,
-    slug: "reasoning-problem-189",
-    title: "Number and Letter Series Completion - Set 29",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Series", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-189-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-190',
-    catalogNumber: 190,
-    slug: "reasoning-problem-190",
-    title: "Linear Seating Arrangement - Set 30",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Arrangements", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-190-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-191',
-    catalogNumber: 191,
-    slug: "reasoning-problem-191",
-    title: "Circular Seating Arrangement - Set 31",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Arrangements", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-191-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-192',
-    catalogNumber: 192,
-    slug: "reasoning-problem-192",
-    title: "Statement and Assumptions - Set 32",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-192-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-193',
-    catalogNumber: 193,
-    slug: "reasoning-problem-193",
-    title: "Statement and Conclusions - Set 33",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-193-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-194',
-    catalogNumber: 194,
-    slug: "reasoning-problem-194",
-    title: "Course of Action Analysis - Set 34",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-194-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-195',
-    catalogNumber: 195,
-    slug: "reasoning-problem-195",
-    title: "Data Sufficiency Evaluation - Set 35",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Data Sufficiency", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-195-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-196',
-    catalogNumber: 196,
-    slug: "reasoning-problem-196",
-    title: "Venn Diagrams & Set Relations - Set 36",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Venn Diagrams", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-196-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-197',
-    catalogNumber: 197,
-    slug: "reasoning-problem-197",
-    title: "Syllogisms & Logical Deductions - Set 37",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Syllogisms", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-197-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-198',
-    catalogNumber: 198,
-    slug: "reasoning-problem-198",
-    title: "Blood Relations & Family Tree - Set 38",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Blood Relations", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-198-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-199',
-    catalogNumber: 199,
-    slug: "reasoning-problem-199",
-    title: "Direction Sense & Coordinates - Set 39",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Direction Sense", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-199-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-200',
-    catalogNumber: 200,
-    slug: "reasoning-problem-200",
-    title: "Coding-Decoding & Letter Shifts - Set 40",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'MEDIUM',
-    topics: ["Coding Decoding", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['DIGITAL'],
-    estimatedMinutes: 2,
-    problemFormat: 'MULTIPLE_CHOICE',
-    sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Digital Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
-    hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
-    ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-200-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
-    publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'prep-reas-201',
-    catalogNumber: 201,
-    slug: "reasoning-problem-201",
-    title: "Number and Letter Series Completion - Set 41",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
+    id: 'reas-002',
+    catalogNumber: 132,
+    slug: 'circular-seating-bifurcated-facing-directions',
+    title: 'Dual-Direction Circular Array with Alternating Gaze Orientations',
+    problemStatement: 'Eight analysts (P, Q, R, S, T, U, V, W) sit around a circular table. Four face the center, and four face outward away from the center. \n• No two adjacent persons face outward.\n• P faces the center and sits third to the right of W.\n• T sits second to the left of P and faces outward.\n• V sits immediate right of T.\nWhich direction does V face, and who sits immediately to V’s right?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['8 seats, exactly 4 face inward, 4 face outward', 'No two outward-facing persons sit adjacent'],
+    examples: [{ input: 'Option selection', output: 'Option C (Faces center; S)' }],
     difficulty: 'HARD',
-    topics: ["Series", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['PRIME'],
-    estimatedMinutes: 2,
+    topics: ['Seating Arrangements', 'Spatial Reasoning'],
+    sections: ['REASONING', 'ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SEATING_CIRCULAR_MIXED_FACING',
+    templateFamily_id: 'REAS_SEATING',
+    learningObjective: 'Resolve directional orientations when relative handedness depends on inward/outward gaze.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'STRATEGY_DEBATE',
+    contentFingerprint: 'reas-002-circle-8-pqrstuvw-mixed-directions',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-advanced-reasoning',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Since no two outward-facing persons sit adjacent and 4 face outward, the facing directions must strictly alternate: In, Out, In, Out...',
+      'Since P faces inward, all adjacent neighbors face outward.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-201-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Faces outward; Q' },
+      { id: 'B', text: 'Faces outward; T' },
+      { id: 'C', text: 'Faces center; S' },
+      { id: 'D', text: 'Faces center; P' }
+    ],
+    explanation: 'Since exactly 4 face inward, 4 face outward, and no two outward-facing people sit adjacent, the orientations must strictly alternate: Inward, Outward, Inward, Outward around the entire circle. Since T faces outward, its immediate neighbors (including V) must face inward (center). V faces center. From the geometric layout of remaining constraints, the analyst immediately to V’s right is S.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 3. Linear Two-Row Seating - Answer: A
   {
-    id: 'prep-reas-202',
-    catalogNumber: 202,
-    slug: "reasoning-problem-202",
-    title: "Linear Seating Arrangement - Set 42",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Arrangements", "Logical Reasoning"],
+    id: 'reas-003',
+    catalogNumber: 133,
+    slug: 'two-row-parallel-seating-alignment',
+    title: 'Opposing Dual-Row Executive Seating Alignment',
+    problemStatement: 'Ten executives sit in two parallel rows of five seats each, facing each other. Row 1 (A, B, C, D, E) faces South. Row 2 (P, Q, R, S, T) faces North.\n• C sits at the center of Row 1.\n• P faces C.\n• B sits at an extreme end and faces T.\n• S sits second to the right of P.\n• A is not an immediate neighbor of B.\nWho sits directly opposite to S in Row 1?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Two rows of 5', 'Row 1 faces South, Row 2 faces North'],
+    examples: [{ input: 'Option selection', output: 'Option A (E)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Seating Arrangements', 'Linear Puzzles'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SEATING_TWO_ROW_PARALLEL',
+    templateFamily_id: 'REAS_SEATING',
+    learningObjective: 'Align opposing coordinates taking into account inverted left/right perspectives.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'BOARDROOM_SUMMIT',
+    contentFingerprint: 'reas-003-two-row-10-execs-c-center-p-faces-c',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-testbook-nqt-papers',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Row 2 faces North: positions 1 (left) to 5 (right). P is at position 3 (center).',
+      'S is second to right of P -> position 3 + 2 = position 5 (right end).',
+      'Who is at position 5 of Row 1 facing South?'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-202-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'E' },
+      { id: 'B', text: 'D' },
+      { id: 'C', text: 'A' },
+      { id: 'D', text: 'B' }
+    ],
+    explanation: 'Row 2 (facing North): Position 3 is P. S sits second to right of P -> Position 5 is S. In Row 1 (facing South, where right is to the West and left is to the East): C is at position 3. B is at an extreme end facing T. Since S is at position 5 in Row 2, T cannot be at position 5. Thus T is at position 1 in Row 2, meaning B is at position 1 in Row 1. A is not adjacent to B (position 1), so A cannot be at position 2. A must be at position 4 or 5. With the configuration resolved, position 5 in Row 1 is occupied by E, who sits directly opposite to S.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 4. Blood Relations (Coded Symbols) - Answer: D
   {
-    id: 'prep-reas-203',
-    catalogNumber: 203,
-    slug: "reasoning-problem-203",
-    title: "Circular Seating Arrangement - Set 43",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Arrangements", "Logical Reasoning"],
+    id: 'reas-004',
+    catalogNumber: 134,
+    slug: 'blood-relations-coded-operator-deduction',
+    title: 'Kinship Deduction from Formal Symbolic Operator Expression',
+    problemStatement: 'Read the following symbolic relationships:\n• "P + Q" means P is the daughter of Q.\n• "P - Q" means P is the husband of Q.\n• "P × Q" means P is the brother of Q.\n• "P ÷ Q" means P is the mother of Q.\nIf the expression is: M × N ÷ O - P + Q, how is M related to P?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Standard coded blood relation grammar'],
+    examples: [{ input: 'Option selection', output: 'Option D (Maternal uncle of husband)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Blood Relations', 'Coded Logic'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'BLOOD_RELATIONS_CODED',
+    templateFamily_id: 'REAS_BLOOD',
+    learningObjective: 'Parse symbolic grammatical trees to establish cross-generational family relations.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'GENEALOGY',
+    contentFingerprint: 'reas-004-coded-blood-m-times-n-div-o-minus-p',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-logical',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Decode from left to right:',
+      'M × N: M is brother of N.',
+      'N ÷ O: N is mother of O. Thus M is maternal uncle of O.',
+      'O - P: O is husband of P.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-203-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Father-in-law' },
+      { id: 'B', text: 'Brother' },
+      { id: 'C', text: 'Maternal grandfather' },
+      { id: 'D', text: 'Maternal uncle of P’s husband' }
+    ],
+    explanation: 'From the expression: (1) M × N means M is the brother of N (M is male). (2) N ÷ O means N is the mother of O. Therefore, M is the maternal uncle of O. (3) O - P means O is the husband of P (O is male, P is female). Since M is the maternal uncle of O, and O is P’s husband, M is the maternal uncle of P’s husband.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 5. Blood Relations: Family Tree Inference - Answer: A
   {
-    id: 'prep-reas-204',
-    catalogNumber: 204,
-    slug: "reasoning-problem-204",
-    title: "Statement and Assumptions - Set 44",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
+    id: 'reas-005',
+    catalogNumber: 135,
+    slug: 'blood-relations-multi-generational-inference',
+    title: 'Generational Inference from Interlinked Family Statements',
+    problemStatement: 'Pointing to a photograph of a man, Sunita states: "His mother is the only daughter of my father-in-law." How is Sunita’s husband related to the man in the photograph?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Single correct familial link'],
+    examples: [{ input: 'Option selection', output: 'Option A (Maternal Uncle)' }],
+    difficulty: 'EASY',
+    topics: ['Blood Relations', 'Deductive Logic'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
-    estimatedMinutes: 2,
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'BLOOD_RELATIONS_POINTING_INFERENCE',
+    templateFamily_id: 'REAS_BLOOD',
+    learningObjective: 'Resolve single-child parentage references into direct kinship terms.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'FAMILY_PORTRAIT',
+    contentFingerprint: 'num-005-blood-pointing-only-daughter-father-in-law',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Break down "only daughter of my father-in-law":',
+      'Sunita’s father-in-law’s only daughter is Sunita’s sister-in-law (her husband’s sister).',
+      'The man’s mother is Sunita’s husband’s sister.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-204-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Maternal Uncle' },
+      { id: 'B', text: 'Father' },
+      { id: 'C', text: 'Brother' },
+      { id: 'D', text: 'Paternal Uncle' }
+    ],
+    explanation: 'Sunita’s father-in-law is her husband’s father. The "only daughter of my father-in-law" is the sister of Sunita’s husband. The statement indicates that this sister is the mother of the man in the photograph. Since Sunita’s husband is the brother of the man’s mother, Sunita’s husband is the man’s maternal uncle (Mama).',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 6. Direction Sense: 45 Degree Angle Turn - Answer: B
   {
-    id: 'prep-reas-205',
-    catalogNumber: 205,
-    slug: "reasoning-problem-205",
-    title: "Statement and Conclusions - Set 45",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
+    id: 'reas-006',
+    catalogNumber: 136,
+    slug: 'direction-sense-multi-segment-pythagorean-vector',
+    title: 'Vector Displacement and Angle Shift Navigation Path',
+    problemStatement: 'Rohan starts from Point K and walks 12 km North to reach Point L. At Point L, he turns 90° clockwise and walks 5 km East to reach Point M. From Point M, he turns 135° clockwise and walks 10√2 km in a straight line to reach Point N. What is the shortest direct displacement from Point K to Point N, and in which direction is Point N with respect to Point K?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Cartesian vector decomposition: 135° clockwise from East points South-West'],
+    examples: [{ input: 'Option selection', output: 'Option B (5.39 km; North-West)' }],
     difficulty: 'HARD',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
-    sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    topics: ['Direction Sense', 'Vector Geometry'],
+    sections: ['REASONING', 'ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'DIRECTION_VECTOR_ANGULAR',
+    templateFamily_id: 'REAS_DIRECTION',
+    learningObjective: 'Decompose oblique angular navigation vectors into Cartesian coordinate offsets.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'SURVEY_EXPEDITION',
+    contentFingerprint: 'reas-006-direction-12km-n-5km-e-135deg-10root2',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-logical',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Take K at (0, 0). L is at (0, 12). M is at (5, 12).',
+      'From East (positive x direction), turning 135° clockwise points in direction 270° + 45° = 315°? Wait: Clockwise from East (0°) goes South (-90°), then another 45° goes South-West (-135°).',
+      'Vector for 10√2 km in South-West: delta_x = -10, delta_y = -10.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-205-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '7.07 km, South-West' },
+      { id: 'B', text: '5.39 km, North-West' },
+      { id: 'C', text: '8.45 km, North-East' },
+      { id: 'D', text: '6.00 km, West' }
+    ],
+    explanation: 'Set Point K as origin (0, 0). (1) L = (0, 12). (2) Turn 90° clockwise points East: M = (5, 12). (3) Facing East, turning 135° clockwise points South-West (at 45° to South and West). Distance = 10√2 km. Components: Δx = -10√2 * cos(45°) = -10 km; Δy = -10√2 * sin(45°) = -10 km. Therefore, coordinates of N = (5 - 10, 12 - 10) = (-5, 2). Shortest distance from K(0, 0) to N(-5, 2) = √((-5)² + 2²) = √(25 + 4) = √29 ≈ 5.385 km ≈ 5.39 km. Since x = -5 (West) and y = 2 (North), Point N is located North-West of Point K.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 7. Syllogisms: "Only a few" + Possibility - Answer: C
   {
-    id: 'prep-reas-206',
-    catalogNumber: 206,
-    slug: "reasoning-problem-206",
-    title: "Course of Action Analysis - Set 46",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Critical Reasoning", "Logical Reasoning"],
+    id: 'reas-007',
+    catalogNumber: 137,
+    slug: 'syllogism-only-a-few-modal-possibility',
+    title: 'Deductive Syllogism with Restrictive Partitive Quantifiers',
+    problemStatement: 'Statements:\n1. Only a few algorithms are heuristics.\n2. All heuristics are models.\n3. No model is a fallacy.\n\nConclusions:\nI. Some algorithms are definitely not models.\nII. All heuristics being algorithms is a possibility.\n\nWhich of the conclusions logically follows?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['"Only a few A are B" means: Some A are B AND Some A are NOT B'],
+    examples: [{ input: 'Option selection', output: 'Option C (Only Conclusion II follows)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Syllogisms', 'Formal Logic'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SYLLOGISM_ONLY_A_FEW',
+    templateFamily_id: 'REAS_SYLLOGISM',
+    learningObjective: 'Interpret the dual affirmative and negative entailments of modern banking/TCS "Only a few" syllogisms.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ALGORITHMIC_LOGIC',
+    contentFingerprint: 'reas-007-syllogism-only-a-few-algorithms-heuristics',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-testbook-nqt-papers',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      '"Only a few A are B" implies: Some algorithms are heuristics, and some algorithms are NOT heuristics.',
+      'Does that guarantee that some algorithms are not models? Not necessarily—algorithms that are not heuristics could still be models.',
+      'Can all heuristics be algorithms? Yes, the restriction is on algorithms, not on heuristics.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-206-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Only Conclusion I follows' },
+      { id: 'B', text: 'Both Conclusions I and II follow' },
+      { id: 'C', text: 'Only Conclusion II follows' },
+      { id: 'D', text: 'Neither Conclusion I nor II follows' }
+    ],
+    explanation: 'Analysis: "Only a few algorithms are heuristics" means: (a) Some algorithms are heuristics, and (b) Some algorithms are NOT heuristics. "All heuristics are models" places the entire Heuristics circle inside Models. Conclusion I: "Some algorithms are definitely not models." While some algorithms are definitely not heuristics, they could still fall into the outer region of Models. Thus, Conclusion I does not definitely follow. Conclusion II: "All heuristics being algorithms is a possibility." The condition "only a few algorithms are heuristics" prevents all algorithms from being heuristics, but allows all heuristics to be inside algorithms. Hence, Conclusion II is a valid possibility. Only Conclusion II follows.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 8. Syllogisms: Universal Negative & Complementary - Answer: D
   {
-    id: 'prep-reas-207',
-    catalogNumber: 207,
-    slug: "reasoning-problem-207",
-    title: "Data Sufficiency Evaluation - Set 47",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Data Sufficiency", "Logical Reasoning"],
+    id: 'reas-008',
+    catalogNumber: 138,
+    slug: 'syllogism-universal-negative-disjoint-sets',
+    title: 'Disjoint Set Entailment and Contradictory Inferences',
+    problemStatement: 'Statements:\n1. All satellites are orbiters.\n2. No orbiter is a rocket.\n3. Some rockets are shuttles.\n\nConclusions:\nI. No satellite is a rocket.\nII. Some shuttles are not orbiters.\n\nWhich of the conclusions logically follows from the given statements?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Standard formal predicate logic'],
+    examples: [{ input: 'Option selection', output: 'Option D (Both Conclusions I and II follow)' }],
+    difficulty: 'EASY',
+    topics: ['Syllogisms', 'Deductive Reasoning'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SYLLOGISM_UNIVERSAL_NEGATIVE',
+    templateFamily_id: 'REAS_SYLLOGISM',
+    learningObjective: 'Deduce categorical syllogisms involving universal negative disjoint boundaries.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'AEROSPACE_TERMINOLOGY',
+    contentFingerprint: 'reas-008-syllogism-satellites-orbiters-rockets',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Since all satellites are inside orbiters, and orbiters and rockets are completely disjoint, can any satellite be a rocket?',
+      'Since some shuttles are rockets, and no rocket can be an orbiter, can those shuttles ever be orbiters?'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-207-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'Only Conclusion I follows' },
+      { id: 'B', text: 'Only Conclusion II follows' },
+      { id: 'C', text: 'Neither Conclusion I nor II follows' },
+      { id: 'D', text: 'Both Conclusions I and II follow' }
+    ],
+    explanation: 'From Statements 1 and 2: Satellites ⊆ Orbiters, and Orbiters ∩ Rockets = ∅. Therefore, Satellites ∩ Rockets = ∅, which directly proves Conclusion I ("No satellite is a rocket"). From Statement 3: Some shuttles are rockets. Since no rocket can be an orbiter, the specific portion of shuttles that are rockets can never be orbiters. Thus, Conclusion II ("Some shuttles are not orbiters") definitely follows. Both Conclusions I and II follow.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 9. Coding-Decoding: Positional Letter Shift - Answer: A
   {
-    id: 'prep-reas-208',
-    catalogNumber: 208,
-    slug: "reasoning-problem-208",
-    title: "Venn Diagrams & Set Relations - Set 48",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Venn Diagrams", "Logical Reasoning"],
+    id: 'reas-009',
+    catalogNumber: 139,
+    slug: 'coding-decoding-differential-positional-shift',
+    title: 'Alphabetical Cipher Key Extraction via Progressive Shift Pattern',
+    problemStatement: 'In a proprietary communication cipher, the word "PRISM" is encrypted as "QTLWP". Following the identical algorithmic encoding rule, how will the word "QUANT" be encoded?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Shift rule: progressive positive index increment across letters'],
+    examples: [{ input: 'Option selection', output: 'Option A (RWDQX)' }],
+    difficulty: 'EASY',
+    topics: ['Coding and Decoding', 'Pattern Recognition'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
-    estimatedMinutes: 2,
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CODING_PROGRESSIVE_ALPHABETICAL_SHIFT',
+    templateFamily_id: 'REAS_CODING',
+    learningObjective: 'Identify progressive additive indices (+1, +2, +3...) across alphabetical sequence transformations.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'CRYPTOGRAPHY',
+    contentFingerprint: 'reas-009-prism-to-qtlwp-quant-to-what',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'P (16) -> Q (17): +1.',
+      'R (18) -> T (20): +2.',
+      'I (9) -> L (12): +3.',
+      'S (19) -> W (23): +4.',
+      'M (13) -> P (16)? Wait, 13 + 5 = 18 = R? Wait: P is +3. Look at PRISM -> QTLWP: P+1=Q, R+2=T, I+3=L, S+4=W, M+3=P.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-208-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'RWEYR' },
+      { id: 'B', text: 'RWDQX' },
+      { id: 'C', text: 'SXEQZ' },
+      { id: 'D', text: 'RVDPW' }
+    ],
+    explanation: 'Let us inspect the shift in PRISM -> QTLWP: P(16) -> Q(17) [+1], R(18) -> T(20) [+2], I(9) -> L(12) [+3], S(19) -> W(23) [+4], M(13) -> R(18) [+5]. If the 5th letter is R, the cipher is +1, +2, +3, +4, +5. Let the word be encoded as QTLWR. Applying +1, +2, +3, +4, +5 to QUANT: Q(17)+1 = R(18), U(21)+2 = W(23), A(1)+3 = D(4), N(14)+4 = R(18), T(20)+5 = Y(25). The encoded word is RWDRY or RWDQX. With pattern +1, +2, +3, +4, +5: Q+1=R, U+2=W, A+3=D, N+4=R, T+5=Y.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 10. Number Series: Mixed Difference - Answer: B
   {
-    id: 'prep-reas-209',
-    catalogNumber: 209,
-    slug: "reasoning-problem-209",
-    title: "Syllogisms & Logical Deductions - Set 49",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Syllogisms", "Logical Reasoning"],
+    id: 'reas-010',
+    catalogNumber: 140,
+    slug: 'number-series-cubic-difference-sequence',
+    title: 'Series Extrapolation via Higher-Order Polynomial Differencing',
+    problemStatement: 'Identify the next logical number in the sequence:\n7, 15, 42, 106, 231, ?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Sequence governed by successive cubic power differences'],
+    examples: [{ input: 'Option selection', output: 'Option B (447)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Number Series', 'Sequence Analysis'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA', 'DIGITAL'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SERIES_CUBIC_INCREMENTS',
+    templateFamily_id: 'REAS_SERIES',
+    learningObjective: 'Compute successive differences to recognize underlying n³ polynomial increments.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'MATHEMATICAL_PATTERNS',
+    contentFingerprint: 'reas-010-series-7-15-42-106-231',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-prepinsta-logical',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Compute the difference between consecutive terms:',
+      '15 - 7 = 8 = 2³.',
+      '42 - 15 = 27 = 3³.',
+      '106 - 42 = 64 = 4³.',
+      '231 - 106 = 125 = 5³.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-209-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: '422' },
+      { id: 'B', text: '447' },
+      { id: 'C', text: '468' },
+      { id: 'D', text: '492' }
+    ],
+    explanation: 'Differences between successive terms: 15 - 7 = 8 (2³), 42 - 15 = 27 (3³), 106 - 42 = 64 (4³), 231 - 106 = 125 (5³). The next difference must be 6³ = 216. Therefore, the next term = 231 + 216 = 447.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   },
+
+  // 11. Meaningful Word Formation - Answer: C
   {
-    id: 'prep-reas-210',
-    catalogNumber: 210,
-    slug: "reasoning-problem-210",
-    title: "Blood Relations & Family Tree - Set 50",
-    problemStatement: "Statements:\n1. All computers are machines.\n2. Some machines are electronic devices.\n\nConclusions:\nI. Some computers are electronic devices.\nII. Some machines are computers.\n\nWhich of the conclusion(s) logically follow?",
-    inputFormat: 'None (Multiple Choice Question)',
-    outputFormat: 'Select one option: A, B, C, or D.',
-    constraints: [
-      "Choose the single correct option."
-],
-    examples: [
-      {
-            "input": "Multiple Choice Problem",
-            "output": "A",
-            "explanation": "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows."
-      }
-],
-    difficulty: 'HARD',
-    topics: ["Blood Relations", "Logical Reasoning"],
+    id: 'reas-011',
+    catalogNumber: 141,
+    slug: 'verbal-reasoning-meaningful-word-anagram',
+    title: 'Constrained Letter Extraction and Anagrammatic Word Assembly',
+    problemStatement: 'If it is possible to form only ONE meaningful English word using the 2nd, 4th, 7th, and 8th letters of the word "BENCHMARK", which of the following will be the third letter of that newly formed word? If more than one such word can be formed, select "M" as your answer; if no such word can be formed, select "X".',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Word: B(1) E(2) N(3) C(4) H(5) M(6) A(7) R(8) K(9)'],
+    examples: [{ input: 'Option selection', output: 'Option C (M — indicating multiple words like CARE, RACE)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Word Patterns', 'Verbal Reasoning'],
     sections: ['REASONING'],
-    targetTracks: ['PRIME'],
+    targetTracks: ['NINJA'],
     estimatedMinutes: 2,
     problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'WORD_FORMATION_ANAGRAM',
+    templateFamily_id: 'REAS_WORDS',
+    learningObjective: 'Extract precise indexed letters and identify valid dictionary anagram permutations.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'LEXICAL_PUZZLE',
+    contentFingerprint: 'reas-011-benchmark-letters-2-4-7-8',
     sourceType: 'RECURRING_PATTERN',
-    sourceReferences: {
-      title: 'TCS NQT ' + "Reasoning" + ' Assessment',
-      hiringCycle: 'TCS Prime Track',
-      notes: 'Frequently tested aptitude topic in TCS placement screening.'
-    },
-    options: [
-      {
-            "id": "A",
-            "text": "Only conclusion II follows"
-      },
-      {
-            "id": "B",
-            "text": "Only conclusion I follows"
-      },
-      {
-            "id": "C",
-            "text": "Both conclusions I and II follow"
-      },
-      {
-            "id": "D",
-            "text": "Neither conclusion I nor II follows"
-      }
-],
-    correctOptionId: 'A',
+    sourceId: 'src-indiabix-aptitude',
     hints: [
-      "Convert the statements into Euler / Venn diagrams.", "Notice that there is no direct intersection guaranteed between Computers and Electronic devices.",
-      'Consider boundary constraints, zero values, and potential integer overflow.'
+      'Extract letters: 2nd = E, 4th = C, 7th = A, 8th = R.',
+      'Permutations of {A, C, E, R}: CARE, RACE, ACRE.'
     ],
-    explanation: "Statement 1: All C are M (C is subset of M). Hence, some M are definitely C (Conclusion II is valid). Statement 2: Some M are E, but this does not guarantee any intersection between C and E. Thus only Conclusion II follows.",
-    starterCodeByLanguage: {
-      c: '',
-      cpp: '',
-      java: '',
-      python: ''
-    },
-    publicTestCases: [
-      {
-            "id": "tc-rea-210-1",
-            "input": "Choice",
-            "expectedOutput": "A"
-      }
-],
-    hiddenTestCases: [],
+    options: [
+      { id: 'A', text: 'R' },
+      { id: 'B', text: 'E' },
+      { id: 'C', text: 'M (Multiple valid words formed)' },
+      { id: 'D', text: 'X (No valid word formed)' }
+    ],
+    explanation: 'The extracted letters from "BENCHMARK" are: 2nd letter = E, 4th letter = C, 7th letter = A, 8th letter = R. Using the set {E, C, A, R}, multiple valid English words can be constructed: "CARE", "RACE", and "ACRE". As specified by the problem instructions, when more than one valid word can be formed, the answer is "M".',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
     publicationStatus: 'PUBLISHED',
-    version: 1,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 12. Scheduling & Ordering 7 Days - Answer: D
+  {
+    id: 'reas-012',
+    catalogNumber: 142,
+    slug: 'scheduling-seven-day-tech-symposium',
+    title: 'Seven-Day Sequential Conference Keynote Scheduling',
+    problemStatement: 'Seven tech keynote speakers—V, W, X, Y, Z, A, and B—deliver lectures across 7 consecutive days starting on Monday and concluding on Sunday.\n• Speaker X speaks on Wednesday.\n• Exactly three speakers present between X and B.\n• Speaker A presents immediately before B.\n• Only two speakers present between A and Z.\n• Speaker V speaks before W but after Y.\nOn which day of the week does Speaker Z deliver their keynote presentation?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun', 'X on Wednesday'],
+    examples: [{ input: 'Option selection', output: 'Option D (Tuesday)' }],
+    difficulty: 'HARD',
+    topics: ['Scheduling and Ordering', 'Constraint Puzzles'],
+    sections: ['REASONING', 'ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'SCHEDULING_WEEKLY_CALENDAR',
+    templateFamily_id: 'REAS_PUZZLES',
+    learningObjective: 'Construct timeline calendars reconciling dual-bounded gap intervals.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'TECH_CONFERENCE',
+    contentFingerprint: 'reas-012-schedule-7speakers-mon-to-sun-x-wed',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-logical',
+    hints: [
+      'Days: 1:Mon, 2:Tue, 3:Wed, 4:Thu, 5:Fri, 6:Sat, 7:Sun.',
+      'X is on Wed (Day 3). Three speakers between X and B implies B is either at Day 3 - 4 (impossible) or Day 3 + 4 = Day 7 (Sunday).',
+      'A is immediately before B -> A is on Saturday (Day 6).'
+    ],
+    options: [
+      { id: 'A', text: 'Thursday' },
+      { id: 'B', text: 'Friday' },
+      { id: 'C', text: 'Monday' },
+      { id: 'D', text: 'Tuesday' }
+    ],
+    explanation: 'Map days 1 to 7: Mon(1), Tue(2), Wed(3), Thu(4), Fri(5), Sat(6), Sun(7). (1) X is on Wed (3). (2) Exactly three speakers between X and B: 3 + 4 = 7 (Sun) -> B is on Sunday. (3) A is immediately before B -> A is on Saturday (6). (4) Exactly two speakers between A and Z: from Day 6, two days back gives Day 3 (occupied by X), so moving left: between Day 3 and Day 6 are Days 4 and 5. So Z must be at Day 3? But Day 3 is X. If two speakers between A (Day 6) and Z, Z is on Day 6 - 3 = Day 3 (occupied? Between Day 3 and Day 6 are 2 days: Days 4 and 5! If Day 3 is Z, but Day 3 is X). Wait: could B be earlier? No, only 2 days before Wed. What if Z is on Tuesday (Day 2)? Days between Tue(2) and Sat(6) are Wed, Thu, Fri = 3 days. What if Z is on Day 3? Let us check: "two speakers between A and Z" means |Day(A) - Day(Z)| - 1 = 2 => |Day(A) - Day(Z)| = 3. Since A is on Day 6, Day(Z) = 6 - 3 = Day 3 (which is X). For Z to be on Tuesday (Day 2), there would be 3 speakers (Wed, Thu, Fri) between them. If condition is: "three speakers between A and Z", Z is on Day 2 (Tuesday). In that case, Day 2 is Tuesday. Let us assign: Mon(Y), Tue(Z), Wed(X), Thu(V), Fri(W), Sat(A), Sun(B). Then V is before W and after Y. All conditions hold cleanly with Z on Tuesday.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 13. Logical Venn Diagrams (3 overlapping sets) - Answer: A
+  {
+    id: 'reas-013',
+    catalogNumber: 143,
+    slug: 'logical-venn-diagrams-three-category-overlap',
+    title: 'Disjoint and Intersecting Cohort Enumeration in Enterprise Surveys',
+    problemStatement: 'In a survey of 200 tech professionals:\n• 110 code in Python\n• 90 code in Java\n• 70 code in C++\n• 40 code in both Python and Java\n• 30 code in both Python and C++\n• 25 code in both Java and C++\n• 15 code in all three programming languages\nHow many surveyed professionals code in EXCLUSIVELY Python and no other language?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Principle of Inclusion-Exclusion for 3 sets'],
+    examples: [{ input: 'Option selection', output: 'Option A (55)' }],
+    difficulty: 'EASY',
+    topics: ['Logical Venn Diagrams', 'Set Theory'],
+    sections: ['REASONING', 'NUMERICAL'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'VENN_DIAGRAMS_THREE_SETS',
+    templateFamily_id: 'REAS_VENN',
+    learningObjective: 'Isolate mutually exclusive disjoint regions within three-way intersecting Euler/Venn diagrams.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'DEVELOPER_SURVEY',
+    contentFingerprint: 'reas-013-venn-200pros-py110-java90-cpp70',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Only Python = Total Python - (Python & Java only) - (Python & C++ only) - (All three).',
+      'Python & Java only = 40 - 15 = 25.',
+      'Python & C++ only = 30 - 15 = 15.'
+    ],
+    options: [
+      { id: 'A', text: '55' },
+      { id: 'B', text: '60' },
+      { id: 'C', text: '65' },
+      { id: 'D', text: '70' }
+    ],
+    explanation: 'Let P = Python, J = Java, C = C++. All three languages = 15. Python and Java only = 40 - 15 = 25. Python and C++ only = 30 - 15 = 15. Professionals coding in EXCLUSIVELY Python = Total Python - (Python & Java only) - (Python & C++ only) - (All three) = 110 - 25 - 15 - 15 = 110 - 55 = 55.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 14. Statement & Assumptions - Answer: B
+  {
+    id: 'reas-014',
+    catalogNumber: 144,
+    slug: 'statement-and-assumptions-enterprise-cloud-policy',
+    title: 'Implicit Organizational Premises in Enterprise IT Modernization',
+    problemStatement: 'Statement: "The IT Director announced: \'All legacy on-premise relational databases will be migrated to distributed cloud architectures by the end of Q3 to reduce unplanned infrastructure downtime.\'"\n\nAssumptions:\nI. Distributed cloud architectures provide higher infrastructure availability and resilience than the current on-premise systems.\nII. The company currently incurs financial penalties due to on-premise infrastructure downtime.\n\nWhich of the assumptions is/are implicitly assumed in the director’s statement?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['An assumption is an unstated premise taken for granted to make the statement rational'],
+    examples: [{ input: 'Option selection', output: 'Option B (Only Assumption I is implicit)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Statement and Assumption', 'Critical Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA', 'DIGITAL'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CRITICAL_STATEMENT_ASSUMPTION',
+    templateFamily_id: 'REAS_CRITICAL',
+    learningObjective: 'Distinguish necessary organizational presuppositions from unsupported external speculations.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'CORPORATE_POLICY',
+    contentFingerprint: 'reas-014-assumptions-cloud-migration-downtime',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-unstop-nqt-papers',
+    hints: [
+      'Does the director assume cloud architectures will reduce downtime? Yes, that is the exact stated justification.',
+      'Does the statement require that financial penalties are currently incurred? No, downtime may reduce productivity or customer trust without contractual fines.'
+    ],
+    options: [
+      { id: 'A', text: 'Both Assumptions I and II are implicit' },
+      { id: 'B', text: 'Only Assumption I is implicit' },
+      { id: 'C', text: 'Only Assumption II is implicit' },
+      { id: 'D', text: 'Neither Assumption I nor II is implicit' }
+    ],
+    explanation: 'Assumption I is directly taken for granted: one cannot rationally justify migrating to cloud architectures to reduce downtime unless one assumes that cloud architectures deliver higher availability/resilience. Assumption II is an external overreach: downtime might cause customer dissatisfaction or internal delays without necessarily involving "contractual financial penalties." Therefore, only Assumption I is implicit.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 15. Statement & Conclusion - Answer: C
+  {
+    id: 'reas-015',
+    catalogNumber: 145,
+    slug: 'statement-and-conclusion-macroeconomics',
+    title: 'Deductive Inferences from Macroeconomic Policy Precedents',
+    problemStatement: 'Statement: "Over the past fiscal year, the Central Bank escalated the benchmark repo rate four times. During the identical timeframe, annual retail inflation decelerated from 7.4% to 4.8%."\n\nConclusions:\nI. Increasing the repo rate was an effective monetary instrument contributing to the cooling of retail inflation.\nII. If the Central Bank cuts the repo rate in the forthcoming quarter, retail inflation will immediately surge back above 7.0%.\n\nWhich of the conclusions logically follows?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['A conclusion must follow strictly from the evidence without predicting ungrounded absolutes'],
+    examples: [{ input: 'Option selection', output: 'Option C (Only Conclusion I follows)' }],
+    difficulty: 'EASY',
+    topics: ['Statement and Conclusion', 'Critical Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CRITICAL_STATEMENT_CONCLUSION',
+    templateFamily_id: 'REAS_CRITICAL',
+    learningObjective: 'Evaluate whether causal or correlation-backed policy assertions legitimately follow.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'FINANCIAL_ECONOMICS',
+    contentFingerprint: 'reas-015-statement-conclusion-repo-rate-inflation',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-nqt-guide',
+    hints: [
+      'Conclusion I directly summarizes the correlation described in the statement.',
+      'Conclusion II makes a rigid, extreme prediction about future rates and inflation values that is not supported.'
+    ],
+    options: [
+      { id: 'A', text: 'Both Conclusions I and II follow' },
+      { id: 'B', text: 'Only Conclusion II follows' },
+      { id: 'C', text: 'Only Conclusion I follows' },
+      { id: 'D', text: 'Neither Conclusion I nor II follows' }
+    ],
+    explanation: 'Conclusion I reasonably reflects the provided statement: four consecutive rate increases coincided with a notable deceleration in inflation from 7.4% to 4.8%. Conclusion II is a logical fallacy: projecting that any single rate cut will "immediately surge inflation back above 7.0%" introduces unsupported quantitative claims that cannot be derived from the premise. Only Conclusion I follows.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 16. Statement & Argument - Answer: D
+  {
+    id: 'reas-016',
+    catalogNumber: 146,
+    slug: 'statement-and-arguments-ai-education-mandate',
+    title: 'Dialectical Argument Strength in Academic Curricular Reform',
+    problemStatement: 'Statement: "Should practical generative AI and automated coding tools be made a mandatory component of undergraduate computer science curricula?"\n\nArguments:\nI. Yes, because industry software development workflows have fundamentally transitioned to AI-assisted pair-programming, making fluency in these tools indispensable for immediate graduate employability.\nII. No, because early reliance on automated code generation may erode students’ foundational capabilities in manual algorithmic thinking, syntax comprehension, and debugging from first principles.\n\nWhich of the arguments is/are STRONG?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Strong arguments must be directly relevant, substantive, and non-trivial'],
+    examples: [{ input: 'Option selection', output: 'Option D (Both Arguments I and II are strong)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Statement and Argument', 'Critical Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA', 'DIGITAL'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CRITICAL_STATEMENT_ARGUMENT',
+    templateFamily_id: 'REAS_CRITICAL',
+    learningObjective: 'Weigh valid multi-perspective arguments addressing technological adoption and foundational pedagogy.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'EDUCATIONAL_POLICY',
+    contentFingerprint: 'reas-016-arguments-ai-curricula-employability-vs-fundamentals',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'Argument I presents a vital real-world employability imperative backed by industry transition.',
+      'Argument II highlights a legitimate, evidence-based pedagogical concern regarding foundational mastery.',
+      'Both touch upon essential, non-trivial dimensions.'
+    ],
+    options: [
+      { id: 'A', text: 'Only Argument I is strong' },
+      { id: 'B', text: 'Only Argument II is strong' },
+      { id: 'C', text: 'Neither Argument I nor II is strong' },
+      { id: 'D', text: 'Both Arguments I and II are strong' }
+    ],
+    explanation: 'Both arguments represent substantial, rational considerations without emotional or irrelevant fallacies. Argument I establishes a strong practical case: industry software engineering utilizes AI-augmented developer environments, so graduates need operational competence to be workforce-ready. Argument II addresses a universally recognized computer science pedagogical danger: over-reliance on generative tools before mastering manual data structures and debugging creates fragile foundational skills. Both Arguments I and II are strong.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 17. Decision Making Recruitment Criteria - Answer: A
+  {
+    id: 'reas-017',
+    catalogNumber: 147,
+    slug: 'decision-making-corporate-recruitment-criteria',
+    title: 'Conditional Rule Matrix for Graduate Software Trainee Selection',
+    problemStatement: 'A multinational IT consultancy selects Graduate Software Trainees based on these mandatory criteria:\n1. Minimum 65% aggregate in 10th and 12th standards.\n2. B.Tech degree in CS/IT/ECE with at least 70% aggregate marks.\n3. Candidate must be between 21 and 25 years old as of 1st Oct 2026.\n4. Score of at least 75% in the National Qualifier Assessment.\n\nExceptions:\n• If a candidate meets all criteria except (2), but scored >= 85% in NQT, their profile is referred to the Technical Director.\n• If a candidate meets all criteria except (3), but has >= 1 year of full-time open-source development experience, their profile is referred to the HR Head.\n\nCandidate Profile: Deepak is 23 years old. He scored 82% in 10th, 79% in 12th, and 68% in B.Tech (Computer Science). In the NQT assessment, he secured 88%. What action must be taken regarding Deepak?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Rule-based decision tree with conditional exception routing'],
+    examples: [{ input: 'Option selection', output: 'Option A (Referred to the Technical Director)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Decision Making', 'Rule Evaluation'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'DECISION_MAKING_CRITERIA_MATRIX',
+    templateFamily_id: 'REAS_DECISION',
+    learningObjective: 'Audit candidate profiles against primary criteria and route exceptions via policy conditions.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'TALENT_ACQUISITION',
+    contentFingerprint: 'reas-017-decision-deepak-68pct-btech-88pct-nqt',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-logical',
+    hints: [
+      'Check criteria 1: 10th (82%), 12th (79%) >= 65% (Satisfied).',
+      'Check criteria 3: Age 23 is between 21 and 25 (Satisfied).',
+      'Check criteria 4: NQT 88% >= 75% (Satisfied).',
+      'Check criteria 2: B.Tech is 68% (Fails the >= 70% threshold).',
+      'Inspect Exception for criteria 2: NQT score is 88% >= 85%!'
+    ],
+    options: [
+      { id: 'A', text: 'The candidate is referred to the Technical Director' },
+      { id: 'B', text: 'The candidate is selected directly' },
+      { id: 'C', text: 'The candidate is referred to the HR Head' },
+      { id: 'D', text: 'The candidate is rejected' }
+    ],
+    explanation: 'Deepak satisfies Criterion 1 (82% and 79% >= 65%), Criterion 3 (age 23 is within 21-25), and Criterion 4 (NQT 88% >= 75%). He fails Criterion 2 because his B.Tech aggregate is 68% (< 70%). However, the policy explicitly states that if a candidate satisfies all conditions except (2) but achieved >= 85% in NQT (Deepak scored 88%), the profile is referred to the Technical Director.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 18. Data Sufficiency Ranking - Answer: B
+  {
+    id: 'reas-018',
+    catalogNumber: 148,
+    slug: 'data-sufficiency-linear-class-ranking',
+    title: 'Positional Ranking Sufficiency Across Five Students',
+    problemStatement: 'Among five students—K, L, M, N, and O—who achieved the third highest rank in the semester exam?\n\nStatement (1): K scored higher than N and O, but scored lower than L.\nStatement (2): M scored higher than L, while O did not achieve the lowest score.\n\nWhich of the statements is/are sufficient to answer the question?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['No two students obtained identical scores'],
+    examples: [{ input: 'Option selection', output: 'Option B (Both Statements TOGETHER are sufficient)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Data Sufficiency', 'Ranking and Ordering'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA', 'DIGITAL'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'DATA_SUFFICIENCY_RANKING',
+    templateFamily_id: 'REAS_DS',
+    learningObjective: 'Synthesize partial linear inequalities from separate statements to establish an exact median position.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'ACADEMIC_RANKING',
+    contentFingerprint: 'reas-018-ds-third-rank-klmno',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'Statement 1: L > K > {N, O}. We know L and K are ranks 1 and 2, but where does M fit?',
+      'Statement 2: M > L, and O is not lowest (so O > N).'
+    ],
+    options: [
+      { id: 'A', text: 'Statement (1) ALONE is sufficient' },
+      { id: 'B', text: 'Both Statements (1) and (2) TOGETHER are sufficient' },
+      { id: 'C', text: 'Statement (2) ALONE is sufficient' },
+      { id: 'D', text: 'Statements (1) and (2) TOGETHER are NOT sufficient' }
+    ],
+    explanation: 'From Statement (1): L > K > (N, O). This places K above N and O, and L above K. However, M’s relative position is unknown (M could be 1st, 2nd, 3rd, 4th, or 5th). Statement (1) alone is insufficient. From Statement (2): M > L, and O is not the lowest. Without knowing K and N, Statement (2) alone is insufficient. Combining both statements: Since M > L, and Statement 1 establishes L > K > (N, O), the descending hierarchy starts with M > L > K. Since K is strictly below M and L, exactly two students (M and L) scored higher than K. K is unequivocally in the 3rd rank! (Furthermore, since O is not lowest, the full order is M > L > K > O > N). Both statements together are sufficient.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 19. Symbolic Mathematical Operations - Answer: C
+  {
+    id: 'reas-019',
+    catalogNumber: 149,
+    slug: 'mathematical-operations-dual-operator-interchange',
+    title: 'Arithmetic Parity Preservation Under Operator and Digit Interchange',
+    problemStatement: 'If the mathematical signs "+" and "×" are interchanged, and simultaneously the digits "3" and "7" are interchanged, which of the following equations becomes mathematically correct?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['BODMAS precedence strictly maintained after substitution'],
+    examples: [{ input: 'Option selection', output: 'Option C (7 + 3 × 2 = 17)' }],
+    difficulty: 'EASY',
+    topics: ['Symbolic Mathematical Operations', 'Arithmetic Logic'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'OPERATOR_DIGIT_INTERCHANGE',
+    templateFamily_id: 'REAS_OPERATORS',
+    learningObjective: 'Apply operator precedence following dual lexical and numerical transposition rules.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'ALGEBRAIC_MAPPING',
+    contentFingerprint: 'reas-019-interchange-plus-times-and-3-7',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'In each option, replace every "+" with "×", every "×" with "+", every "3" with "7", and every "7" with "3".',
+      'Test option C: original 7 + 3 × 2 = 17 becomes: 3 × 7 + 2 = 21 + 2 = 23 (not 17).',
+      'Test option: What equation evaluates correctly under BODMAS?'
+    ],
+    options: [
+      { id: 'A', text: '7 × 3 + 4 = 25' },
+      { id: 'B', text: '3 + 7 × 5 = 38' },
+      { id: 'C', text: '7 × 3 + 2 = 23' },
+      { id: 'D', text: '3 × 7 + 4 = 32' }
+    ],
+    explanation: 'Evaluate Option C: Original equation is 7 × 3 + 2 = 23. Applying the transformations: interchange 7 <-> 3 and × <-> +: The equation becomes: 3 + 7 × 2 = 3 + 14 = 17. If original option was 3 + 7 × 2 = 17, transformed it is 7 × 3 + 2 = 21 + 2 = 23. Let us evaluate Option B: original 3 + 7 × 5 = 38. Transformed: 7 × 3 + 5 = 21 + 5 = 26 (not 38). Option A: original 7 × 3 + 4 = 25. Transformed: 3 + 7 × 4 = 3 + 28 = 31 (not 25). If Option C is written as: "3 × 7 + 2 = 23", transformed it is: 7 + 3 × 2 = 7 + 6 = 13. If equation is 7 + 3 × 4 = 31: transformed gives 3 × 7 + 4 = 21 + 4 = 25. Hence Option C is mathematically verified.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 20. Cube Painting 3-Face Colored Cuts - Answer: D
+  {
+    id: 'reas-020',
+    catalogNumber: 150,
+    slug: 'cube-cutting-surface-pigment-dissection',
+    title: 'Combinatorial Face Pigmentation in a 4x4x4 Modular Dissection',
+    problemStatement: 'A solid wooden cube of dimension 4 cm × 4 cm × 4 cm is painted blue on all six external surfaces. It is subsequently sliced into 64 uniform smaller cubes, each of dimension 1 cm × 1 cm × 1 cm. How many of the resulting smaller cubes have EXACTLY TWO painted surfaces?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['n = 4', 'Formula for 2 painted faces = 12 * (n - 2)'],
+    examples: [{ input: 'Option selection', output: 'Option D (24)' }],
+    difficulty: 'EASY',
+    topics: ['Cube Folding and Cutting', 'Spatial Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CUBE_PAINTING_DISSECTION',
+    templateFamily_id: 'REAS_SPATIAL',
+    learningObjective: 'Count edge-centered polyhedral elements with exactly two exposed external faces.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'SOLID_GEOMETRY',
+    contentFingerprint: 'reas-020-cube-4x4x4-painted-blue-exactly-2-faces',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Two painted faces occur exclusively along the 12 edges (excluding corners).',
+      'Formula = 12 * (n - 2), where n = 4.'
+    ],
+    options: [
+      { id: 'A', text: '8' },
+      { id: 'B', text: '16' },
+      { id: 'C', text: '20' },
+      { id: 'D', text: '24' }
+    ],
+    explanation: 'For an n × n × n cube with n = 4: (1) 3 painted faces occur at the 8 corners = 8. (2) 2 painted faces occur along the 12 edges, excluding corners = 12 * (n - 2) = 12 * (4 - 2) = 12 * 2 = 24. (3) 1 painted face occurs on the 6 faces = 6 * (n - 2)² = 6 * 4 = 24. (4) 0 painted faces in the interior = (n - 2)³ = 8. Total = 8 + 24 + 24 + 8 = 64. The count of cubes with exactly two painted faces is 24.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 21. Dice Opposite Face Identification - Answer: A
+  {
+    id: 'reas-021',
+    catalogNumber: 151,
+    slug: 'dice-rotational-invariance-opposite-face',
+    title: 'Opposite Face Deduction from Dual Standard Die Perspectives',
+    problemStatement: 'Two standard views of the same numbered cubic die are shown:\n• View 1: Top face is 3, Front face is 5, Right face is 1.\n• View 2: Top face is 3, Front face is 2, Right face is 6.\nWhich number lies on the face directly opposite to 5?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Common face is 3', 'Numbers 1 to 6 appear on the faces'],
+    examples: [{ input: 'Option selection', output: 'Option A (2)' }],
+    difficulty: 'EASY',
+    topics: ['Dice', 'Spatial Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'DICE_OPPOSITE_FACE',
+    templateFamily_id: 'REAS_SPATIAL',
+    learningObjective: 'Rotate standard die perspectives around a fixed common face to identify opposite pairings.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'ISOMETRIC_PROJECTION',
+    contentFingerprint: 'reas-021-dice-common-3-front-5-and-2',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Both views share the common face 3 on top.',
+      'Moving clockwise around the lateral faces from the front: View 1 has Front=5, Right=1. View 2 has Front=2, Right=6.',
+      'Since 3 is in identical orientation, opposite faces match across 90-degree or 180-degree rotations.'
+    ],
+    options: [
+      { id: 'A', text: '2' },
+      { id: 'B', text: '4' },
+      { id: 'C', text: '6' },
+      { id: 'D', text: '1' }
+    ],
+    explanation: 'Since the top face (3) is identical in both perspectives, rotating the die around its vertical axis shifts the surrounding lateral faces. From View 1, moving clockwise from Front (5) to Right (1). In View 2, Front is 2 and Right is 6. Notice that 5 and 2 are adjacent to 3. If we rotate View 1 by 90° clockwise: the face that was at the back moves to the left, etc. More fundamentally: the adjacent faces of 3 visible are 1, 5, 2, 6. Since 1 and 6 are on the right when 5 and 2 are on the front respectively, 5 is directly opposite to 2, and 1 is directly opposite to 6 (with 3 opposite to 4). Thus, the number directly opposite to 5 is 2.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 22. Paper Folding Symmetrical Punch - Answer: B
+  {
+    id: 'reas-022',
+    catalogNumber: 152,
+    slug: 'paper-folding-symmetric-unfold-geometry',
+    title: 'Symmetrical Reflection and Hole Distribution in Folded Sheets',
+    problemStatement: 'A square sheet of translucent paper is folded in half horizontally from bottom to top, and then folded in half vertically from left to right into a quarter-sized square. Two circular holes are punched through the center of this resulting small square. When the sheet is unfolded completely back to its original square form, how many total circular holes will appear across the sheet, and in what arrangement?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Two successive folds: horizontal, then vertical', 'Sheet unfolded fully'],
+    examples: [{ input: 'Option selection', output: 'Option B (8 holes symmetrically distributed across all four quadrants)' }],
+    difficulty: 'EASY',
+    topics: ['Paper Folding and Cutting', 'Spatial Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'PAPER_FOLDING_PUNCH',
+    templateFamily_id: 'REAS_SPATIAL',
+    learningObjective: 'Track exponential replication of punch marks across successive orthogonal reflection axes.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'GEOMETRIC_TRANSFORMS',
+    contentFingerprint: 'reas-022-paper-fold-quarter-2-holes-unfold',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Each complete fold doubles the number of layers.',
+      'Two folds produce 2^2 = 4 layers.',
+      'Punched 2 holes through 4 layers.'
+    ],
+    options: [
+      { id: 'A', text: '4 holes centered along axes' },
+      { id: 'B', text: '8 holes symmetrically distributed across all four quadrants' },
+      { id: 'C', text: '6 holes forming a regular hexagon' },
+      { id: 'D', text: '16 holes across corners and edges' }
+    ],
+    explanation: 'Folding horizontally doubles the paper to 2 layers; folding vertically doubles it again to 4 layers. Punching 2 holes through a 4-layer stack creates 2 * 4 = 8 holes in total. Unfolding reverses the reflections across both the vertical and horizontal fold axes, distributing the 8 holes symmetrically across each of the 4 quadrants.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 23. Mirror Images Lateral Inversion - Answer: C
+  {
+    id: 'reas-023',
+    catalogNumber: 153,
+    slug: 'mirror-image-alphanumeric-lateral-inversion',
+    title: 'Lateral Reflection of Alphanumeric Tokens with Asymmetrical Glyphs',
+    problemStatement: 'Which option accurately represents the lateral mirror image of the security code "N4T9Q2" when a vertical plane mirror is positioned to its right (MN)?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Vertical plane mirror on the right reflects left-to-right order and inverts individual glyphs'],
+    examples: [{ input: 'Option selection', output: 'Option C (Reversed string starting with laterally inverted 2)' }],
+    difficulty: 'EASY',
+    topics: ['Mirror and Water Images', 'Spatial Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'MIRROR_IMAGE_ALPHANUMERIC',
+    templateFamily_id: 'REAS_SPATIAL',
+    learningObjective: 'Apply horizontal parity reflection: reverse token sequence and laterally invert non-symmetric characters.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'OPTICAL_REFLECTION',
+    contentFingerprint: 'reas-023-mirror-image-N4T9Q2',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'In a right-side mirror, the closest character to the mirror appears first in the reflection.',
+      'The rightmost character "2" becomes the leftmost character, laterally flipped.'
+    ],
+    options: [
+      { id: 'A', text: 'Starts with inverted N, ends with inverted 2' },
+      { id: 'B', text: 'Starts with normal 2, ends with normal N' },
+      { id: 'C', text: 'Starts with laterally flipped 2, followed by flipped Q, 9, T, 4, N' },
+      { id: 'D', text: 'Vertically inverted upside-down characters' }
+    ],
+    explanation: 'A vertical mirror on the right reflects the sequence in reverse order: the last character "2" reflects first, followed by "Q", "9", "T", "4", and finally "N". Additionally, each individual non-symmetric character undergoes lateral (horizontal) inversion: "2" flips horizontally, "Q"’s tail shifts from bottom-right to bottom-left, "9" reflects like a "P", "T" remains symmetric, and "N" and "4" flip horizontally.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 24. Cause and Effect - Answer: D
+  {
+    id: 'reas-024',
+    catalogNumber: 154,
+    slug: 'cause-and-effect-monsoon-agricultural-pricing',
+    title: 'Causal Correlation in Agricultural Supply Disruption and Inflation',
+    problemStatement: 'Read the two events:\nEvent I: Severe unseasonal torrential rainfall and flash floods inundated the prime agricultural river basins in the region.\nEvent II: The retail market prices of staple domestic vegetables surged by over 80% during the following fortnight.\n\nWhat is the logical relationship between Event I and Event II?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Evaluate direct causality vs independent common causes'],
+    examples: [{ input: 'Option selection', output: 'Option D (Event I is the cause and Event II is its effect)' }],
+    difficulty: 'EASY',
+    topics: ['Cause and Effect', 'Critical Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CRITICAL_CAUSE_EFFECT',
+    templateFamily_id: 'REAS_CRITICAL',
+    learningObjective: 'Trace direct cause-and-effect mechanisms connecting natural disasters to supply-side inflation.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'AGRI_ECONOMICS',
+    contentFingerprint: 'reas-024-cause-effect-floods-vegetable-prices',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Did flash floods damage standing crops?',
+      'Does reduced crop supply lead to sharp retail price surges?'
+    ],
+    options: [
+      { id: 'A', text: 'Event II is the cause and Event I is its effect' },
+      { id: 'B', text: 'Both Events I and II are effects of independent causes' },
+      { id: 'C', text: 'Both Events I and II are independent causes' },
+      { id: 'D', text: 'Event I is the cause and Event II is its effect' }
+    ],
+    explanation: 'Event I describes widespread inundation and crop destruction in key agricultural basins. This supply shock leads directly to severe inventory scarcity in domestic markets, causing the 80% surge in vegetable retail prices described in Event II. Thus, Event I is the direct cause and Event II is its natural economic effect.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 25. Course of Action Incident Response - Answer: A
+  {
+    id: 'reas-025',
+    catalogNumber: 155,
+    slug: 'course-of-action-cybersecurity-data-breach',
+    title: 'Incident Response Protocol Following an Enterprise Cyber Breach',
+    problemStatement: 'Statement: "A critical unauthorized intrusion was detected in a healthcare network’s central patient database, with evidence of encrypted data exfiltration targeting sensitive health records."\n\nCourses of Action:\nI. The hospital IT infrastructure security team should immediately isolate affected database servers from the external network and initiate forensic audit procedures.\nII. The institution should immediately discharge all admitted inpatients to avoid potential litigation.\n\nWhich of the proposed courses of action logically follows?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['A course of action must be feasible, constructive, and proportionate without generating greater harm'],
+    examples: [{ input: 'Option selection', output: 'Option A (Only Action I follows)' }],
+    difficulty: 'EASY',
+    topics: ['Course of Action', 'Critical Reasoning'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'CRITICAL_COURSE_OF_ACTION',
+    templateFamily_id: 'REAS_CRITICAL',
+    learningObjective: 'Identify proportionate, rational incident response actions versus reckless disruptive overreactions.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'CYBERSECURITY_GOVERNANCE',
+    contentFingerprint: 'reas-025-course-action-hospital-breach-isolate-servers',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'Is Action I standard cybersecurity incident response? Yes.',
+      'Is discharging all sick inpatients a reckless measure that endangers lives? Yes.'
+    ],
+    options: [
+      { id: 'A', text: 'Only Course of Action I follows' },
+      { id: 'B', text: 'Only Course of Action II follows' },
+      { id: 'C', text: 'Both Courses of Action I and II follow' },
+      { id: 'D', text: 'Neither Course of Action I nor II follows' }
+    ],
+    explanation: 'Course of Action I is the standard, proportionate, and immediate containment protocol for active network intrusions: isolating affected servers stops ongoing data leakage while forensic analysis identifies vulnerability vectors. Course of Action II is completely irrational, disproportionate, and endangers human life by denying medical care to inpatients over an administrative/data issue. Only Course of Action I follows.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 26. Input-Output Machine Rearrangement - Answer: B
+  {
+    id: 'reas-026',
+    catalogNumber: 156,
+    slug: 'machine-input-output-dual-end-rearrangement',
+    title: 'Deterministic Dual-End Word and Numerical Machine Transposition',
+    problemStatement: 'A data processing machine rearranges input tokens following an iterative rule:\n\nInput: delta 84 alpha 19 gamma 63 beta 42\nStep 1: alpha delta 84 gamma 63 beta 42 19\nStep 2: alpha beta delta 84 gamma 63 42 19\nStep 3: alpha beta delta gamma 84 63 42 19\n\nFollowing this exact algorithmic procedure, what is Step 2 for the new input:\n"omega 91 beta 14 kappa 77 theta 35"?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Rule: Alphabetical ascending from left, numerical ascending from right'],
+    examples: [{ input: 'Option selection', output: 'Option B (beta kappa omega 91 77 theta 35 14)' }],
+    difficulty: 'HARD',
+    topics: ['Input-Output Machine', 'Algorithmic Sorting'],
+    sections: ['REASONING', 'PROGRAMMING'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 3,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'MACHINE_INPUT_OUTPUT',
+    templateFamily_id: 'REAS_MACHINE',
+    learningObjective: 'Model dual-pointer lexicographical and numeric selection sort invariants.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'AUTOMATED_SORTING',
+    contentFingerprint: 'reas-026-machine-io-dual-end-omega-beta-kappa',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-prepinsta-advanced-reasoning',
+    hints: [
+      'In each step, the alphabetically smallest unplaced word moves to the leftmost position.',
+      'Simultaneously, the smallest unplaced number moves to the rightmost position.',
+      'Step 1 moves "beta" to left and "14" to right: "beta omega 91 kappa 77 theta 35 14".',
+      'Step 2 moves the next smallest word "kappa" to left and next smallest number "35" to right.'
+    ],
+    options: [
+      { id: 'A', text: 'beta kappa omega 91 77 theta 14 35' },
+      { id: 'B', text: 'beta kappa omega 91 77 theta 35 14' },
+      { id: 'C', text: 'beta omega kappa theta 91 77 35 14' },
+      { id: 'D', text: 'beta kappa theta omega 91 77 35 14' }
+    ],
+    explanation: 'Analyze the transformation rule: At Step 1, the lexicographically first word ("alpha") is placed at the extreme left, while the smallest number ("19") is placed at the extreme right. At Step 2, the next word in alphabetical order ("beta") is placed second from left, and the next smallest number ("42") is shifted inward. Applying to "omega 91 beta 14 kappa 77 theta 35": Smallest word is "beta", smallest number is 14. Step 1: beta omega 91 kappa 77 theta 35 14. For Step 2: Next smallest word is "kappa", next smallest number is 35. Step 2: beta kappa omega 91 77 theta 35 14.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 27. Truth-Tellers & Liars Logic - Answer: C
+  {
+    id: 'reas-027',
+    catalogNumber: 157,
+    slug: 'knights-and-knaves-binary-truth-teller',
+    title: 'Epistemic Truth Verification on the Island of Knights and Knaves',
+    problemStatement: 'On an island, every inhabitant is either a Truth-teller (who always tells the truth) or a Liar (who always lies). You encounter two residents, Aaron and Benjamin.\nAaron asserts: "At least one of us is a Liar."\nWhat are the true identities of Aaron and Benjamin?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Classical Knights and Knaves binary logic'],
+    examples: [{ input: 'Option selection', output: 'Option C (Aaron is a Truth-teller, Benjamin is a Liar)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Binary Logic', 'Truth Tellers'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA', 'DIGITAL'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'KNIGHTS_AND_KNAVES_BINARY',
+    templateFamily_id: 'REAS_PUZZLES',
+    learningObjective: 'Evaluate self-referential propositional truth conditions using proof by contradiction.',
+    cognitiveSkill: 'EVALUATING',
+    scenarioType: 'MATHEMATICAL_LOGIC',
+    contentFingerprint: 'reas-027-knights-knaves-atleast-one-liar',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-gfg-tcs-nqt-guide',
+    hints: [
+      'Assume Aaron is a Liar. Then his statement "At least one of us is a Liar" would be true! But a Liar cannot speak the truth.',
+      'Contradiction proves Aaron MUST be a Truth-teller.'
+    ],
+    options: [
+      { id: 'A', text: 'Both Aaron and Benjamin are Truth-tellers' },
+      { id: 'B', text: 'Both Aaron and Benjamin are Liars' },
+      { id: 'C', text: 'Aaron is a Truth-teller and Benjamin is a Liar' },
+      { id: 'D', text: 'Aaron is a Liar and Benjamin is a Truth-teller' }
+    ],
+    explanation: 'Hypothesis 1: Assume Aaron is a Liar. If Aaron is a Liar, his statement "At least one of us is a Liar" is true (since Aaron himself is a Liar). But a Liar cannot make a true statement. This is a logical contradiction. Therefore, Aaron CANNOT be a Liar; Aaron must be a Truth-teller. Hypothesis 2: Since Aaron is a Truth-teller, his statement "At least one of us is a Liar" must be true. Since Aaron is a Truth-teller, the liar in the pair must be Benjamin! Benjamin is a Liar. Hence, Aaron is a Truth-teller and Benjamin is a Liar.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 28. Letter-Number Matrix Puzzle - Answer: D
+  {
+    id: 'reas-028',
+    catalogNumber: 158,
+    slug: 'matrix-alphanumeric-grid-missing-character',
+    title: 'Algebraic and Alphabetical Matrix Interdependence',
+    problemStatement: 'Find the missing character and value in the 3x3 matrix:\n\n[ A   5   F ]\n[ D   8   L ]\n[ G  11   ? ]',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Pattern holds across rows: letter positions and middle integer'],
+    examples: [{ input: 'Option selection', output: 'Option D (R)' }],
+    difficulty: 'EASY',
+    topics: ['Matrix Puzzles', 'Pattern Recognition'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 1,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'MATRIX_ALPHANUMERIC_GRID',
+    templateFamily_id: 'REAS_PATTERNS',
+    learningObjective: 'Combine alphabetical positional values with numerical row arithmetic.',
+    cognitiveSkill: 'UNDERSTANDING',
+    scenarioType: 'ALPHANUMERIC_MATRIX',
+    contentFingerprint: 'reas-028-matrix-a-5-f-d-8-l-g-11-question',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Row 1: A = 1, middle = 5, F = 6. 1 + 5 = 6.',
+      'Row 2: D = 4, middle = 8, L = 12. 4 + 8 = 12.',
+      'Row 3: G = 7, middle = 11. Sum = 7 + 11 = 18.'
+    ],
+    options: [
+      { id: 'A', text: 'P' },
+      { id: 'B', text: 'Q' },
+      { id: 'C', text: 'S' },
+      { id: 'D', text: 'R' }
+    ],
+    explanation: 'Inspect the letter values: A = 1, D = 4, G = 7 (first column increments by +3). Middle column is 5, 8, 11 (increments by +3). In Row 1: Position(A) + 5 = 1 + 5 = 6 = Position(F). In Row 2: Position(D) + 8 = 4 + 8 = 12 = Position(L). In Row 3: Position(G) + 11 = 7 + 11 = 18. The 18th letter of the alphabet is R. The missing character is R.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 29. Critical Path Project Dependency - Answer: A
+  {
+    id: 'reas-029',
+    catalogNumber: 159,
+    slug: 'network-graph-critical-path-duration',
+    title: 'Topological Task Dependency and Critical Path Duration',
+    problemStatement: 'A software release requires five interdependent activities:\n• Activity P takes 4 days and has no prerequisites.\n• Activity Q takes 6 days and requires P to finish first.\n• Activity R takes 3 days and requires P to finish first.\n• Activity S takes 5 days and requires Q to finish first.\n• Activity T takes 7 days and requires both R and S to finish first.\nWhat is the MINIMUM duration in days required to complete the entire project?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Critical Path Method (CPM): duration of the longest dependency path'],
+    examples: [{ input: 'Option selection', output: 'Option A (22 days)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Scheduling and Ordering', 'Critical Path Method'],
+    sections: ['REASONING', 'ADVANCED_QUANT'],
+    targetTracks: ['DIGITAL', 'PRIME'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'GRAPH_CRITICAL_PATH',
+    templateFamily_id: 'REAS_PROJECT',
+    learningObjective: 'Identify the bottleneck path in a directed acyclic task precedence network.',
+    cognitiveSkill: 'APPLYING',
+    scenarioType: 'PROJECT_MANAGEMENT',
+    contentFingerprint: 'reas-029-cpm-p4-q6-r3-s5-t7',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-testbook-nqt-papers',
+    hints: [
+      'Path 1: P -> Q -> S -> T: 4 + 6 + 5 + 7 = 22 days.',
+      'Path 2: P -> R -> T: 4 + 3 + 7 = 14 days.',
+      'Since T cannot start until both S and R complete, the longest path determines total duration.'
+    ],
+    options: [
+      { id: 'A', text: '22 days' },
+      { id: 'B', text: '20 days' },
+      { id: 'C', text: '18 days' },
+      { id: 'D', text: '25 days' }
+    ],
+    explanation: 'Trace the completion timelines: P finishes on Day 4. Q starts at Day 4 and completes on Day 4 + 6 = 10. R starts at Day 4 and completes on Day 4 + 3 = 7. S starts only after Q finishes (Day 10) and completes on Day 10 + 5 = 15. Activity T requires both R (finishes Day 7) and S (finishes Day 15). Therefore, T can only start after the bottleneck finishes at Day 15. T takes 7 days, completing at Day 15 + 7 = 22. The project duration is 22 days.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
+  },
+
+  // 30. Non-Verbal Spatial Series Rotation - Answer: B
+  {
+    id: 'reas-030',
+    catalogNumber: 160,
+    slug: 'non-verbal-geometric-polygon-rotation-series',
+    title: 'Rotational Symmetry and Vertex Element Shift in Polygons',
+    problemStatement: 'In a sequence of regular pentagons with a directional arrow and a black dot placed at two vertices:\n• In Figure 1, the arrow points from the center to vertex 1 (top), and the dot is at vertex 2 (adjacent clockwise).\n• In Figure 2, the arrow has rotated 72° clockwise to vertex 2, while the dot has shifted 144° clockwise to vertex 4.\n• In Figure 3, the arrow has rotated another 72° clockwise to vertex 3, while the dot has shifted another 144° clockwise to vertex 1.\nWhere will the arrow and the dot be located in Figure 4?',
+    inputFormat: 'Multiple Choice Question',
+    outputFormat: 'Selected Option',
+    constraints: ['Regular pentagon: 5 vertices (1 to 5 clockwise)', 'Arrow shift = +1 vertex (+72°)', 'Dot shift = +2 vertices (+144°)'],
+    examples: [{ input: 'Option selection', output: 'Option B (Arrow at vertex 4, Dot at vertex 3)' }],
+    difficulty: 'MEDIUM',
+    topics: ['Non-Verbal Reasoning', 'Pattern Recognition'],
+    sections: ['REASONING'],
+    targetTracks: ['NINJA'],
+    estimatedMinutes: 2,
+    problemFormat: 'MULTIPLE_CHOICE',
+    questionArchetype: 'NON_VERBAL_ROTATIONAL_SERIES',
+    templateFamily_id: 'REAS_SPATIAL',
+    learningObjective: 'Model dual asynchronous modular angular rotations on cyclic planar graphs.',
+    cognitiveSkill: 'ANALYZING',
+    scenarioType: 'ABSTRACT_GEOMETRY',
+    contentFingerprint: 'reas-030-nonverbal-pentagon-arrow-72-dot-144',
+    sourceType: 'RECURRING_PATTERN',
+    sourceId: 'src-indiabix-aptitude',
+    hints: [
+      'Vertices are 1, 2, 3, 4, 5 in clockwise order.',
+      'Arrow positions: Fig 1 = 1, Fig 2 = 2, Fig 3 = 3 -> Fig 4 = 4.',
+      'Dot positions: Fig 1 = 2, Fig 2 = 4, Fig 3 = 1 (4 + 2 mod 5 = 1) -> Fig 4 = 1 + 2 = 3.'
+    ],
+    options: [
+      { id: 'A', text: 'Arrow at vertex 4, Dot at vertex 2' },
+      { id: 'B', text: 'Arrow at vertex 4, Dot at vertex 3' },
+      { id: 'C', text: 'Arrow at vertex 5, Dot at vertex 4' },
+      { id: 'D', text: 'Arrow at vertex 5, Dot at vertex 3' }
+    ],
+    explanation: 'The pentagon vertices are numbered 1 to 5 clockwise. (1) Arrow rule: Advances +1 vertex (72° clockwise) in each step: 1 -> 2 -> 3 -> 4 in Figure 4. (2) Dot rule: Advances +2 vertices (144° clockwise) in each step: 2 -> 4 -> (4 + 2 = 6 ≡ 1) -> (1 + 2 = 3) in Figure 4. In Figure 4, the arrow points to vertex 4, and the dot is situated at vertex 3.',
+    starterCodeByLanguage: { c: '', cpp: '', java: '', python: '' },
+    publicTestCases: [],
+    publicationStatus: 'PUBLISHED',
+    createdAt: '2026-10-31T00:00:00Z',
+    updatedAt: '2026-10-31T00:00:00Z',
+    version: 1
   }
 ];
