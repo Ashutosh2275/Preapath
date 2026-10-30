@@ -30,6 +30,7 @@ export interface UserProfile {
   preparationStartDate?: string;
   prepIntensity?: PrepIntensity;
   version?: number;
+  onboardingDraft?: Record<string, any>;
   createdAt: string;
   updatedAt: string;
 }

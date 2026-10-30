@@ -49,7 +49,9 @@ import {
   fetchPostgresDailySessions,
   fetchPostgresNotificationDevices,
   updatePostgresNotificationDeviceStatus,
-  deletePostgresAccount
+  deletePostgresAccount,
+  savePostgresOnboardingDraft,
+  clearPostgresOnboardingDraft
 } from '../lib/db';
 import { signOutFromProviders } from '../lib/authService';
 import { calculateNextSpacedReview } from '../lib/spacedRepetition';
@@ -69,6 +71,8 @@ interface UserStoreState {
   signOutUser: () => Promise<void>;
   clearLocalCacheOnly: () => Promise<void>;
   deleteAccountPermanently: () => Promise<boolean>;
+  saveOnboardingDraft: (draft: Record<string, any>) => Promise<void>;
+  clearOnboardingDraft: () => Promise<void>;
 
   // Notification Devices (Multi-device subscriptions)
   notificationDevices: NotificationDevice[];
@@ -1022,6 +1026,26 @@ export const useUserStore = create<UserStoreState>()(
           console.error('Failed to permanently delete account:', err);
           return false;
         }
+      },
+
+      saveOnboardingDraft: async (draft: Record<string, any>) => {
+        const currentUser = get().user;
+        if (!currentUser?.uid) return;
+        try {
+          localStorage.setItem(`preppath_onboarding_draft_${currentUser.uid}`, JSON.stringify(draft));
+          await savePostgresOnboardingDraft(currentUser.uid, draft);
+        } catch (err) {
+          console.debug('Failed to save onboarding draft:', err);
+        }
+      },
+
+      clearOnboardingDraft: async () => {
+        const currentUser = get().user;
+        if (currentUser?.uid) {
+          localStorage.removeItem(`preppath_onboarding_draft_${currentUser.uid}`);
+          await clearPostgresOnboardingDraft(currentUser.uid);
+        }
+        localStorage.removeItem('preppath_onboarding_draft');
       },
 
       resetAccountData: () => {

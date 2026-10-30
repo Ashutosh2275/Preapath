@@ -35,7 +35,7 @@ export async function getPostgresProfile(userId: string): Promise<UserProfile | 
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, email, display_name, target_track, preferred_language, available_days, daily_minutes, exam_date, proficiency, weak_topics, role, timezone, onboarding_completed, onboarding_version, days_available_per_week, preferred_study_hours, preparation_start_date, prep_intensity, version, created_at, updated_at')
+      .select('id, email, display_name, target_track, preferred_language, available_days, daily_minutes, exam_date, proficiency, weak_topics, role, timezone, onboarding_completed, onboarding_version, days_available_per_week, preferred_study_hours, preparation_start_date, prep_intensity, version, onboarding_draft, created_at, updated_at')
       .eq('id', userId)
       .maybeSingle();
 
@@ -61,6 +61,7 @@ export async function getPostgresProfile(userId: string): Promise<UserProfile | 
       preparationStartDate: data.preparation_start_date || undefined,
       prepIntensity: (data.prep_intensity as PrepIntensity) || 'STANDARD',
       version: data.version || 1,
+      onboardingDraft: data.onboarding_draft || undefined,
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -87,7 +88,7 @@ export async function upsertPostgresProfile(profile: UserProfile): Promise<boole
       weak_topics: profile.weakTopics,
       role: profile.role,
       timezone: profile.timezone || 'Asia/Kolkata',
-      onboarding_completed: profile.onboardingCompleted ?? true,
+      onboarding_completed: profile.onboardingCompleted ?? (Boolean(profile.targetTrack)),
       onboarding_version: profile.onboardingVersion || 1,
       days_available_per_week: profile.daysAvailablePerWeek || 6,
       preferred_study_hours: profile.preferredStudyHours || null,
@@ -97,6 +98,10 @@ export async function upsertPostgresProfile(profile: UserProfile): Promise<boole
       updated_at: new Date().toISOString(),
     };
 
+    if (profile.onboardingDraft !== undefined) {
+      payload.onboarding_draft = profile.onboardingDraft;
+    }
+
     const { error } = await supabase
       .from('profiles')
       .upsert(payload);
@@ -104,6 +109,44 @@ export async function upsertPostgresProfile(profile: UserProfile): Promise<boole
     return !error;
   } catch (err) {
     console.error('Failed to upsert PostgreSQL profile:', err);
+    return false;
+  }
+}
+
+export async function savePostgresOnboardingDraft(userId: string, draft: Record<string, any>): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        onboarding_draft: draft,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', userId);
+
+    return !error;
+  } catch (err) {
+    console.warn('Failed to save onboarding draft to PostgreSQL:', err);
+    return false;
+  }
+}
+
+export async function clearPostgresOnboardingDraft(userId: string): Promise<boolean> {
+  if (!isPostgresConfigured() || !supabase) return false;
+
+  try {
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        onboarding_draft: null,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', userId);
+
+    return !error;
+  } catch (err) {
+    console.warn('Failed to clear onboarding draft from PostgreSQL:', err);
     return false;
   }
 }
